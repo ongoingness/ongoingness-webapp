@@ -2,7 +2,7 @@
  Created:  2019-01-25
  Author:   Daniel
  Description:
- -
+ - Vuex store.
  */
 
 // index.js

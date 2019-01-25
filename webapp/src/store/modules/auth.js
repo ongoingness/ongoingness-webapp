@@ -3,7 +3,7 @@
  Created:  2019-01-25
  Author:   Daniel
  Description:
- -
+ - Store for authentication information.
  */
 
 const state = {

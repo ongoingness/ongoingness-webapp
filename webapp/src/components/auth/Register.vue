@@ -48,13 +48,16 @@ export default {
      * Register the user.
      *
      * TODO: Properly catch all the errors.
+     * TODO: Catch 500
+     * TODO: Catch 403
+     * TODO: Add error messages to page
      * @returns {Promise<void>}
      */
     async registerUser() {
-      console.log('Registering user');
-
+      // Reject if username or password not given
       if (this.username.length === 0 || this.password.length === 0) throw new Error('Username or password cannot be empty.');
 
+      // Try and get the token.
       let token;
       try {
         token = await API.register(this.username, this.password);
@@ -62,13 +65,17 @@ export default {
         alert('User could not be registered');
       }
 
+      // Store the token.
       if (token) {
         this.setCookie(token);
         this.$store.commit('updateToken', token);
       }
-
-      console.log(token);
     },
+    /**
+     * Set a cookie in the browser window, valid for one day.
+     * TODO: Move this into shared code with Login.
+     * @param value
+     */
     setCookie(value) {
       const expires = new Date();
       expires.setDate(expires.getDate() + 1);
