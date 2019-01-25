@@ -64,6 +64,7 @@ export default {
 
       if (token) {
         this.setCookie(token);
+        this.$store.commit('updateToken', token);
       }
 
       console.log(token);

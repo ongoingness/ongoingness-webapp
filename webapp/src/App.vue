@@ -1,8 +1,11 @@
 <template lang="pug">
   div#app
     Title
-    Register
-    Login
+    div(
+      v-if="!isLoggedIn"
+    )
+      Register
+      Login
 </template>
 
 <script>
@@ -17,7 +20,20 @@ export default {
     Register,
     Title,
   },
+  data() {
+    return {};
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.getToken;
+    },
+  },
   methods: {
+    /**
+     * Get cookie from browser
+     * @param name cookie label
+     * @returns {*}
+     */
     getCookie(name) {
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${name}=`);
