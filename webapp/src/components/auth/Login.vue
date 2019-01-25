@@ -43,11 +43,20 @@ export default {
     };
   },
   methods: {
+    /**
+     * Authenticate the user against the API.
+     * Should return an authentication which is stored in Vuex and as a cookie.
+     *
+     * TODO: Catch 500
+     * TODO: Catch 404
+     * TODO: Add error messages to page
+     * @returns {Promise<void>}
+     */
     async authenticate() {
-      console.log('authenticating user');
-
+      // Throw an error is username or password is not provided
       if (this.username.length === 0 || this.password.length === 0) throw new Error('Username or password cannot be empty.');
 
+      // Try to get the token
       let token;
       try {
         token = await API.authenticate(this.username, this.password);
@@ -55,13 +64,17 @@ export default {
         alert('User could not be authenticated');
       }
 
+      // Store the cookie
       if (token) {
         this.setCookie(token);
         this.$store.commit('updateToken', token);
       }
-
-      console.log(token);
     },
+    /**
+     * Set a cookie in the browser window, valid for one day.
+     * TODO: Move this into shared code with Register.
+     * @param value
+     */
     setCookie(value) {
       const expires = new Date();
       expires.setDate(expires.getDate() + 1);
