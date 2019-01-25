@@ -34,6 +34,7 @@
 
 <script>
 import API from '../../api';
+import Cookie from '../../cookies';
 
 export default {
   name: 'Register',
@@ -67,19 +68,9 @@ export default {
 
       // Store the token.
       if (token) {
-        this.setCookie(token);
+        Cookie.set(token);
         this.$store.commit('updateToken', token);
       }
-    },
-    /**
-     * Set a cookie in the browser window, valid for one day.
-     * TODO: Move this into shared code with Login.
-     * @param value
-     */
-    setCookie(value) {
-      const expires = new Date();
-      expires.setDate(expires.getDate() + 1);
-      document.cookie = `${encodeURIComponent('authToken')}=${`${encodeURIComponent(value)}; expires=${expires}`}`;
     },
   },
 };

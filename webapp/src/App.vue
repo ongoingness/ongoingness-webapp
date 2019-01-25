@@ -9,6 +9,7 @@
 <script>
 import Title from './components/Title.vue';
 import AuthForm from './components/AuthForm.vue';
+import Cookie from './cookies';
 
 export default {
   name: 'app',
@@ -24,24 +25,10 @@ export default {
       return this.$store.getters.getToken;
     },
   },
-  methods: {
-    /**
-     * Get cookie from browser
-     * @param name cookie label
-     * @returns {*}
-     */
-    getCookie(name) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) {
-        return parts.pop().split(';').shift();
-      }
-      return null;
-    },
-  },
+  methods: {},
   mounted() {
     // Get the token from cookie if exists and write to store.
-    const token = this.getCookie('authToken');
+    const token = Cookie.get('authToken');
     if (token) {
       this.$store.commit('updateToken', token);
     }

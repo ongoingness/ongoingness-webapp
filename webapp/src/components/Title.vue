@@ -7,6 +7,10 @@
             v-if="isLoggedIn",
             @click="logout"
           ) Logout
+          button.button.is-danger(
+            v-if="isLoggedIn"
+            @click="deleteAccount"
+          ) Delete Account
       div.hero-body
         div.container
           h1.title Ongoingness
@@ -14,6 +18,8 @@
 </template>
 
 <script>
+import Cookie from '../cookies';
+
 export default {
   name: 'Title',
   computed: {
@@ -27,19 +33,17 @@ export default {
      */
     logout() {
       this.$store.commit('updateToken', null);
-      this.deleteCookie();
+      Cookie.delete();
     },
-    /**
-     * Delete authToken cookie from browser
-     */
-    deleteCookie() {
-      document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    deleteAccount() {
+      const confirmed = window.confirm('Are you sure? your data cannot be recovered');
+      // if (!confirmed) return;
     },
   },
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 h1.title {
   text-transform: uppercase;
   letter-spacing: 4px;
@@ -47,5 +51,9 @@ h1.title {
 }
   .hero-head {
     padding-top: 1%;
+
+    .button {
+      margin-left: 5px;
+    }
   }
 </style>
