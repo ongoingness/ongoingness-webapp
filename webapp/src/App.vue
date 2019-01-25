@@ -1,23 +1,19 @@
 <template lang="pug">
   div#app
     Title
-    div(
+    AuthForm(
       v-if="!isLoggedIn"
     )
-      Register
-      Login
 </template>
 
 <script>
 import Title from './components/Title.vue';
-import Register from './components/auth/Register.vue';
-import Login from './components/auth/Login.vue';
+import AuthForm from './components/AuthForm.vue';
 
 export default {
   name: 'app',
   components: {
-    Login,
-    Register,
+    AuthForm,
     Title,
   },
   data() {

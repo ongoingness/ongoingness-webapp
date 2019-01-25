@@ -79,8 +79,7 @@ export default {
 </script>
 
 <style scoped>
-#register {
-  margin-top: 5%;
-  margin-bottom: 5%;
-}
+  .is-size-3{
+    margin-bottom: 25px;
+  }
 </style>
