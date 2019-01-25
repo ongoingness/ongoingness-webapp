@@ -46,6 +46,8 @@ export default {
   methods: {
     /**
      * Register the user.
+     *
+     * TODO: Properly catch all the errors.
      * @returns {Promise<void>}
      */
     async registerUser() {
@@ -57,7 +59,7 @@ export default {
       try {
         token = await API.register(this.username, this.password);
       } catch (e) {
-        alert('User could not be authenticated');
+        alert('User could not be registered');
       }
 
       if (token) {

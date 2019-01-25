@@ -17,6 +17,23 @@ export default {
     Register,
     Title,
   },
+  methods: {
+    getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) {
+        return parts.pop().split(';').shift();
+      }
+      return null;
+    },
+  },
+  mounted() {
+    // Get the token from cookie if exists and write to store.
+    const token = this.getCookie('authToken');
+    if (token) {
+      this.$store.commit('updateToken', token);
+    }
+  },
 };
 </script>
 
