@@ -1,0 +1,92 @@
+<template lang="pug">
+  div#register
+    div.container
+      h1.is-size-3 Register
+      div.field
+        label.label Username
+        div.control.has-icons-left.has-icons-right
+          input.input(
+            type="text",
+            placeholder="johnsmith"
+            v-model="username"
+          )
+          span.icon.is-small.is-left
+            i.fas.fa-user
+
+      div.field
+        label.label Password
+        div.control.has-icons-left.has-icons-right
+          input.input(
+            type="password",
+            placeholder="secret",
+            v-model="password"
+          )
+          span.icon.is-small.is-left
+            i.fas.fa-lock
+
+      div.field
+        div.control
+          button.button.is-link(
+            @click="registerUser"
+          ) Submit
+
+</template>
+
+<script>
+import API from '../../api';
+
+export default {
+  name: 'Register',
+  data() {
+    return {
+      username: '',
+      password: '',
+    };
+  },
+  methods: {
+    /**
+     * Register the user.
+     *
+     * TODO: Properly catch all the errors.
+     * TODO: Catch 500
+     * TODO: Catch 403
+     * TODO: Add error messages to page
+     * @returns {Promise<void>}
+     */
+    async registerUser() {
+      // Reject if username or password not given
+      if (this.username.length === 0 || this.password.length === 0) throw new Error('Username or password cannot be empty.');
+
+      // Try and get the token.
+      let token;
+      try {
+        token = await API.register(this.username, this.password);
+      } catch (e) {
+        alert('User could not be registered');
+      }
+
+      // Store the token.
+      if (token) {
+        this.setCookie(token);
+        this.$store.commit('updateToken', token);
+      }
+    },
+    /**
+     * Set a cookie in the browser window, valid for one day.
+     * TODO: Move this into shared code with Login.
+     * @param value
+     */
+    setCookie(value) {
+      const expires = new Date();
+      expires.setDate(expires.getDate() + 1);
+      document.cookie = `${encodeURIComponent('authToken')}=${`${encodeURIComponent(value)}; expires=${expires}`}`;
+    },
+  },
+};
+</script>
+
+<style scoped>
+  .is-size-3{
+    margin-bottom: 25px;
+  }
+</style>
