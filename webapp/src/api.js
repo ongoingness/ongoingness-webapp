@@ -6,6 +6,7 @@
  - Interact with the API.
  */
 import axios from 'axios';
+import mock from '../mock_api.json';
 
 export default class API {
   static URL = 'https://ongoingness-api.openlab.ncl.ac.uk/api';
@@ -22,8 +23,13 @@ export default class API {
       username,
       password,
     };
-    const response = await axios.post(`${this.URL}/auth/register`, userData);
-    // console.log(response);
+
+    let response;
+    if (process.env.NODE_ENV === 'test') {
+      response = mock.register;
+    } else {
+      response = await axios.post(`${this.URL}/auth/register`, userData);
+    }
 
     return response.data.payload.token;
   }
@@ -40,7 +46,14 @@ export default class API {
       username,
       password,
     };
-    const response = await axios.post(`${this.URL}/auth/authenticate`, userData);
+
+    let response;
+    if (process.env.NODE_ENV === 'test') {
+      response = mock.authenticate;
+    } else {
+      response = await axios.post(`${this.URL}/auth/authenticate`, userData);
+    }
+
     return response.data.payload.token;
   }
 
@@ -51,7 +64,14 @@ export default class API {
    */
   static async getUser(token) {
     if (!token) throw new Error('Access token is required');
-    const response = await axios.get(`${this.URL}/user/me`, { headers: { 'x-access-token': token } });
+
+    let response;
+    if (process.env.NODE_ENV === 'test') {
+      response = mock.get_user;
+    } else {
+      response = await axios.get(`${this.URL}/user/me`, { headers: { 'x-access-token': token } });
+    }
+
     return response.data.payload.user;
   }
 
@@ -64,11 +84,14 @@ export default class API {
     if (!token) throw new Error('Access token is required');
 
     const user = await this.getUser(token);
-    const response = await axios.delete(`${this.URL}/user/${user._id}`, { headers: { 'x-access-token': token } });
-    if (response.status !== 200) {
-      return false;
+
+    let response;
+    if (process.env.NODE_ENV === 'test') {
+      response = mock.delete_user;
+    } else {
+      response = await axios.delete(`${this.URL}/user/${user._id}`, { headers: { 'x-access-token': token } });
     }
 
-    return true;
+    return response.status === 200;
   }
 }

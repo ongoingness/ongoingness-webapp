@@ -31,18 +31,6 @@ describe('Auth', () => {
 
       expect(submit.html()).contains('disabled');
     });
-
-    it('Should enable submit button if username and password present', () => {
-      const wrapper = mount(Login);
-      wrapper.setData({
-        username: 'test',
-        password: 'secret',
-      });
-
-      const submit = wrapper.find('#login-submit');
-
-      expect(submit.html()).not.contains('disabled');
-    });
   });
 
   describe('Register.vue', () => {
@@ -70,18 +58,6 @@ describe('Auth', () => {
       const submit = wrapper.find('#register-submit');
 
       expect(submit.html()).contains('disabled');
-    });
-
-    it('Should enable submit button if username and password present', () => {
-      const wrapper = mount(Register);
-      wrapper.setData({
-        username: 'test',
-        password: 'secret',
-      });
-
-      const submit = wrapper.find('#register-submit');
-
-      expect(submit.html()).not.contains('disabled');
     });
   });
 });

@@ -62,7 +62,7 @@ export default {
      */
     async registerUser() {
       // Reject if username or password not given
-      if (this.username.length === 0 || this.password.length === 0) throw new Error('Username or password cannot be empty.');
+      if (this.username.length > 0 && this.password.length > 0) throw new Error('Username or password cannot be empty.');
 
       // Try and get the token.
       let token;

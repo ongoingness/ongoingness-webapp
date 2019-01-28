@@ -1,0 +1,215 @@
+{
+  "register": {
+    "data": {
+      "code": 200,
+      "message": "success",
+      "errors": false,
+      "payload": {
+        "user": {
+          "devices": [],
+          "media": [],
+          "_id": "5c4f07868a727300111ef4ba",
+          "iv": "fe89db32ed3d8f21d79bb8b813af5e68",
+          "username": "username",
+          "password": "2798a5b5f39cc56fe0a808d8b681b16a5c2057fdee21340f9866e9867f86e73e",
+          "createdAt": "2019-01-28T13:45:42.445Z",
+          "updatedAt": "2019-01-28T13:45:42.445Z",
+          "__v": 0
+        },
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjNGYwNzg2OGE3MjczMDAxMTFlZjRiYSIsInVzZXJuYW1lIjoidXNlcm5hbWUiLCJpYXQiOjE1NDg2ODMxNDIsImV4cCI6MTU0ODc2OTU0Mn0.oSpXzGJpVKxYjsH8_vliuoHQEakTiVHgXsKCGjhI7_s"
+      }
+    },
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "content-type": "application/json; charset=utf-8"
+    },
+    "config": {
+      "transformRequest": {},
+      "transformResponse": {},
+      "timeout": 0,
+      "xsrfCookieName": "XSRF-TOKEN",
+      "xsrfHeaderName": "X-XSRF-TOKEN",
+      "maxContentLength": -1,
+      "headers": {
+        "Accept": "application/json, text/plain, */*",
+        "Content-Type": "application/json;charset=utf-8"
+      },
+      "method": "post",
+      "url": "https://ongoingness-api.openlab.ncl.ac.uk/api/auth/register",
+      "data": "{\"username\":\"username\",\"password\":\"password\"}"
+    },
+    "request": {
+      "upload": {
+        "_ownerDocument": {
+          "location": {
+            "href": "http://localhost/",
+            "origin": "http://localhost",
+            "protocol": "http:",
+            "host": "localhost",
+            "hostname": "localhost",
+            "port": "",
+            "pathname": "/",
+            "search": "",
+            "hash": ""
+          }
+        }
+      },
+      "_registeredHandlers": {},
+      "_eventHandlers": {}
+    }
+  },
+  "authenticate": {
+    "data": {
+      "code": 200,
+      "message": "success",
+      "errors": false,
+      "payload": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjNGYwNzg2OGE3MjczMDAxMTFlZjRiYSIsInVzZXJuYW1lIjoidXNlcm5hbWUiLCJpYXQiOjE1NDg2ODMxNDIsImV4cCI6MTU0ODc2OTU0Mn0.oSpXzGJpVKxYjsH8_vliuoHQEakTiVHgXsKCGjhI7_s"
+      }
+    },
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "content-type": "application/json; charset=utf-8"
+    },
+    "config": {
+      "transformRequest": {},
+      "transformResponse": {},
+      "timeout": 0,
+      "xsrfCookieName": "XSRF-TOKEN",
+      "xsrfHeaderName": "X-XSRF-TOKEN",
+      "maxContentLength": -1,
+      "headers": {
+        "Accept": "application/json, text/plain, */*",
+        "Content-Type": "application/json;charset=utf-8"
+      },
+      "method": "post",
+      "url": "https://ongoingness-api.openlab.ncl.ac.uk/api/auth/authenticate",
+      "data": "{\"username\":\"username\",\"password\":\"password\"}"
+    },
+    "request": {
+      "upload": {
+        "_ownerDocument": {
+          "location": {
+            "href": "http://localhost/",
+            "origin": "http://localhost",
+            "protocol": "http:",
+            "host": "localhost",
+            "hostname": "localhost",
+            "port": "",
+            "pathname": "/",
+            "search": "",
+            "hash": ""
+          }
+        }
+      },
+      "_registeredHandlers": {},
+      "_eventHandlers": {}
+    }
+  },
+  "get_user": {
+    "data": {
+      "code": 200,
+      "message": "success",
+      "errors": false,
+      "payload": {
+        "user": {
+          "devices": [],
+          "media": [],
+          "_id": "5c4f07868a727300111ef4ba",
+          "iv": "fe89db32ed3d8f21d79bb8b813af5e68",
+          "username": "username",
+          "password": "2798a5b5f39cc56fe0a808d8b681b16a5c2057fdee21340f9866e9867f86e73e",
+          "createdAt": "2019-01-28T13:45:42.445Z",
+          "updatedAt": "2019-01-28T13:45:42.445Z",
+          "__v": 0
+        }
+      }
+    },
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "content-type": "application/json; charset=utf-8"
+    },
+    "config": {
+      "transformRequest": {},
+      "transformResponse": {},
+      "timeout": 0,
+      "xsrfCookieName": "XSRF-TOKEN",
+      "xsrfHeaderName": "X-XSRF-TOKEN",
+      "maxContentLength": -1,
+      "headers": {
+        "Accept": "application/json, text/plain, */*",
+        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjNGYwNzg2OGE3MjczMDAxMTFlZjRiYSIsInVzZXJuYW1lIjoidXNlcm5hbWUiLCJpYXQiOjE1NDg2ODMxNDIsImV4cCI6MTU0ODc2OTU0Mn0.oSpXzGJpVKxYjsH8_vliuoHQEakTiVHgXsKCGjhI7_s"
+      },
+      "method": "get",
+      "url": "https://ongoingness-api.openlab.ncl.ac.uk/api/user/me"
+    },
+    "request": {
+      "upload": {
+        "_ownerDocument": {
+          "location": {
+            "href": "http://localhost/",
+            "origin": "http://localhost",
+            "protocol": "http:",
+            "host": "localhost",
+            "hostname": "localhost",
+            "port": "",
+            "pathname": "/",
+            "search": "",
+            "hash": ""
+          }
+        }
+      },
+      "_registeredHandlers": {},
+      "_eventHandlers": {}
+    }
+  },
+  "delete_user": {
+    "data": {
+      "code": 200,
+      "message": "success",
+      "errors": false,
+      "payload": {}
+    },
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "content-type": "application/json; charset=utf-8"
+    },
+    "config": {
+      "transformRequest": {},
+      "transformResponse": {},
+      "timeout": 0,
+      "xsrfCookieName": "XSRF-TOKEN",
+      "xsrfHeaderName": "X-XSRF-TOKEN",
+      "maxContentLength": -1,
+      "headers": {
+        "Accept": "application/json, text/plain, */*",
+        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjNGYwNzg2OGE3MjczMDAxMTFlZjRiYSIsInVzZXJuYW1lIjoidXNlcm5hbWUiLCJpYXQiOjE1NDg2ODMxNDIsImV4cCI6MTU0ODc2OTU0Mn0.oSpXzGJpVKxYjsH8_vliuoHQEakTiVHgXsKCGjhI7_s"
+      },
+      "method": "delete",
+      "url": "https://ongoingness-api.openlab.ncl.ac.uk/api/user/5c4f07868a727300111ef4ba"
+    },
+    "request": {
+      "upload": {
+        "_ownerDocument": {
+          "location": {
+            "href": "http://localhost/",
+            "origin": "http://localhost",
+            "protocol": "http:",
+            "host": "localhost",
+            "hostname": "localhost",
+            "port": "",
+            "pathname": "/",
+            "search": "",
+            "hash": ""
+          }
+        }
+      },
+      "_registeredHandlers": {},
+      "_eventHandlers": {}
+    }
+  }
+}
