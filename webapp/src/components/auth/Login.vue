@@ -26,7 +26,7 @@
 
       div.field
         div.control
-          button.button.is-link(
+          button#login-submit.button.is-link(
           @click="authenticate"
           ) Submit
 </template>
@@ -64,6 +64,8 @@ export default {
       } catch (e) {
         alert('User could not be authenticated');
       }
+
+      console.log('got token');
 
       // Store the cookie
       if (token) {

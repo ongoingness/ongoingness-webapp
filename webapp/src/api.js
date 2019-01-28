@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /**
  Created:  2019-01-25
  Author:   Daniel Welsh
@@ -41,9 +42,18 @@ export default class API {
       password,
     };
     const response = await axios.post(`${this.URL}/auth/authenticate`, userData);
-    console.log(response);
-
     return response.data.payload.token;
+  }
+
+  /**
+   * Get a user's information
+   * @param token
+   * @returns {Promise<any>}
+   */
+  static async getUser(token) {
+    if (!token) throw new Error('Access token is required');
+    const response = await axios.get(`${this.URL}/user/me`, { headers: {'x-access-token': token } });
+    return response.data.payload.user;
   }
 
   /**
@@ -54,12 +64,12 @@ export default class API {
   static async deleteAccount(token) {
     if (!token) throw new Error('Access token is required');
 
-    const response = await axios.delete(`${this.URL}/auth/user/`, { headers: { 'x-access-token': token } });
-    if (response.statusCode !== 200) {
+    const user = await this.getUser(token);
+    const response = await axios.delete(`${this.URL}/user/${user._id}`, { headers: { 'x-access-token': token } });
+    if (response.status !== 200) {
       return false;
     }
 
-    store.commit('updateToken', null);
     return true;
   }
 }

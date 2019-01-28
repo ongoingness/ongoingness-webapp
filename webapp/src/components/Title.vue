@@ -19,6 +19,7 @@
 
 <script>
 import Cookie from '../cookies';
+import API from '../api';
 
 export default {
   name: 'Title',
@@ -35,9 +36,18 @@ export default {
       this.$store.commit('updateToken', null);
       Cookie.delete();
     },
-    deleteAccount() {
+    async deleteAccount() {
+      // eslint-disable-next-line no-alert
       const confirmed = window.confirm('Are you sure? your data cannot be recovered');
-      // if (!confirmed) return;
+      if (!confirmed) return;
+
+      try {
+        await API.deleteAccount(this.$store.getters.getToken);
+        this.$store.commit('updateToken', null);
+        Cookie.delete();
+      } catch (e) {
+        alert('Account could not be deleted');
+      }
     },
   },
 };
