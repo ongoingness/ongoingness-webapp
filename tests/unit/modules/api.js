@@ -14,11 +14,6 @@ describe('api.js', () => {
   const username = 'username';
   const password = 'password';
 
-  before(() => {
-    console.log('SETTING TEST');
-    process.env.TEST = 'true';
-  });
-
   describe('Auth', () => {
     it('Should register a user', (done) => {
       API.register(username, password)
