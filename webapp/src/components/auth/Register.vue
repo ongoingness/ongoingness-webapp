@@ -26,8 +26,9 @@
 
       div.field
         div.control
-          button.button.is-link(
-            @click="registerUser"
+          button#register-submit.button.is-link(
+            @click="registerUser",
+            :disabled="isDisabled"
           ) Submit
 
 </template>
@@ -43,6 +44,11 @@ export default {
       username: '',
       password: '',
     };
+  },
+  computed: {
+    isDisabled() {
+      return this.username.length === 0 || this.password.length === 0;
+    },
   },
   methods: {
     /**

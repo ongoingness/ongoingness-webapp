@@ -27,7 +27,8 @@
       div.field
         div.control
           button#login-submit.button.is-link(
-          @click="authenticate"
+            @click="authenticate",
+            :disabled="submitDisabled"
           ) Submit
 </template>
 
@@ -42,6 +43,11 @@ export default {
       username: '',
       password: '',
     };
+  },
+  computed: {
+    submitDisabled() {
+      return this.username.length === 0 || this.password.length === 0;
+    },
   },
   methods: {
     /**

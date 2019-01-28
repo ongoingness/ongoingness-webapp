@@ -6,7 +6,6 @@
  - Interact with the API.
  */
 import axios from 'axios';
-import store from './store';
 
 export default class API {
   static URL = 'https://ongoingness-api.openlab.ncl.ac.uk/api';
@@ -52,7 +51,7 @@ export default class API {
    */
   static async getUser(token) {
     if (!token) throw new Error('Access token is required');
-    const response = await axios.get(`${this.URL}/user/me`, { headers: {'x-access-token': token } });
+    const response = await axios.get(`${this.URL}/user/me`, { headers: { 'x-access-token': token } });
     return response.data.payload.user;
   }
 
