@@ -10,5 +10,5 @@ run_tests:
   tags:
     - docker
   script:
-    - npm install --prefix ./webapp --progress=false
+    - npm install --progress=false
     - npm run test:unit
