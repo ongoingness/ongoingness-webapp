@@ -10,6 +10,7 @@
 import Title from './components/Title.vue';
 import AuthForm from './components/AuthForm.vue';
 import Cookie from './cookies';
+import API from './api';
 
 export default {
   name: 'app',
@@ -26,11 +27,18 @@ export default {
     },
   },
   methods: {},
-  mounted() {
+  async mounted() {
     // Get the token from cookie if exists and write to store.
     const token = Cookie.get('authToken');
     if (token) {
       this.$store.commit('updateToken', token);
+
+      try {
+        const response = await API.getAllMedia(this.$store.getters.getToken);
+        this.$store.commit('updateMedia', response);
+      } catch (e) {
+        alert(e);
+      }
     }
   },
 };
