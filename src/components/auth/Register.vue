@@ -69,7 +69,8 @@ export default {
       try {
         token = await API.register(this.username, this.password);
       } catch (e) {
-        alert('User could not be registered');
+        console.log(e);
+        // TODO: Update UI
       }
 
       // Store the token.

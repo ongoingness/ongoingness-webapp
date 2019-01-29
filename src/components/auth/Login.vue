@@ -68,7 +68,8 @@ export default {
       try {
         token = await API.authenticate(this.username, this.password);
       } catch (e) {
-        alert('User could not be authenticated');
+        console.log(e);
+        // TODO: Update UI
       }
 
       console.log('got token');

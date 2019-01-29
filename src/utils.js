@@ -10,6 +10,7 @@
  * Used across API functions to determine whether to use dummy service.
  * @returns {boolean}
  */
+// eslint-disable-next-line import/prefer-default-export
 export function isTest() {
   return process.env.NODE_ENV === 'test';
 }

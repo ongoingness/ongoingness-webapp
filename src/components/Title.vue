@@ -46,7 +46,8 @@ export default {
         this.$store.commit('updateToken', null);
         Cookie.delete();
       } catch (e) {
-        alert('Account could not be deleted');
+        console.log(e);
+        // TODO: Update UI
       }
     },
   },

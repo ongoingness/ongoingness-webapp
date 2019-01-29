@@ -48,7 +48,8 @@ export default {
         const response = await API.getAllMedia(this.$store.getters.getToken);
         this.$store.commit('updateMedia', response.data);
       } catch (e) {
-        alert(e);
+        console.log(e);
+        // TODO: Update UI
       }
     },
   },
