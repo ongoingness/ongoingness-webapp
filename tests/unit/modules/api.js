@@ -55,4 +55,17 @@ describe('api.js', () => {
         });
     });
   });
+
+  describe('Media', () => {
+    before(() => {
+      if (!authToken) throw new Error('Token not provided');
+    });
+
+    it('Should fetch all of the users media', (done) => {
+      API.getAllMedia(authToken)
+        .then((response) => {
+          expect(response).not.equal(null);
+        });
+    });
+  });
 });

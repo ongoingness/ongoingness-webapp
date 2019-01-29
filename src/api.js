@@ -94,4 +94,21 @@ export default class API {
 
     return response.status === 200;
   }
+
+  /**
+   * Get all of the user's media.
+   * @param token
+   * @returns {Promise<void>}
+   */
+  static async getAllMedia(token) {
+    if (!token) throw new Error('Access token is required');
+
+    // if (process.env.NODE_ENV === 'test') {
+    //   response = null;
+    // } else {
+    const response = await axios.get(`${this.URL}/media`, { headers: { 'x-access-token': token } });
+    // }
+
+    return response.data.payload;
+  }
 }
