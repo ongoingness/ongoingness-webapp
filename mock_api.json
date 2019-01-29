@@ -211,5 +211,50 @@
       "_registeredHandlers": {},
       "_eventHandlers": {}
     }
+  },
+  "all_media": {
+    "data": {
+      "code": 200,
+      "message": "success",
+      "errors": false
+    },
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "content-type": "application/json; charset=utf-8"
+    },
+    "config": {
+      "transformRequest": {},
+      "transformResponse": {},
+      "timeout": 0,
+      "xsrfCookieName": "XSRF-TOKEN",
+      "xsrfHeaderName": "X-XSRF-TOKEN",
+      "maxContentLength": -1,
+      "headers": {
+        "Accept": "application/json, text/plain, */*",
+        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjNGYwNzg2OGE3MjczMDAxMTFlZjRiYSIsInVzZXJuYW1lIjoidXNlcm5hbWUiLCJpYXQiOjE1NDg2ODMxNDIsImV4cCI6MTU0ODc2OTU0Mn0.oSpXzGJpVKxYjsH8_vliuoHQEakTiVHgXsKCGjhI7_s"
+      },
+      "method": "get",
+      "url": "http://localhost:3000/api/media"
+    },
+    "request": {
+      "upload": {
+        "_ownerDocument": {
+          "location": {
+            "href": "http://localhost/",
+            "origin": "http://localhost",
+            "protocol": "http:",
+            "host": "localhost",
+            "hostname": "localhost",
+            "port": "",
+            "pathname": "/",
+            "search": "",
+            "hash": ""
+          }
+        }
+      },
+      "_registeredHandlers": {},
+      "_eventHandlers": {}
+    }
   }
 }

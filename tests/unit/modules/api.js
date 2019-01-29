@@ -65,6 +65,8 @@ describe('api.js', () => {
       API.getAllMedia(authToken)
         .then((response) => {
           expect(response).not.equal(null);
+          expect(response).not.equal(undefined);
+          done();
         });
     });
   });
