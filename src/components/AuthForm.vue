@@ -2,10 +2,12 @@
   div#auth-form
     div.container
       Login(
-        v-if="hasAccount"
+        v-if="hasAccount",
+        v-on:authenticated="onAuthenticated"
       )
       Register(
-        v-else
+        v-else,
+        v-on:authenticated="onAuthenticated"
       )
       div(
       v-if="hasAccount"
@@ -28,6 +30,7 @@
 <script>
 import Register from './auth/Register.vue';
 import Login from './auth/Login.vue';
+import API from '../api';
 
 export default {
   name: 'AuthForm',
@@ -36,6 +39,18 @@ export default {
     return {
       hasAccount: true,
     };
+  },
+  methods: {
+    async onAuthenticated() {
+      console.log('User is authenticated');
+
+      try {
+        const response = await API.getAllMedia(this.$store.getters.getToken);
+        this.$store.commit('updateMedia', response.data);
+      } catch (e) {
+        alert(e);
+      }
+    },
   },
 };
 </script>

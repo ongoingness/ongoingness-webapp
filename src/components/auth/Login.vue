@@ -77,6 +77,7 @@ export default {
       if (token) {
         Cookie.set(token);
         this.$store.commit('updateToken', token);
+        this.$emit('authenticated');
       }
     },
   },

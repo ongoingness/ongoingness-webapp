@@ -9,4 +9,5 @@
 describe('Webapp', () => {
   require('./modules/auth');
   require('./modules/api');
+  require('./modules/store');
 });
