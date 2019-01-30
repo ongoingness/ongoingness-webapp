@@ -60,15 +60,22 @@
         )
           li.list-item(
             v-for="m in permMedia"
-          ) {{ m._id }}
+          )
+            MediaItem(
+              :media="m"
+            )
+
 
         h2.is-size-4 Transient Media
         ul.list(
         v-if="tempMedia.length > 0"
         )
           li.list-item(
-          v-for="m in tempMedia"
-          ) {{ m._id }}
+            v-for="m in tempMedia"
+          )
+            MediaItem(
+              :media="m"
+            )
 
         p(
           v-else
@@ -78,15 +85,16 @@
 <script>
 import API from '../api';
 import Notification from './Notification.vue';
+import MediaItem from './MediaItem.vue';
 
 export default {
   name: 'Media',
-  components: { Notification },
+  components: { MediaItem, Notification },
   data() {
     return {
       file: null,
       era: 'past',
-      ltag: '',
+      ltag: 'temp',
       notificationText: '',
       isNotificationHidden: true,
       isBusy: false,
