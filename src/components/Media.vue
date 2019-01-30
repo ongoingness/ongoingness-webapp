@@ -6,7 +6,7 @@
 
       div.new-media
         h2.is-size-4 Upload Media
-        div.file.is-boxed
+        div.file.is-boxed.file-upload
           label.file-label
             input.file-input(
               type="file",
@@ -18,11 +18,34 @@
                 i.fas.fa-upload
               span.file-label.has-text-centered Choose a file
             span.file-name {{ filename }}
-        button.button(
-          @click="uploadFile"
+
+        div.control.image-tag-selection
+          p Is your image:
+          label.radio
+            input(
+              type="radio",
+              name="mtag",
+              value="perm",
+              v-model="ltag"
+            )
+            | &nbsp; Permanent
+          br
+          label.radio
+            input(
+              type="radio",
+              name="mtag",
+              value="temp",
+              v-model="ltag"
+            )
+            | &nbsp; Temporary
+
+        button.button.upload-button(
+          @click="uploadFile",
+          :disabled="(file === null)"
         ) Upload
 
       div.all-media
+        h2.is-size-4 Your Media
         ul.list(
           v-if="media.length > 0"
         )
@@ -44,6 +67,7 @@ export default {
     return {
       file: null,
       era: 'past',
+      ltag: '',
     };
   },
   computed: {
@@ -51,31 +75,34 @@ export default {
       return this.$store.getters.getMedia;
     },
     filename() {
-      return this.file === null ? 'file-name' : this.file.name;
+      return this.file === null ? 'Your Image' : this.file.name;
     },
   },
   methods: {
     async uploadFile() {
-      console.log(this.file);
-
+      if (this.ltag === '') {
+        alert('must select tag');
+        // TODO: display error.
+        this.ltag = 'temp';
+        return;
+      }
       try {
         const response = await API.uploadMedia(
           this.file,
-          { era: this.era },
+          {
+            era: this.era,
+            locket: this.ltag,
+          },
           this.$store.getters.getToken,
         );
-        console.log(response);
 
         this.file = null;
         this.$store.commit('addMedia', response);
-
       } catch (e) {
         console.log(e);
         // TODO: Handle error.
         this.file = null;
       }
-
-
     },
     handleFileChange(e) {
       this.file = e.target.files[0];
@@ -90,6 +117,10 @@ export default {
 
   .all-media {
     margin-top: 2.5%;
+  }
+
+  .image-tag-selection, .upload-button, .file-upload {
+    margin-top: 1.25%;
   }
 }
 </style>

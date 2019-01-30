@@ -116,17 +116,22 @@ export default class API {
     const formData = new FormData();
     formData.append('file', file);
 
+    const headers = {
+      'Content-Type': 'multipart/form-data',
+      'x-access-token': token,
+    };
+
     if (data) {
-      Object.entries(data).forEach((key) => {
-        formData.append(key, data[key]);
+      Object.keys(data).forEach((key) => {
+        console.log(key);
+        headers[key] = data[key];
       });
     }
 
+    console.log(headers);
+
     const response = await axios.post(`${this.URL}/media`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'x-access-token': token,
-      },
+      headers,
     });
 
     return response.data.payload;
