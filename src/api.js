@@ -6,6 +6,7 @@
  - Interact with the API.
  */
 import axios from 'axios';
+import * as FormData from 'form-data';
 import mock from '../mock_api.json';
 import { isTest } from './utils';
 
@@ -100,5 +101,34 @@ export default class API {
       { headers: { 'x-access-token': token } });
     // If there is no media return an empty array, else, return the media
     return response.data.payload === undefined || null ? [] : response.data.payload;
+  }
+
+  /**
+   * Upload media to the api.
+   * @param file
+   * @param data
+   * @param token
+   * @returns {Promise<void>}
+   */
+  static async uploadMedia(file, data, token) {
+    if (!token) throw new Error('Access token required');
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    if (data) {
+      Object.entries(data).forEach((key) => {
+        formData.append(key, data[key]);
+      });
+    }
+
+    const response = await axios.post(`${this.URL}/media`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'x-access-token': token,
+      },
+    });
+
+    return response.data.payload;
   }
 }

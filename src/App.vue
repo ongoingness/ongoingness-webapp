@@ -4,6 +4,7 @@
     AuthForm(
       v-if="!isLoggedIn"
     )
+    Media
 </template>
 
 <script>
@@ -11,10 +12,12 @@ import Title from './components/Title.vue';
 import AuthForm from './components/AuthForm.vue';
 import Cookie from './cookies';
 import API from './api';
+import Media from './components/Media.vue';
 
 export default {
   name: 'app',
   components: {
+    Media,
     AuthForm,
     Title,
   },
