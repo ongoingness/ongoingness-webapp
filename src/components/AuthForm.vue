@@ -46,7 +46,8 @@ export default {
 
       try {
         const response = await API.getAllMedia(this.$store.getters.getToken);
-        this.$store.commit('updateMedia', response.data);
+        console.log(response);
+        this.$store.commit('updateMedia', response);
       } catch (e) {
         console.log(e);
         // TODO: Update UI

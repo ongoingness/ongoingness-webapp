@@ -4,7 +4,9 @@
     AuthForm(
       v-if="!isLoggedIn"
     )
-    Media
+    Media(
+      v-if="isLoggedIn"
+    )
 </template>
 
 <script>
