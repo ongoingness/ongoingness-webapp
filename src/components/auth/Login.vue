@@ -85,7 +85,7 @@ export default {
             break;
         }
       }
-      
+
       // Store the cookie
       if (token) {
         Cookie.set(token);

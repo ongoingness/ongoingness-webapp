@@ -39,10 +39,17 @@
             )
             | &nbsp; Temporary
 
-        button.button.upload-button(
+        button.button.upload-button.is-primary(
           @click="uploadFile",
-          :disabled="(file === null)"
+          :disabled="(file === null)",
+          :class="{ 'is-loading': isBusy }"
         ) Upload
+
+        Notification(
+          v-if="!isNotificationHidden",
+          v-on:closed="isNotificationHidden = true"
+        )
+          p {{ notificationText }}
 
       div.all-media
         h2.is-size-4 Your Media
@@ -70,14 +77,19 @@
 
 <script>
 import API from '../api';
+import Notification from './Notification.vue';
 
 export default {
   name: 'Media',
+  components: { Notification },
   data() {
     return {
       file: null,
       era: 'past',
       ltag: '',
+      notificationText: '',
+      isNotificationHidden: true,
+      isBusy: false,
     };
   },
   computed: {
@@ -108,11 +120,11 @@ export default {
      */
     async uploadFile() {
       if (this.ltag === '') {
-        alert('must select tag');
-        // TODO: display error.
-        this.ltag = 'temp';
+        this.isNotificationHidden = false;
+        this.notificationText = 'You must select whether media is permanent or temporary';
         return;
       }
+      this.isBusy = true;
       try {
         const response = await API.uploadMedia(
           // set headers
@@ -123,13 +135,14 @@ export default {
           },
           this.$store.getters.getToken,
         );
-
         this.file = null;
         this.$store.commit('addMedia', response);
       } catch (e) {
-        console.log(e);
-        // TODO: Handle error.
+        this.isNotificationHidden = false;
+        this.notificationText = 'Something went wrong';
         this.file = null;
+      } finally {
+        this.isBusy = false;
       }
     },
     /**
@@ -153,6 +166,10 @@ export default {
 
   .image-tag-selection, .upload-button, .file-upload {
     margin-top: 1.25%;
+  }
+
+  .upload-button {
+    margin-bottom: 1.25%;
   }
 }
 </style>
