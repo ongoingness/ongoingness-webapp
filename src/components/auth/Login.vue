@@ -30,18 +30,28 @@
             @click="authenticate",
             :disabled="submitDisabled"
           ) Submit
+
+      Notification(
+        v-if="!isNotificationHidden"
+        v-on:closed="isNotificationHidden = true"
+      )
+        p {{ notificationText }}
 </template>
 
 <script>
 import API from '../../api';
 import Cookie from '../../cookies';
+import Notification from '../Notification.vue';
 
 export default {
   name: 'Login',
+  components: { Notification },
   data() {
     return {
       username: '',
       password: '',
+      notificationText: '',
+      isNotificationHidden: true,
     };
   },
   computed: {
@@ -54,9 +64,6 @@ export default {
      * Authenticate the user against the API.
      * Should return an authentication which is stored in Vuex and as a cookie.
      *
-     * TODO: Catch 500
-     * TODO: Catch 404
-     * TODO: Add error messages to page
      * @returns {Promise<void>}
      */
     async authenticate() {
@@ -68,12 +75,17 @@ export default {
       try {
         token = await API.authenticate(this.username, this.password);
       } catch (e) {
-        console.log(e);
-        // TODO: Update UI
+        this.isNotificationHidden = false;
+        switch (e.response.data.code) {
+          case 401:
+            this.notificationText = 'Username or password is incorrect';
+            break;
+          default:
+            this.notificationText = 'Something went wrong';
+            break;
+        }
       }
-
-      console.log('got token');
-
+      
       // Store the cookie
       if (token) {
         Cookie.set(token);
