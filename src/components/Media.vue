@@ -46,11 +46,21 @@
 
       div.all-media
         h2.is-size-4 Your Media
+
+        h2.is-size-4 Permanent Media
         ul.list(
-          v-if="media.length > 0"
+          v-if="permMedia.length > 0"
         )
           li.list-item(
-            v-for="m in media"
+            v-for="m in permMedia"
+          ) {{ m._id }}
+
+        h2.is-size-4 Transient Media
+        ul.list(
+        v-if="tempMedia.length > 0"
+        )
+          li.list-item(
+          v-for="m in tempMedia"
           ) {{ m._id }}
 
         p(
@@ -71,14 +81,31 @@ export default {
     };
   },
   computed: {
-    media() {
-      return this.$store.getters.getMedia;
+    /**
+     * Get all media marked with a temporary tag.
+     *
+     * @returns {*}
+     */
+    tempMedia() {
+      return this.$store.getters.getMedia.filter(media => media.locket === 'temp');
+    },
+    /**
+     * Get all permanent media.
+     *
+     * @returns {*}
+     */
+    permMedia() {
+      return this.$store.getters.getMedia.filter(media => media.locket === 'perm');
     },
     filename() {
       return this.file === null ? 'Your Image' : this.file.name;
     },
   },
   methods: {
+    /**
+     * Handle a file upload.
+     * @returns {Promise<void>}
+     */
     async uploadFile() {
       if (this.ltag === '') {
         alert('must select tag');
@@ -88,6 +115,7 @@ export default {
       }
       try {
         const response = await API.uploadMedia(
+          // set headers
           this.file,
           {
             era: this.era,
@@ -104,6 +132,10 @@ export default {
         this.file = null;
       }
     },
+    /**
+     * Set the file when the file is changed.
+     * @param e
+     */
     handleFileChange(e) {
       this.file = e.target.files[0];
     },
