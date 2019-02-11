@@ -1,15 +1,19 @@
 <template lang="pug">
   div#media-item
-    div
-      div
-        figure
-          img.is-rounded(
-            :src="imageUrl"
-          )
-        br
-        div.has-text-centered
-          p Added on:
-          | {{ media.createdAt }}
+    div.actions.has-text-right
+      span.icon.action(
+        @click="deleteMedia(media._id)"
+      )
+        i.fas.fa-trash
+    figure
+      img.is-rounded(
+        :src="imageUrl"
+      )
+    br
+    div.has-text-centered
+      div.date
+        p Added on:
+        | {{ formattedDate }}
 </template>
 
 <script>
@@ -23,19 +27,57 @@ export default {
     imageUrl() {
       return `${API.URL}/media/${this.media._id}?token=${this.$store.getters.getToken}`;
     },
+    formattedDate() {
+      const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      };
+      const today = new Date(this.media.createdAt);
+
+      return today.toLocaleDateString('en-GB', options);
+    },
+  },
+  methods: {
+    async deleteMedia(id) {
+      try {
+        await API.deleteMedia(id);
+      } catch (e) {
+        console.error(e);
+        return;
+      }
+
+      this.$store.commit('removeMedia', id);
+    },
   },
 };
 </script>
 
-<style scoped>
-  img {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+<style lang="scss" scoped>
+  #media-item {
+    box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
+    padding: 0.75%;
 
-    max-height: 128px;
-    max-width: 128px;
+    img {
+      $maxImgSize: 256px;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
 
-    border-radius: 50%;
+      max-height: $maxImgSize;
+      max-width: $maxImgSize;
+
+      height: 100%;
+      width: 100%;
+
+      border-radius: 50%;
+      margin-top: 2.5%;
+    }
+
+    .action:hover {
+      cursor: pointer;
+      color: #ff3860;
+    }
   }
 </style>

@@ -58,14 +58,14 @@
           v-if="permMedia.length > 0 || tempMedia.length > 0"
         )
           h2.is-size-4 Permanent Media
-          div.transient-media
+          div.media-collection
             MediaItem.media-item(
               v-for="m in permMedia"
               :media="m"
             )
 
           h2.is-size-4 Transient Media
-          div.transient-media
+          div.media-collection
             MediaItem.media-item(
               v-for="m in tempMedia"
               :media="m"
@@ -187,7 +187,7 @@ export default {
     margin-right: 0;
   }
 
-  @media screen and (min-width: 50em) {
+  @media screen and (min-width: 800px) {
     .media-item {
       width: calc(25% - 6px);
     }
@@ -199,6 +199,10 @@ export default {
     .media-item:nth-of-type(4n) {
       margin-right: 0;
     }
+  }
+
+  .media-collection {
+    margin-top: 2.5%;
   }
 }
 </style>

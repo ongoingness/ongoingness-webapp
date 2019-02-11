@@ -127,13 +127,28 @@ export default class API {
         headers[key] = data[key];
       });
     }
-
-    console.log(headers);
-
     const response = await axios.post(`${this.URL}/media`, formData, {
       headers,
     });
 
     return response.data.payload;
+  }
+
+  /**
+   * Delete an item of media
+   * @param id
+   * @param token
+   * @returns {Promise<number|string>}
+   */
+  static async deleteMedia(id, token) {
+    if (!token) throw new Error('Access token required');
+
+    const response = await axios.delete(`${this.URL}/media/${id}`, {
+      headers: {
+        'x-access-token': token,
+      },
+    });
+
+    return response.data.status;
   }
 }
