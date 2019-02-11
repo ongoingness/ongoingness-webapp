@@ -156,6 +156,7 @@ export default {
      */
     handleFileChange(e) {
       // eslint-disable-next-line prefer-destructuring
+
       this.file = e.target.files[0];
     },
   },

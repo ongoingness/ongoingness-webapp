@@ -42,7 +42,7 @@ export default {
   methods: {
     async deleteMedia(id) {
       try {
-        await API.deleteMedia(id);
+        await API.deleteMedia(id, this.$store.getters.getToken);
       } catch (e) {
         console.error(e);
         return;
