@@ -6,7 +6,7 @@
       )
         i.fas.fa-trash
     figure
-      img.is-rounded(
+      img(
         :src="imageUrl"
       )
     br
@@ -36,7 +36,7 @@ export default {
       };
       const today = new Date(this.media.createdAt);
 
-      return today.toLocaleDateString('en-GB', options);
+      return today.toLocaleDateString(options);
     },
   },
   methods: {

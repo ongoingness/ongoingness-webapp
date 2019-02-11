@@ -63,6 +63,7 @@
               v-for="m in permMedia"
               :media="m"
             )
+            NewMedia.media-item
 
           h2.is-size-4 Transient Media
           div.media-collection
@@ -81,10 +82,11 @@
 import API from '../api';
 import Notification from './Notification.vue';
 import MediaItem from './MediaItem.vue';
+import NewMedia from './NewMedia.vue';
 
 export default {
   name: 'Media',
-  components: { MediaItem, Notification },
+  components: { NewMedia, MediaItem, Notification },
   data() {
     return {
       file: null,
