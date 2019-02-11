@@ -14,7 +14,6 @@
       div.hero-body
         div.container
           h1.title Ongoingness
-          h2.subtitle Coming soon...
 </template>
 
 <script>
