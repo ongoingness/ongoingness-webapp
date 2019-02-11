@@ -59,6 +59,8 @@ export default {
     box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
     padding: 0.75%;
 
+    max-height: 400px;
+
     img {
       $maxImgSize: 256px;
       margin-left: auto;
