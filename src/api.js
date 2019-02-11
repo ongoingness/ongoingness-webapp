@@ -11,9 +11,8 @@ import mock from '../mock_api.json';
 import { isTest } from './utils';
 
 export default class API {
-  // static URL_PROD = 'https://ongoingness-api.openlab.ncl.ac.uk/api';
-
-  static URL = 'http://localhost:3000/api';
+  static URL = 'https://ongoingness-api.openlab.ncl.ac.uk/api';
+  // static URL = 'http://localhost:3000/api';
 
   /**
    * Register a user.
@@ -105,6 +104,7 @@ export default class API {
 
   /**
    * Upload media to the api.
+   *
    * @param file
    * @param data
    * @param token

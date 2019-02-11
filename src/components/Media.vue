@@ -52,34 +52,29 @@
           p {{ notificationText }}
 
       div.all-media
-        h2.is-size-4 Your Media
+        h2.is-size-3 Your Media
 
-        h2.is-size-4 Permanent Media
-        ul.list(
-          v-if="permMedia.length > 0"
+        div(
+          v-if="permMedia.length > 0 || tempMedia.length > 0"
         )
-          li.list-item(
-            v-for="m in permMedia"
-          )
-            MediaItem(
+          h2.is-size-4 Permanent Media
+          div.transient-media
+            MediaItem.media-item(
+              v-for="m in permMedia"
               :media="m"
             )
 
-
-        h2.is-size-4 Transient Media
-        ul.list(
-        v-if="tempMedia.length > 0"
-        )
-          li.list-item(
-            v-for="m in tempMedia"
-          )
-            MediaItem(
+          h2.is-size-4 Transient Media
+          div.transient-media
+            MediaItem.media-item(
+              v-for="m in tempMedia"
               :media="m"
             )
 
-        p(
+        div(
           v-else
-        ) You have no media
+        )
+          p You have not uploaded any media.
 </template>
 
 <script>
@@ -158,6 +153,7 @@ export default {
      * @param e
      */
     handleFileChange(e) {
+      // eslint-disable-next-line prefer-destructuring
       this.file = e.target.files[0];
     },
   },
@@ -178,6 +174,31 @@ export default {
 
   .upload-button {
     margin-bottom: 1.25%;
+  }
+
+  .media-item {
+    display: inline-block;
+    margin-bottom: 8px;
+    width: 100%;
+    margin-right: 8px;
+  }
+
+  .media-item:nth-of-type(2n) {
+    margin-right: 0;
+  }
+
+  @media screen and (min-width: 50em) {
+    .media-item {
+      width: calc(25% - 6px);
+    }
+
+    .media-item:nth-of-type(2n) {
+      margin-right: 6px;
+    }
+
+    .media-item:nth-of-type(4n) {
+      margin-right: 0;
+    }
   }
 }
 </style>
