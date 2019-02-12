@@ -1,6 +1,6 @@
 <template lang="pug">
   div#title
-    section.hero.is-fullheight.is-light.has-text-centered
+    section.hero.is-large.is-light.has-text-centered
       div.hero-head.has-text-right
         div.container
           button.button(

@@ -1,36 +1,32 @@
 <template lang="pug">
   div#media.container.is-fluid
-    div.header
-      h1.is-size-3 Media
+    h2.is-size-3 Your Media
 
     UploadMedia
 
-    div.all-media
-      h2.is-size-3 Your Media
+    div.all-media(
+      v-if="permMedia.length > 0 || tempMedia.length > 0"
+    )
+      h2.is-size-4.media-header Permanent Media
+      p This is your permanent media, and will always stay on the locket.
+      div.media-collection
+        MediaItem.media-item(
+          v-for="m in permMedia"
+          :media="m"
+        )
 
-      div(
-        v-if="permMedia.length > 0 || tempMedia.length > 0"
-      )
-        h2.is-size-4.media-header Permanent Media
-        p This is your permanent media, and will always stay on the locket.
-        div.media-collection
-          MediaItem.media-item(
-            v-for="m in permMedia"
-            :media="m"
-          )
+      h2.is-size-4.media-header Transient Media
+      p This is your transient media, the locket will update to show new images you upload here.
+      div.media-collection
+        MediaItem.media-item(
+          v-for="m in tempMedia"
+          :media="m"
+        )
 
-        h2.is-size-4.media-header Transient Media
-        p This is your transient media, the locket will update to show new images you upload here.
-        div.media-collection
-          MediaItem.media-item(
-            v-for="m in tempMedia"
-            :media="m"
-          )
-
-      div(
-        v-else
-      )
-        p You have not uploaded any media.
+    div(
+      v-else
+    )
+      p You have not uploaded any media.
 </template>
 
 <script>
@@ -79,7 +75,7 @@ export default {
   }
 
   .is-size-3 {
-    margin-bottom: 1.25%;
+    margin-top: 1.25%;
   }
 
   .media-item {

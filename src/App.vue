@@ -4,9 +4,18 @@
     AuthForm(
       v-if="!isLoggedIn"
     )
-    Media(
+    NavTabs(
+      v-on:on-update="tabUpdate"
+    )
+    div(
       v-if="isLoggedIn"
     )
+      Media(
+        v-if="active.media"
+      )
+      Devices(
+        v-if="active.devices"
+      )
 </template>
 
 <script>
@@ -15,23 +24,39 @@ import AuthForm from './components/AuthForm.vue';
 import Cookie from './cookies';
 import API from './api';
 import Media from './components/Media.vue';
+import NavTabs from './components/NavTabs.vue';
+import Devices from './components/Devices.vue';
 
 export default {
   name: 'app',
   components: {
+    Devices,
+    NavTabs,
     Media,
     AuthForm,
     Title,
   },
   data() {
-    return {};
+    return {
+      active: {
+        media: true,
+        devices: false,
+      },
+    };
   },
   computed: {
     isLoggedIn() {
       return this.$store.getters.getToken;
     },
   },
-  methods: {},
+  methods: {
+    tabUpdate(tab) {
+      Object.keys(this.active).forEach((key) => {
+        this.active[key] = false;
+      });
+      this.active[tab] = true;
+    },
+  },
   async mounted() {
     // Get the token from cookie if exists and write to store.
     const token = Cookie.get('authToken');
