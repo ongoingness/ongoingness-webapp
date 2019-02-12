@@ -11,8 +11,8 @@ import mock from '../mock_api.json';
 import { isTest } from './utils';
 
 export default class API {
-  // static URL = 'https://ongoingness-api.openlab.ncl.ac.uk/api';
-  static URL = 'http://localhost:3000/api';
+  static URL = 'https://ongoingness-api.openlab.ncl.ac.uk/api';
+  // static URL = 'http://localhost:3000/api';
 
   /**
    * Register a user.

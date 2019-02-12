@@ -1,37 +1,36 @@
 <template lang="pug">
-  div#media
-    div.container
-      div.header
-        h1.is-size-3 Media
+  div#media.container.is-fluid
+    div.header
+      h1.is-size-3 Media
 
-      UploadMedia
+    UploadMedia
 
-      div.all-media
-        h2.is-size-3 Your Media
+    div.all-media
+      h2.is-size-3 Your Media
 
-        div(
-          v-if="permMedia.length > 0 || tempMedia.length > 0"
-        )
-          h2.is-size-4.media-header Permanent Media
-          p This is your permanent media, and will always stay on the locket.
-          div.media-collection
-            MediaItem.media-item(
-              v-for="m in permMedia"
-              :media="m"
-            )
+      div(
+        v-if="permMedia.length > 0 || tempMedia.length > 0"
+      )
+        h2.is-size-4.media-header Permanent Media
+        p This is your permanent media, and will always stay on the locket.
+        div.media-collection
+          MediaItem.media-item(
+            v-for="m in permMedia"
+            :media="m"
+          )
 
-          h2.is-size-4.media-header Transient Media
-          p This is your transient media, the locket will update to show new images you upload here.
-          div.media-collection
-            MediaItem.media-item(
-              v-for="m in tempMedia"
-              :media="m"
-            )
+        h2.is-size-4.media-header Transient Media
+        p This is your transient media, the locket will update to show new images you upload here.
+        div.media-collection
+          MediaItem.media-item(
+            v-for="m in tempMedia"
+            :media="m"
+          )
 
-        div(
-          v-else
-        )
-          p You have not uploaded any media.
+      div(
+        v-else
+      )
+        p You have not uploaded any media.
 </template>
 
 <script>
@@ -72,6 +71,8 @@ export default {
 <style scoped lang="scss">
 #media {
   margin-bottom: 5%;
+  margin-left: 32px;
+  margin-right: 32px;
 
   .all-media {
     margin-top: 2.5%;
@@ -112,6 +113,11 @@ export default {
 
   .media-header {
     margin-top: 2.5%;
+  }
+
+  @media screen and (max-width: 1090px) {
+    #media {
+    }
   }
 }
 </style>
