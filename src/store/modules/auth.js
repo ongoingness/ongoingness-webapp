@@ -7,7 +7,7 @@
  */
 
 const state = {
-  token: undefined,
+  token: null,
 };
 
 const mutations = {

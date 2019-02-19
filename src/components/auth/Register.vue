@@ -26,31 +26,43 @@
 
       div.field
         div.control
-          button.button.is-link(
-            @click="registerUser"
+          button#register-submit.button.is-link(
+            @click="registerUser",
+            :disabled="isDisabled"
           ) Submit
+
+      Notification(
+      v-if="!isNotificationHidden"
+      v-on:closed="isNotificationHidden = true"
+      )
+        p {{ notificationText }}
 
 </template>
 
 <script>
 import API from '../../api';
+import Cookie from '../../cookies';
+import Notification from '../Notification.vue';
 
 export default {
   name: 'Register',
+  components: { Notification },
   data() {
     return {
       username: '',
       password: '',
+      isNotificationHidden: true,
+      notificationText: '',
     };
+  },
+  computed: {
+    isDisabled() {
+      return this.username.length === 0 || this.password.length === 0;
+    },
   },
   methods: {
     /**
      * Register the user.
-     *
-     * TODO: Properly catch all the errors.
-     * TODO: Catch 500
-     * TODO: Catch 403
-     * TODO: Add error messages to page
      * @returns {Promise<void>}
      */
     async registerUser() {
@@ -62,24 +74,22 @@ export default {
       try {
         token = await API.register(this.username, this.password);
       } catch (e) {
-        alert('User could not be registered');
+        this.isNotificationHidden = false;
+        switch (e.response.data.code) {
+          case 403:
+            this.notificationText = 'Username already exists.';
+            break;
+          default:
+            this.notificationText = 'Something went wrong.';
+        }
       }
 
       // Store the token.
       if (token) {
-        this.setCookie(token);
+        Cookie.set(token);
         this.$store.commit('updateToken', token);
+        this.$emit('authenticated');
       }
-    },
-    /**
-     * Set a cookie in the browser window, valid for one day.
-     * TODO: Move this into shared code with Login.
-     * @param value
-     */
-    setCookie(value) {
-      const expires = new Date();
-      expires.setDate(expires.getDate() + 1);
-      document.cookie = `${encodeURIComponent('authToken')}=${`${encodeURIComponent(value)}; expires=${expires}`}`;
     },
   },
 };
