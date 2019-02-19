@@ -11,6 +11,7 @@ import Vuex from 'vuex';
 
 import auth from './modules/auth';
 import media from './modules/media';
+import device from './modules/device';
 
 Vue.use(Vuex);
 
@@ -18,5 +19,6 @@ export default new Vuex.Store({
   modules: {
     auth,
     media,
+    device,
   },
 });

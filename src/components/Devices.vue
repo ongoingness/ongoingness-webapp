@@ -12,7 +12,9 @@
         li.list-item(
           v-for="device in devices"
         ) {{ device.mac }}
-          a.delete.has-text-right
+          a.delete.has-text-right(
+            :click="removeDevice(device._id)"
+          )
 </template>
 
 <script>
@@ -27,6 +29,11 @@ export default {
         { mac: '3325424' },
       ],
     };
+  },
+  methods: {
+    async removeDevice(id) {
+      return id;
+    },
   },
 };
 </script>
@@ -52,5 +59,14 @@ export default {
 
   .list {
     margin-top: 0.75%;
+
+    .list-item {
+      transition: all ease 0.25s;
+    }
+
+    .list-item:hover {
+      font-weight: bold;
+      padding-left: 1.5%;
+    }
   }
 </style>

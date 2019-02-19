@@ -151,4 +151,28 @@ export default class API {
 
     return response.data.status;
   }
+
+  static async getDevices(token) {
+    if (!token) throw new Error('Access token required');
+
+    const response = await axios.get(`${this.URL}/devices/`, {
+      headers: {
+        'x-access-token': token,
+      },
+    });
+
+    return response.data.payload;
+  }
+
+  static async deleteDevice(id, token) {
+    if (!token) throw new Error('Access token required');
+
+    const response = await axios.delete(`${this.URL}/devices/${id}`, {
+      headers: {
+        'x-access-token': token,
+      },
+    });
+
+    return response;
+  }
 }
