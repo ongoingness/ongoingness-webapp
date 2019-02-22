@@ -4,13 +4,19 @@
 
     h1.is-size-4 Register Device
     p Add a device to display media on below. Add the device's MAC address to the text field.
+    div
+      InputBar(
+        :iconGroup="'fas'",
+        :icon="'fa-plus'",
+        v-on:on-submit="addDevice"
+      )
 
     h1.is-size-4 All Devices
     p These are all your registered devices. To remove a device press the delete button.
     div.all-devices
       ul.list
         li.list-item(
-          v-for="device in devices"
+          v-for="device in getDevices"
         ) {{ device.mac }}
           a.delete.has-text-right(
             :click="removeDevice(device._id)"
@@ -18,8 +24,11 @@
 </template>
 
 <script>
+import InputBar from './views/InputBar.vue';
+
 export default {
   name: 'Devices',
+  components: { InputBar },
   data() {
     return {
       devices: [
@@ -28,11 +37,20 @@ export default {
         { mac: '3325424' },
         { mac: '3325424' },
       ],
+      deviceId: '',
     };
   },
   methods: {
     async removeDevice(id) {
       return id;
+    },
+    async addDevice(code) {
+      return code;
+    },
+  },
+  computed: {
+    getDevices() {
+      return this.$store.getters.getDevices;
     },
   },
 };

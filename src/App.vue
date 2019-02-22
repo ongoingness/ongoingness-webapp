@@ -66,6 +66,9 @@ export default {
       try {
         const response = await API.getAllMedia(this.$store.getters.getToken);
         this.$store.commit('updateMedia', response);
+
+        const deviceResponse = await API.getDevices(this.$store.getters.getToken);
+        this.$store.commit('updateDevices', deviceResponse);
       } catch (e) {
         console.log(e);
         // TODO: Update UI
