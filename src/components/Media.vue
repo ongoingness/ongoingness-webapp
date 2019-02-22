@@ -1,9 +1,10 @@
 <template lang="pug">
-  div#media.container.is-fluid
-    h2.is-size-3 Your Media
+  div#media.container
+    h2.is-size-3 Media
 
     UploadMedia
 
+    h2.is-size-4 Your Media
     div.all-media(
       v-if="permMedia.length > 0 || tempMedia.length > 0"
     )
@@ -67,14 +68,16 @@ export default {
 <style scoped lang="scss">
 #media {
   margin-bottom: 5%;
-  margin-left: 32px;
-  margin-right: 32px;
 
   .all-media {
     margin-top: 2.5%;
   }
 
   .is-size-3 {
+    margin-top: 1.25%;
+  }
+
+  .is-size-4 {
     margin-top: 1.25%;
   }
 
@@ -110,10 +113,11 @@ export default {
   .media-header {
     margin-top: 2.5%;
   }
-
-  @media screen and (max-width: 1090px) {
-    #media {
-    }
+}
+@media (max-width: 1080px) {
+  #media {
+    margin-left: 32px;
+    margin-right: 32px;
   }
 }
 </style>

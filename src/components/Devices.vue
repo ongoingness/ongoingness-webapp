@@ -5,7 +5,7 @@
     h1.is-size-4 Register Device
     p Add a device to display media on below. Add the device's MAC address to the text field.
     div
-      InputBar(
+      InputBar.input-bar(
         :iconGroup="'fas'",
         :icon="'fa-plus'",
         :placeholder="'Device code'",
@@ -74,8 +74,6 @@ export default {
 
 <style lang="scss" scoped>
   #devices {
-    margin-left: 32px;
-    margin-right: 32px;
     margin-bottom: 5%;
   }
 
@@ -91,8 +89,13 @@ export default {
     float: right;
   }
 
+  .input-bar {
+    margin-top: 1.25%;
+  }
+
   .list {
     margin-top: 0.75%;
+    max-width: 60%;
 
     .list-item {
       transition: all ease 0.25s;
@@ -101,6 +104,13 @@ export default {
     .list-item:hover {
       font-weight: bold;
       padding-left: 1.5%;
+    }
+  }
+
+  @media (max-width: 1080px) {
+    #devices {
+      margin-left: 32px;
+      margin-right: 32px;
     }
   }
 </style>

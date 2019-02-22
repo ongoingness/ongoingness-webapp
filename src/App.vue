@@ -5,6 +5,7 @@
       v-if="!isLoggedIn"
     )
     NavTabs(
+      v-if="isLoggedIn",
       v-on:on-update="tabUpdate"
     )
     div(

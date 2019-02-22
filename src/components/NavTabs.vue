@@ -1,6 +1,6 @@
 <template lang="pug">
-  div#nav-tabs
-    div.tabs.is-centered
+  div#nav-tabs.container
+    div.tabs.is-centered.is-medium
       ul
         li#images(
           :class="{'is-active': active.images}",
@@ -70,6 +70,6 @@ export default {
 
 <style lang="scss" scoped>
 #nav-tabs {
-  /*margin-top: 1.25%;*/
+  margin-top: 1.25%;
 }
 </style>

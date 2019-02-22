@@ -2,15 +2,16 @@
   div#upload-media
     h2.is-size-4 Upload Media
     p Upload media to displayed your locket.
+
     div.hide-buttons
       button.button(
         v-if="isHidden"
         @click="isHidden = false"
-      ) Show
+      ) Add Media
       button.button(
         v-else
         @click="isHidden = true"
-      ) Hide
+      ) Close
 
     div(
       v-show="!isHidden"
@@ -57,7 +58,7 @@
 
 <script>
 import API from '../api';
-import NotificationController from "../controllers/notification";
+import NotificationController from '../controllers/notification';
 
 export default {
   name: 'UploadMedia',
@@ -122,7 +123,15 @@ export default {
     margin-top: 1.25%;
   }
 
+  .is-size-4 {
+    margin-top: 1.25%;
+  }
+
   .upload-button {
     margin-bottom: 1.25%;
+  }
+
+  .expand-button {
+    margin-left: 5px;
   }
 </style>
