@@ -152,6 +152,18 @@ export default class API {
     return response.data.status;
   }
 
+  static async addDevice(mac, token) {
+    if (!token) throw new Error('Access token required');
+
+    const response = await axios.post(`${this.URL}/devices/`, { mac }, {
+      headers: {
+        'x-access-token': token,
+      },
+    });
+
+    return response.data.payload;
+  }
+
   static async getDevices(token) {
     if (!token) throw new Error('Access token required');
 
@@ -160,6 +172,8 @@ export default class API {
         'x-access-token': token,
       },
     });
+
+    console.log(response);
 
     return response.data.payload;
   }

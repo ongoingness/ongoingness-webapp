@@ -8,8 +8,13 @@
       InputBar(
         :iconGroup="'fas'",
         :icon="'fa-plus'",
+        :placeholder="'Device code'",
         v-on:on-submit="addDevice"
       )
+      Notification(
+        v-if="showError",
+        v-on:closed="showError = false",
+      ) {{ errorMessage }}
 
     h1.is-size-4 All Devices
     p These are all your registered devices. To remove a device press the delete button.
@@ -19,16 +24,18 @@
           v-for="device in getDevices"
         ) {{ device.mac }}
           a.delete.has-text-right(
-            :click="removeDevice(device._id)"
+            @click="deleteDevice(device._id)"
           )
 </template>
 
 <script>
 import InputBar from './views/InputBar.vue';
+import API from '../api';
+import Notification from './Notification.vue';
 
 export default {
   name: 'Devices',
-  components: { InputBar },
+  components: { Notification, InputBar },
   data() {
     return {
       devices: [
@@ -38,14 +45,37 @@ export default {
         { mac: '3325424' },
       ],
       deviceId: '',
+      showError: false,
+      errorMessage: '',
     };
   },
   methods: {
-    async removeDevice(id) {
-      return id;
+    async deleteDevice(id) {
+      console.log('deleting device');
+      try {
+        await API.deleteDevice(id, this.$store.getters.getToken);
+        this.$store.commit('removeDevice', id);
+      } catch (e) {
+        this.errorMessage = 'Device could not be deleted.';
+        this.showError = true;
+      }
     },
     async addDevice(code) {
-      return code;
+      const exists = this.$store.getters.getDevices.findIndex(d => d.mac === code) > -1;
+      if (exists) {
+        this.errorMessage = 'Device already exits';
+        this.showError = true;
+        return;
+      }
+
+      let device;
+      try {
+        device = await API.addDevice(code, this.$store.getters.getToken);
+        this.$store.commit('addDevice', device);
+      } catch (e) {
+        this.errorMessage = 'Device could not be added.';
+        this.showError = true;
+      }
     },
   },
   computed: {

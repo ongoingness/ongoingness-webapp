@@ -4,7 +4,7 @@
       div.control.text-input
         input.input(
           type="text",
-          placeholder="Search",
+          :placeholder="placeholder",
           v-model="value",
           v-on:keyup.enter="$emit('on-submit', value)"
         )
@@ -22,7 +22,7 @@
 <script>
 export default {
   name: 'InputBar',
-  props: ['iconGroup', 'icon'],
+  props: ['iconGroup', 'icon', 'placeholder'],
   data() {
     return {
       value: '',
