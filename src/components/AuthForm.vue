@@ -43,12 +43,12 @@ export default {
   },
   methods: {
     async onAuthenticated() {
-      console.log('User is authenticated');
-
       try {
-        const response = await API.getAllMedia(this.$store.getters.getToken);
-        console.log(response);
+        let response = await API.getAllMedia(this.$store.getters.getToken);
         this.$store.commit('updateMedia', response);
+
+        response = await API.getDevices(this.$store.getters.getToken);
+        this.$store.commit('updateDevices', response);
       } catch (e) {
         NotificationController.setNotification('danger', 'Something went wrong');
       }

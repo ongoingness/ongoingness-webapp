@@ -173,8 +173,6 @@ export default class API {
       },
     });
 
-    console.log(response);
-
     return response.data.payload;
   }
 

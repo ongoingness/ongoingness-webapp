@@ -28,7 +28,7 @@ import Media from './components/Media.vue';
 import NavTabs from './components/NavTabs.vue';
 import Devices from './components/Devices.vue';
 import Notification from './components/views/Notification.vue';
-import NotificationController from "./controllers/notification";
+import NotificationController from './controllers/notification';
 
 export default {
   name: 'app',
