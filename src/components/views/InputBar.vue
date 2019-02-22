@@ -6,12 +6,12 @@
           type="text",
           :placeholder="placeholder",
           v-model="value",
-          v-on:keyup.enter="$emit('on-submit', value)"
+          v-on:keyup.enter="onSubmit"
         )
       div.control
         a#submit-todo.button.is-info.is-outlined(
           :disabled="value.length < 1"
-        @click="$emit('on-submit', value)"
+        @click="onSubmit"
         )
           span.icon.is-small
             i.fas.fa-plus(
@@ -23,6 +23,12 @@
 export default {
   name: 'InputBar',
   props: ['iconGroup', 'icon', 'placeholder'],
+  methods: {
+    onSubmit() {
+      this.$emit('on-submit', this.value);
+      this.value = '';
+    },
+  },
   data() {
     return {
       value: '',

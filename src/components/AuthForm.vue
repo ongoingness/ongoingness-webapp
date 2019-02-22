@@ -31,6 +31,7 @@
 import Register from './auth/Register.vue';
 import Login from './auth/Login.vue';
 import API from '../api';
+import NotificationController from '../controllers/notification';
 
 export default {
   name: 'AuthForm',
@@ -49,8 +50,7 @@ export default {
         console.log(response);
         this.$store.commit('updateMedia', response);
       } catch (e) {
-        console.log(e);
-        // TODO: Update UI
+        NotificationController.setNotification('danger', 'Something went wrong');
       }
     },
   },

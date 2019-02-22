@@ -11,10 +11,6 @@
         :placeholder="'Device code'",
         v-on:on-submit="addDevice"
       )
-      Notification(
-        v-if="showError",
-        v-on:closed="showError = false",
-      ) {{ errorMessage }}
 
     h1.is-size-4 All Devices
     p These are all your registered devices. To remove a device press the delete button.
@@ -31,22 +27,15 @@
 <script>
 import InputBar from './views/InputBar.vue';
 import API from '../api';
-import Notification from './Notification.vue';
+import Notification from './views/Notification.vue';
+import NotificationController from '../controllers/notification';
 
 export default {
   name: 'Devices',
   components: { Notification, InputBar },
   data() {
     return {
-      devices: [
-        { mac: '3325424' },
-        { mac: '3325424' },
-        { mac: '3325424' },
-        { mac: '3325424' },
-      ],
       deviceId: '',
-      showError: false,
-      errorMessage: '',
     };
   },
   methods: {
@@ -56,15 +45,13 @@ export default {
         await API.deleteDevice(id, this.$store.getters.getToken);
         this.$store.commit('removeDevice', id);
       } catch (e) {
-        this.errorMessage = 'Device could not be deleted.';
-        this.showError = true;
+        NotificationController.setNotification('danger', 'Device could not be deleted');
       }
     },
     async addDevice(code) {
       const exists = this.$store.getters.getDevices.findIndex(d => d.mac === code) > -1;
       if (exists) {
-        this.errorMessage = 'Device already exits';
-        this.showError = true;
+        NotificationController.setNotification('warning', 'Device already exists');
         return;
       }
 
@@ -73,8 +60,7 @@ export default {
         device = await API.addDevice(code, this.$store.getters.getToken);
         this.$store.commit('addDevice', device);
       } catch (e) {
-        this.errorMessage = 'Device could not be added.';
-        this.showError = true;
+        NotificationController.setNotification('danger', 'Device could not be added');
       }
     },
   },

@@ -31,18 +31,13 @@
             :disabled="isDisabled"
           ) Submit
 
-      Notification(
-      v-if="!isNotificationHidden"
-      v-on:closed="isNotificationHidden = true"
-      )
-        p {{ notificationText }}
-
 </template>
 
 <script>
 import API from '../../api';
 import Cookie from '../../cookies';
-import Notification from '../Notification.vue';
+import Notification from '../views/Notification.vue';
+import NotificationController from '../../controllers/notification';
 
 export default {
   name: 'Register',
@@ -51,8 +46,6 @@ export default {
     return {
       username: '',
       password: '',
-      isNotificationHidden: true,
-      notificationText: '',
     };
   },
   computed: {
@@ -74,13 +67,12 @@ export default {
       try {
         token = await API.register(this.username, this.password);
       } catch (e) {
-        this.isNotificationHidden = false;
         switch (e.response.data.code) {
           case 403:
-            this.notificationText = 'Username already exists.';
+            NotificationController.setNotification('info', 'Username already exists');
             break;
           default:
-            this.notificationText = 'Something went wrong.';
+            NotificationController.setNotification('danger', 'Something went wrong');
         }
       }
 

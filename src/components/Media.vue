@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import Notification from './Notification.vue';
+import Notification from './views/Notification.vue';
 import MediaItem from './MediaItem.vue';
 import UploadMedia from './UploadMedia.vue';
 

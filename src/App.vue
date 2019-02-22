@@ -16,6 +16,7 @@
       Devices(
         v-if="active.devices"
       )
+    Notification
 </template>
 
 <script>
@@ -26,10 +27,13 @@ import API from './api';
 import Media from './components/Media.vue';
 import NavTabs from './components/NavTabs.vue';
 import Devices from './components/Devices.vue';
+import Notification from './components/views/Notification.vue';
+import NotificationController from "./controllers/notification";
 
 export default {
   name: 'app',
   components: {
+    Notification,
     Devices,
     NavTabs,
     Media,
@@ -71,7 +75,7 @@ export default {
         this.$store.commit('updateDevices', deviceResponse);
       } catch (e) {
         console.log(e);
-        // TODO: Update UI
+        NotificationController.setNotification('danger', 'Something went wrong');
       }
     }
   },

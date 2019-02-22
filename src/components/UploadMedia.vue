@@ -53,16 +53,11 @@
       :disabled="(file === null)",
       :class="{ 'is-loading': isBusy }"
       ) Upload
-
-      Notification(
-      v-if="!isNotificationHidden",
-      v-on:closed="isNotificationHidden = true"
-      )
-        p {{ notificationText }}
 </template>
 
 <script>
 import API from '../api';
+import NotificationController from "../controllers/notification";
 
 export default {
   name: 'UploadMedia',
@@ -71,8 +66,6 @@ export default {
       file: null,
       era: 'past',
       ltag: 'temp',
-      notificationText: '',
-      isNotificationHidden: true,
       isBusy: false,
       isHidden: true,
     };
@@ -84,8 +77,7 @@ export default {
      */
     async uploadFile() {
       if (this.ltag === '') {
-        this.isNotificationHidden = false;
-        this.notificationText = 'You must select whether media is permanent or temporary';
+        NotificationController.setNotification('warning', 'You must select whether media is permanent or temporary');
         return;
       }
       this.isBusy = true;
@@ -102,8 +94,7 @@ export default {
         this.file = null;
         this.$store.commit('addMedia', response);
       } catch (e) {
-        this.isNotificationHidden = false;
-        this.notificationText = 'Something went wrong';
+        NotificationController.setNotification('danger', 'Something went wrong');
         this.file = null;
       } finally {
         this.isBusy = false;
@@ -115,7 +106,6 @@ export default {
      */
     handleFileChange(e) {
       // eslint-disable-next-line prefer-destructuring
-
       this.file = e.target.files[0];
     },
   },

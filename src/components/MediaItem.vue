@@ -19,6 +19,7 @@
 <script>
 /* eslint-disable no-underscore-dangle */
 import API from '../api';
+import NotificationController from '../controllers/notification';
 
 export default {
   props: ['media'],
@@ -45,6 +46,7 @@ export default {
         await API.deleteMedia(id, this.$store.getters.getToken);
       } catch (e) {
         console.error(e);
+        NotificationController.setNotification('danger', 'Could not delete media');
         return;
       }
 
