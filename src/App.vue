@@ -18,6 +18,7 @@
         v-if="active.devices"
       )
     Notification
+    FooterBar
 </template>
 
 <script>
@@ -30,10 +31,12 @@ import NavTabs from './components/NavTabs.vue';
 import Devices from './components/Devices.vue';
 import Notification from './components/views/Notification.vue';
 import NotificationController from './controllers/notification';
+import FooterBar from './components/FooterBar.vue';
 
 export default {
   name: 'app',
   components: {
+    FooterBar,
     Notification,
     Devices,
     NavTabs,
