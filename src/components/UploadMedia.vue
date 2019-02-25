@@ -48,6 +48,57 @@
           v-model="ltag"
           )
           | &nbsp; Temporary
+      div.emotions
+        p Please best describe this picture using three emotions below.
+        div.columns
+          div.column.is-narrow
+            div.field
+              label.label First Emotion
+              div.control
+                div.select
+                  select(
+                  v-model="emotionsT1Idx"
+                  )
+                    option(
+                    selected,
+                    disabled
+                    ) Please select...
+                    option.emotion-option(
+                    v-for="(emotion, idx) in emotions"
+                    v-bind:value="idx"
+                    ) {{ capitalizeFirstLetter(emotion.name) }}
+          div.column.is-narrow
+            div.field
+              label.label Second Emotion
+              div.control
+                div.select
+                  select(
+                  v-model="emotionsT2Idx"
+                  )
+                    option(
+                    selected,
+                    disabled
+                    ) Please select...
+                    option.emotion-option(
+                    v-for="(emotion, idx) in emotions[emotionsT1Idx].children"
+                    v-bind:value="idx"
+                    ) {{ capitalizeFirstLetter(emotion.name) }}
+          div.column.is-narrow
+            div.field
+              label.label Third Emotion
+              div.control
+                div.select
+                  select(
+                  v-model="emotionsT3Idx"
+                  )
+                    option(
+                    selected,
+                    disabled
+                    ) Please select...
+                    option.emotion-option(
+                    v-for="(emotion, idx) in emotions[emotionsT1Idx].children[emotionsT2Idx].children"
+                    v-bind:value="idx"
+                    ) {{ capitalizeFirstLetter(emotion.name) }}
 
       button.button.upload-button.is-primary(
       @click="uploadFile",
@@ -59,6 +110,7 @@
 <script>
 import API from '../api';
 import NotificationController from '../controllers/notification';
+import emotions from '../emotions.json';
 
 export default {
   name: 'UploadMedia',
@@ -69,6 +121,10 @@ export default {
       ltag: 'temp',
       isBusy: false,
       isHidden: true,
+      emotionsT1Idx: 0,
+      emotionsT2Idx: 0,
+      emotionsT3Idx: 0,
+      emotions,
     };
   },
   methods: {
@@ -89,6 +145,12 @@ export default {
           {
             era: this.era,
             locket: this.ltag,
+            emotions: [
+              this.emotions[this.emotionsT1Idx].name,
+              this.emotions[this.emotionsT1Idx].children[this.emotionsT2Idx].name,
+              this.emotions[this.emotionsT1Idx].children[this.emotionsT2Idx]
+                .children[this.emotionsT3Idx].name,
+            ],
           },
           this.$store.getters.getToken,
         );
@@ -100,6 +162,9 @@ export default {
       } finally {
         this.isBusy = false;
       }
+    },
+    capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
     },
     /**
      * Set the file when the file is changed.
@@ -133,5 +198,9 @@ export default {
 
   .expand-button {
     margin-left: 5px;
+  }
+
+  .emotions {
+    margin-top: 1.25%;
   }
 </style>
