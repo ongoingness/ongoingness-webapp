@@ -31,9 +31,9 @@
 </template>
 
 <script>
-  export default {
-    name: 'FooterBar',
-  };
+export default {
+  name: 'FooterBar',
+};
 </script>
 
 <style scoped>
