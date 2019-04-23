@@ -96,7 +96,7 @@
                     disabled
                     ) Please select...
                     option.emotion-option(
-                    v-for="(emotion, idx) in emotions[emotionsT1Idx].children[emotionsT2Idx].children"
+                    v-for="(emotion, idx) in t1Emotions.children[emotionsT2Idx].children"
                     v-bind:value="idx"
                     ) {{ capitalizeFirstLetter(emotion.name) }}
 
@@ -178,6 +178,9 @@ export default {
   computed: {
     filename() {
       return this.file === null ? 'Your Image' : this.file.name;
+    },
+    t1Emotions() {
+      return this.emotions[this.emotionsT1Idx];
     },
   },
 };
