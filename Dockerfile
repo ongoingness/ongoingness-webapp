@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Build the webapp
 COPY . /app
-RUN rm -r ./node_modules
+RUN rm -rf ./node_modules
 RUN npm install
 RUN npm run build
 
