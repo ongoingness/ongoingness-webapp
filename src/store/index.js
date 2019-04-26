@@ -12,6 +12,7 @@ import Vuex from 'vuex';
 import auth from './modules/auth';
 import media from './modules/media';
 import device from './modules/device';
+import notification from './modules/notification';
 
 Vue.use(Vuex);
 
@@ -20,5 +21,6 @@ export default new Vuex.Store({
     auth,
     media,
     device,
+    notification,
   },
 });

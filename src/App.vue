@@ -5,6 +5,7 @@
       v-if="!isLoggedIn"
     )
     NavTabs(
+      v-if="isLoggedIn",
       v-on:on-update="tabUpdate"
     )
     div(
@@ -16,6 +17,8 @@
       Devices(
         v-if="active.devices"
       )
+    Notification
+    FooterBar
 </template>
 
 <script>
@@ -26,10 +29,15 @@ import API from './api';
 import Media from './components/Media.vue';
 import NavTabs from './components/NavTabs.vue';
 import Devices from './components/Devices.vue';
+import Notification from './components/views/Notification.vue';
+import NotificationController from './controllers/notification';
+import FooterBar from './components/FooterBar.vue';
 
 export default {
   name: 'app',
   components: {
+    FooterBar,
+    Notification,
     Devices,
     NavTabs,
     Media,
@@ -66,9 +74,12 @@ export default {
       try {
         const response = await API.getAllMedia(this.$store.getters.getToken);
         this.$store.commit('updateMedia', response);
+
+        const deviceResponse = await API.getDevices(this.$store.getters.getToken);
+        this.$store.commit('updateDevices', deviceResponse);
       } catch (e) {
         console.log(e);
-        // TODO: Update UI
+        NotificationController.setNotification('danger', 'Something went wrong');
       }
     }
   },

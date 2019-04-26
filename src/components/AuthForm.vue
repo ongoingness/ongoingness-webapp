@@ -31,6 +31,7 @@
 import Register from './auth/Register.vue';
 import Login from './auth/Login.vue';
 import API from '../api';
+import NotificationController from '../controllers/notification';
 
 export default {
   name: 'AuthForm',
@@ -42,15 +43,14 @@ export default {
   },
   methods: {
     async onAuthenticated() {
-      console.log('User is authenticated');
-
       try {
-        const response = await API.getAllMedia(this.$store.getters.getToken);
-        console.log(response);
+        let response = await API.getAllMedia(this.$store.getters.getToken);
         this.$store.commit('updateMedia', response);
+
+        response = await API.getDevices(this.$store.getters.getToken);
+        this.$store.commit('updateDevices', response);
       } catch (e) {
-        console.log(e);
-        // TODO: Update UI
+        NotificationController.setNotification('danger', 'Something went wrong');
       }
     },
   },

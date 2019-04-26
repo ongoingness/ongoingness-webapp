@@ -1,13 +1,13 @@
 <template lang="pug">
   div#title
-    section.hero.is-large.is-light.has-text-centered
+    section.hero.is-medium.is-light.has-text-centered
       div.hero-head.has-text-right
         div.container
           button.button(
             v-if="isLoggedIn",
             @click="logout"
           ) Logout
-          button.button.is-danger(
+          button.button.is-danger.is-outlined(
             v-if="isLoggedIn"
             @click="deleteAccount"
           ) Delete Account
@@ -19,6 +19,7 @@
 <script>
 import Cookie from '../cookies';
 import API from '../api';
+import NotificationController from '../controllers/notification';
 
 export default {
   name: 'Title',
@@ -46,7 +47,7 @@ export default {
         Cookie.delete();
       } catch (e) {
         console.log(e);
-        // TODO: Update UI
+        NotificationController.setNotification('danger', 'Something went wrong');
       }
     },
   },

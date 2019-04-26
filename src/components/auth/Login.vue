@@ -30,18 +30,13 @@
             @click="authenticate",
             :disabled="submitDisabled"
           ) Submit
-
-      Notification(
-        v-if="!isNotificationHidden"
-        v-on:closed="isNotificationHidden = true"
-      )
-        p {{ notificationText }}
 </template>
 
 <script>
 import API from '../../api';
 import Cookie from '../../cookies';
-import Notification from '../Notification.vue';
+import Notification from '../views/Notification.vue';
+import NotificationController from '../../controllers/notification';
 
 export default {
   name: 'Login',
@@ -50,8 +45,6 @@ export default {
     return {
       username: '',
       password: '',
-      notificationText: '',
-      isNotificationHidden: true,
     };
   },
   computed: {
@@ -75,13 +68,12 @@ export default {
       try {
         token = await API.authenticate(this.username, this.password);
       } catch (e) {
-        this.isNotificationHidden = false;
         switch (e.response.data.code) {
           case 401:
-            this.notificationText = 'Username or password is incorrect';
+            NotificationController.setNotification('danger', 'Username or password is incorrect');
             break;
           default:
-            this.notificationText = 'Something went wrong';
+            NotificationController.setNotification('danger', 'Something went wrong');
             break;
         }
       }
