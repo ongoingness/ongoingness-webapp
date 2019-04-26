@@ -9,6 +9,7 @@ import axios from 'axios';
 import * as FormData from 'form-data';
 import mock from '../mock_api.json';
 import { isTest } from './utils';
+import store from './store';
 
 export default class API {
   static URL = 'https://ongoingness-api.openlab.ncl.ac.uk/api';
@@ -31,6 +32,8 @@ export default class API {
     if (isTest()) return mock.register.data.payload.token;
 
     const response = await axios.post(`${this.URL}/auth/register`, userData);
+    store.commit('updateUser', response.data.payload.user);
+
     return response.data.payload.token;
   }
 
@@ -50,6 +53,8 @@ export default class API {
     if (isTest()) return mock.authenticate.data.payload.token;
 
     const response = await axios.post(`${this.URL}/auth/authenticate`, userData);
+    store.commit('updateUser', response.data.payload.user);
+
     return response.data.payload.token;
   }
 
@@ -58,12 +63,12 @@ export default class API {
    * @param token
    * @returns {Promise<any>}
    */
-  static async getUser(token) {
+  static async fetchUser(token) {
     if (!token) throw new Error('Access token is required');
 
     if (isTest()) return mock.get_user.data.payload.user;
 
-    const response = await axios.get(`${this.URL}/user/me`,
+    const response = await axios.get(`${this.URL}/auth/me`,
       { headers: { 'x-access-token': token } });
     return response.data.payload.user;
   }
@@ -76,13 +81,18 @@ export default class API {
   static async deleteAccount(token) {
     if (!token) throw new Error('Access token is required');
 
-    const user = await this.getUser(token);
+    const user = await this.fetchUser(token);
 
     if (isTest()) return mock.delete_user.status;
 
-    const response = await axios.delete(`${this.URL}/user/${user._id}`,
-      { headers: { 'x-access-token': token } });
-    return response.status === 200;
+    try {
+      const response = await axios.delete(`${this.URL}/users/${user._id}`,
+        { headers: { 'x-access-token': token } });
+      return response.status === 200;
+    } catch (e) {
+      console.error(e.response);
+      throw e;
+    }
   }
 
   /**
