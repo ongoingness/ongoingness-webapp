@@ -14,16 +14,25 @@
       div.date
         p Added on:
         | {{ formattedDate }}
+    div.has-text-centered.tag-container
+      p Tags:
+      div.tag-list
+        Tag(
+          v-for="t in tags"
+          :tagname="t"
+        )
 </template>
 
 <script>
 /* eslint-disable no-underscore-dangle */
 import API from '../api';
 import NotificationController from '../controllers/notification';
+import Tag from './Tag.vue';
 
 export default {
   props: ['media'],
   name: 'MediaItem',
+  components: { Tag },
   computed: {
     imageUrl() {
       return `${API.URL}/media/${this.media._id}?token=${this.$store.getters.getToken}`;
@@ -38,6 +47,9 @@ export default {
       const today = new Date(this.media.createdAt);
 
       return today.toLocaleDateString(options);
+    },
+    tags() {
+      return this.media.emotions;
     },
   },
   methods: {
@@ -57,11 +69,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .tag-container {
+    padding: 10px;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+
   #media-item {
     box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
     padding: 0.75%;
+    vertical-align: top;
 
-    max-height: 400px;
+    // max-height: 400px;
 
     img {
       $maxImgSize: 256px;

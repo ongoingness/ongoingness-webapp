@@ -19,11 +19,10 @@
       h2.is-size-4.media-header Transient Media
       p This is your transient media, the locket will update to show new images you upload here.
       div.media-collection
-        MediaItem.media-item(
+         MediaItem.media-item(
           v-for="m in tempMedia"
           :media="m"
         )
-
     div(
       v-else
     )
@@ -88,10 +87,6 @@ export default {
     margin-right: 8px;
   }
 
-  .media-item:nth-of-type(2n) {
-    margin-right: 0;
-  }
-
   @media screen and (min-width: 800px) {
     .media-item {
       width: calc(25% - 6px);
@@ -107,6 +102,9 @@ export default {
   }
 
   .media-collection {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
     margin-top: 2.5%;
   }
 

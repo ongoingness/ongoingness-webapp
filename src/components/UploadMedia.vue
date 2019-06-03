@@ -49,57 +49,19 @@
           )
           | &nbsp; Temporary
       div.emotions
-        p Please best describe this picture using three emotions below.
-        div.columns
-          div.column.is-narrow
-            div.field
-              label.label First Emotion
-              div.control
-                div.select
-                  select(
-                  v-model="emotionsT1Idx"
-                  )
-                    option(
-                    selected,
-                    disabled
-                    ) Please select...
-                    option.emotion-option(
-                    v-for="(emotion, idx) in emotions"
-                    v-bind:value="idx"
-                    ) {{ capitalizeFirstLetter(emotion.name) }}
-          div.column.is-narrow
-            div.field
-              label.label Second Emotion
-              div.control
-                div.select
-                  select(
-                  v-model="emotionsT2Idx"
-                  )
-                    option(
-                    selected,
-                    disabled
-                    ) Please select...
-                    option.emotion-option(
-                    v-for="(emotion, idx) in emotions[emotionsT1Idx].children"
-                    v-bind:value="idx"
-                    ) {{ capitalizeFirstLetter(emotion.name) }}
-          div.column.is-narrow
-            div.field
-              label.label Third Emotion
-              div.control
-                div.select
-                  select(
-                  v-model="emotionsT3Idx"
-                  )
-                    option(
-                    selected,
-                    disabled
-                    ) Please select...
-                    option.emotion-option(
-                    v-for="(emotion, idx) in t1Emotions.children[emotionsT2Idx].children"
-                    v-bind:value="idx"
-                    ) {{ capitalizeFirstLetter(emotion.name) }}
-
+        p Please best describe this picture using tags.
+          div
+            multiselect(
+              v-model="value",
+              tag-placeholder="Add this as new tag",
+              placeholder="Search or add a tag",
+              label="name",
+              track-by="code",
+              :options="options",
+              :multiple="true",
+              :taggable="true",
+              @tag="addTag",
+            )
       button.button.upload-button.is-primary(
       @click="uploadFile",
       :disabled="(file === null)",
@@ -108,11 +70,15 @@
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect';
 import API from '../api';
 import NotificationController from '../controllers/notification';
 import emotions from '../emotions.json';
 
 export default {
+  components: {
+    Multiselect,
+  },
   name: 'UploadMedia',
   data() {
     return {
@@ -125,9 +91,36 @@ export default {
       emotionsT2Idx: 0,
       emotionsT3Idx: 0,
       emotions,
+
+      value: [],
+      options: [],
+
     };
   },
   methods: {
+    addTag(newTag) {
+      let code;
+      let name = newTag;
+      if(newTag.includes("p/") || newTag.includes("place/")) {
+        code = 'place';
+        // name = newTag.split('/')[1];
+      } else if (newTag.includes("t/") || newTag.includes("time/"))  {
+        code = 'time';
+        // name = newTag.split('/')[1];
+      } else {
+        code = 'normal';
+        // name = newTag;
+      }
+      
+      const tag = {
+        name: name,
+        code: code,
+      };
+
+      this.options.push(tag);
+      this.value.push(tag);
+    },
+
     /**
      * Handle a file upload.
      * @returns {Promise<void>}
@@ -139,18 +132,19 @@ export default {
       }
       this.isBusy = true;
       try {
+        const tags = [];
+        this.value.forEach((element) => {
+          tags.push(element.name);
+        });
+
+
         const response = await API.uploadMedia(
           // set headers
           this.file,
           {
             era: this.era,
             locket: this.ltag,
-            emotions: [
-              this.emotions[this.emotionsT1Idx].name,
-              this.emotions[this.emotionsT1Idx].children[this.emotionsT2Idx].name,
-              this.emotions[this.emotionsT1Idx].children[this.emotionsT2Idx]
-                .children[this.emotionsT3Idx].name,
-            ],
+            emotions: tags,
           },
           this.$store.getters.getToken,
         );
