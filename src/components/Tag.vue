@@ -20,10 +20,10 @@ export default {
       return this.tagname.includes('/') ? this.tagname.split('/')[1] : this.tagname;
     },
     isTime() {
-        return this.tagname.includes('t/') || this.tagname.includes('time/');
+      return this.tagname.includes('t/') || this.tagname.includes('time/');
     },
     isPlace() {
-        return this.tagname.includes('p/') || this.tagname.includes('place/');
+      return this.tagname.includes('p/') || this.tagname.includes('place/');
     },
   },
 };

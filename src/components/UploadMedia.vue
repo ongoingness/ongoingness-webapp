@@ -6,16 +6,38 @@
     div.hide-buttons
       button.button(
         v-if="isHidden"
-        @click="isHidden = false"
+        @click="submit"
       ) Add Media
       button.button(
         v-else
-        @click="isHidden = true"
+        @click="submit"
       ) Close
 
     div(
       v-show="!isHidden"
     )
+
+      div.control.image-tag-selection
+        p Is your content a:
+        label.radio
+          input(
+          type="radio",
+          name="mcontent",
+          value="file",
+          v-model="lcontent"
+          )
+          | &nbsp; File
+        br
+        label.radio
+          input(
+          type="radio",
+          name="mcontent",
+          value="quote",
+          v-model="lcontent"
+          )
+          | &nbsp; Quote
+
+
       div.file.is-boxed.file-upload
         label.file-label
           input.file-input(
@@ -30,7 +52,7 @@
           span.file-name {{ filename }}
 
       div.control.image-tag-selection
-        p Is your image:
+        p Is your content:
         label.radio
           input(
           type="radio",
@@ -49,7 +71,7 @@
           )
           | &nbsp; Temporary
       div.emotions
-        p Please best describe this picture using tags.
+        p Please best describe this content using tags.
           div
             multiselect(
               v-model="value",
@@ -62,9 +84,12 @@
               :taggable="true",
               @tag="addTag",
             )
+      br
+      div
+        p Please select media you wish to associate from the gallery below.
       button.button.upload-button.is-primary(
       @click="uploadFile",
-      :disabled="(file === null)",
+      :disabled="(file === null || file === undefined)",
       :class="{ 'is-loading': isBusy }"
       ) Upload
 </template>
@@ -80,6 +105,18 @@ export default {
     Multiselect,
   },
   name: 'UploadMedia',
+  props: ['selectedMedia'],
+  created() {
+    this.$eventBus.$on('selectedMedia', (data) => {
+      if (data !== '') {
+        if (this.linkedMedia.includes(data)) {
+          this.linkedMedia.splice(this.linkedMedia.indexOf(data), 1);
+        } else {
+          this.linkedMedia.push(data);
+        }
+      }
+    });
+  },
   data() {
     return {
       file: null,
@@ -87,34 +124,32 @@ export default {
       ltag: 'temp',
       isBusy: false,
       isHidden: true,
-      emotionsT1Idx: 0,
-      emotionsT2Idx: 0,
-      emotionsT3Idx: 0,
       emotions,
-
+      lcontent: 'file',
       value: [],
       options: [],
-
+      linkedMedia: [],
     };
   },
   methods: {
+
+    submit() {
+      this.isHidden = !this.isHidden;
+      this.$eventBus.$emit('addingMedia', !this.isHidden);
+    },
     addTag(newTag) {
       let code;
-      let name = newTag;
-      if(newTag.includes("p/") || newTag.includes("place/")) {
+      const name = newTag;
+      if (newTag.includes('p/') || newTag.includes('place/')) {
         code = 'place';
-        // name = newTag.split('/')[1];
-      } else if (newTag.includes("t/") || newTag.includes("time/"))  {
+      } else if (newTag.includes('t/') || newTag.includes('time/')) {
         code = 'time';
-        // name = newTag.split('/')[1];
       } else {
         code = 'normal';
-        // name = newTag;
       }
-      
       const tag = {
-        name: name,
-        code: code,
+        name,
+        code,
       };
 
       this.options.push(tag);
@@ -137,7 +172,6 @@ export default {
           tags.push(element.name);
         });
 
-
         const response = await API.uploadMedia(
           // set headers
           this.file,
@@ -145,6 +179,7 @@ export default {
             era: this.era,
             locket: this.ltag,
             emotions: tags,
+            links: this.linkedMedia,
           },
           this.$store.getters.getToken,
         );
@@ -155,6 +190,9 @@ export default {
         this.file = null;
       } finally {
         this.isBusy = false;
+        this.options = [];
+        this.value = [];
+        this.$eventBus.$emit('clearSelectedMedia', true);
       }
     },
     capitalizeFirstLetter(string) {
@@ -171,10 +209,7 @@ export default {
   },
   computed: {
     filename() {
-      return this.file === null ? 'Your Image' : this.file.name;
-    },
-    t1Emotions() {
-      return this.emotions[this.emotionsT1Idx];
+      return this.file === null || this.file === undefined ? 'Your media' : this.file.name;
     },
   },
 };

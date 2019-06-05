@@ -5,6 +5,8 @@ import Vuex from 'vuex';
 import store from './store';
 import App from './App.vue';
 
+Vue.prototype.$eventBus = new Vue();
+
 Vue.use(Vuex);
 Vue.config.productionTip = false;
 

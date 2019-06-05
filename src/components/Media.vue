@@ -13,15 +13,17 @@
       div.media-collection
         MediaItem.media-item(
           v-for="m in permMedia"
-          :media="m"
+          :media="m",
+          v-bind:key="m.id",
         )
 
       h2.is-size-4.media-header Transient Media
       p This is your transient media, the locket will update to show new images you upload here.
       div.media-collection
-         MediaItem.media-item(
+        MediaItem.media-item(
           v-for="m in tempMedia"
-          :media="m"
+          :media="m",
+          v-bind:key="m.id",
         )
     div(
       v-else
@@ -37,9 +39,6 @@ import UploadMedia from './UploadMedia.vue';
 export default {
   name: 'Media',
   components: { UploadMedia, MediaItem, Notification },
-  data() {
-    return {};
-  },
   computed: {
     /**
      * Get all media marked with a temporary tag.
@@ -57,9 +56,6 @@ export default {
     permMedia() {
       return this.$store.getters.getMedia.filter(media => media.locket === 'perm');
     },
-  },
-  methods: {
-
   },
 };
 </script>

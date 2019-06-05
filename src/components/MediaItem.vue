@@ -1,5 +1,10 @@
 <template lang="pug">
-  div#media-item
+  div#media-item(
+      @click="selectMedia(media._id)"
+      v-bind:class="{ selected : isSelected, linked : isLinked }"
+      @mouseover="showLinkedMedia()"
+      @mouseleave="hideLinkedMedia()"
+    )
     div.actions.has-text-right
       span.icon.action(
         @click="deleteMedia(media._id)"
@@ -20,6 +25,7 @@
         Tag(
           v-for="t in tags"
           :tagname="t"
+          v-bind:key="tagKey(t)"
         )
 </template>
 
@@ -33,6 +39,32 @@ export default {
   props: ['media'],
   name: 'MediaItem',
   components: { Tag },
+  created() {
+    this.$eventBus.$on('addingMedia', (data) => {
+      this.addingData = data;
+    });
+    this.$eventBus.$on('linkedMedia', (data) => {
+      if (data.action === 'show') {
+        if (data.links.includes(this.media._id)) {
+          this.isLinked = true;
+        } else {
+          this.isLinked = false;
+        }
+      } else if (data.action === 'hide') {
+        this.isLinked = false;
+      }
+    });
+    this.$eventBus.$on('clearSelectedMedia', () => {
+      this.isSelected = false;
+    });
+  },
+  data() {
+    return {
+      addingData: false,
+      isSelected: false,
+      isLinked: false,
+    };
+  },
   computed: {
     imageUrl() {
       return `${API.URL}/media/${this.media._id}?token=${this.$store.getters.getToken}`;
@@ -55,20 +87,44 @@ export default {
   methods: {
     async deleteMedia(id) {
       try {
+        this.$eventBus.$emit('linkedMedia', { action: 'hide' });
         await API.deleteMedia(id, this.$store.getters.getToken);
       } catch (e) {
-        console.error(e);
         NotificationController.setNotification('danger', 'Could not delete media');
         return;
       }
-
       this.$store.commit('removeMedia', id);
+    },
+    selectMedia(id) {
+      if (this.addingData) {
+        this.$eventBus.$emit('selectedMedia', id);
+        this.isSelected = !this.isSelected;
+      }
+    },
+    showLinkedMedia() {
+      this.$eventBus.$emit('linkedMedia', { action: 'show', id: this.media._id, links: this.media.links });
+    },
+    hideLinkedMedia() {
+      this.$eventBus.$emit('linkedMedia', { action: 'hide' });
+    },
+    tagKey(tag) {
+      return `${this.media._id}-${tag}`;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+  .linked {
+    outline: blue;
+    outline-style: dashed;
+  }
+
+  .selected {
+    outline: lightsalmon;
+    outline-style: dashed;
+  }
+
   .tag-container {
     padding: 10px;
   }
@@ -85,8 +141,6 @@ export default {
     box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
     padding: 0.75%;
     vertical-align: top;
-
-    // max-height: 400px;
 
     img {
       $maxImgSize: 256px;
