@@ -71,7 +71,7 @@ export default {
      * @returns {*}
      */
     presentMedia() {
-      return this.$store.getters.getMedia.filter(media => media.locket === 'present');
+      return this.$store.getters.getMedia.filter(media => media.locket === 'permanent');
     },
     /**
      *  Get all media marked with a past tag.
@@ -79,7 +79,7 @@ export default {
      * @returns {*}
      */
     pastMedia() {
-      return this.$store.getters.getMedia.filter(media => media.locket === 'past');
+      return this.$store.getters.getMedia.filter(media => media.locket === 'transient');
     },
 
     tags() {
