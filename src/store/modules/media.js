@@ -9,7 +9,7 @@ const mutations = {
   },
 
   addMedia: (state, payload) => {
-    state.media.push(payload);
+    state.media.push(payload.payload);
   },
 
   removeMedia: (state, id) => {

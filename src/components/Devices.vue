@@ -40,7 +40,6 @@ export default {
   },
   methods: {
     async deleteDevice(id) {
-      console.log('deleting device');
       try {
         await API.deleteDevice(id, this.$store.getters.getToken);
         this.$store.commit('removeDevice', id);

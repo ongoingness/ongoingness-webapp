@@ -14,6 +14,7 @@ import media from './modules/media';
 import device from './modules/device';
 import notification from './modules/notification';
 import user from './modules/user';
+import tags from './modules/tags';
 
 Vue.use(Vuex);
 
@@ -24,5 +25,6 @@ export default new Vuex.Store({
     device,
     notification,
     user,
+    tags,
   },
 });

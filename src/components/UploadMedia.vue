@@ -1,21 +1,21 @@
 <template lang="pug">
   div#upload-media
     h2.is-size-4 Upload Media
-    p Upload media to displayed your locket.
 
     div.hide-buttons
       button.button(
         v-if="isHidden"
-        @click="isHidden = false"
+        @click="submit"
       ) Add Media
       button.button(
         v-else
-        @click="isHidden = true"
+        @click="submit"
       ) Close
 
     div(
       v-show="!isHidden"
     )
+
       div.file.is-boxed.file-upload
         label.file-label
           input.file-input(
@@ -30,104 +30,70 @@
           span.file-name {{ filename }}
 
       div.control.image-tag-selection
-        p Is your image:
+        p Which collection should this media be added to?
         label.radio
           input(
           type="radio",
           name="mtag",
-          value="perm",
+          value="permanent",
           v-model="ltag"
           )
-          | &nbsp; Permanent
+          | &nbsp; Permanent Collection
+        
         br
         label.radio
           input(
           type="radio",
           name="mtag",
-          value="temp",
+          value="transient",
           v-model="ltag"
           )
-          | &nbsp; Temporary
-      div.emotions
-        p Please best describe this picture using three emotions below.
-        div.columns
-          div.column.is-narrow
-            div.field
-              label.label First Emotion
-              div.control
-                div.select
-                  select(
-                  v-model="emotionsT1Idx"
-                  )
-                    option(
-                    selected,
-                    disabled
-                    ) Please select...
-                    option.emotion-option(
-                    v-for="(emotion, idx) in emotions"
-                    v-bind:value="idx"
-                    ) {{ capitalizeFirstLetter(emotion.name) }}
-          div.column.is-narrow
-            div.field
-              label.label Second Emotion
-              div.control
-                div.select
-                  select(
-                  v-model="emotionsT2Idx"
-                  )
-                    option(
-                    selected,
-                    disabled
-                    ) Please select...
-                    option.emotion-option(
-                    v-for="(emotion, idx) in emotions[emotionsT1Idx].children"
-                    v-bind:value="idx"
-                    ) {{ capitalizeFirstLetter(emotion.name) }}
-          div.column.is-narrow
-            div.field
-              label.label Third Emotion
-              div.control
-                div.select
-                  select(
-                  v-model="emotionsT3Idx"
-                  )
-                    option(
-                    selected,
-                    disabled
-                    ) Please select...
-                    option.emotion-option(
-                    v-for="(emotion, idx) in t1Emotions.children[emotionsT2Idx].children"
-                    v-bind:value="idx"
-                    ) {{ capitalizeFirstLetter(emotion.name) }}
-
+          | &nbsp; Transient Collection
+      
+      div
       button.button.upload-button.is-primary(
       @click="uploadFile",
-      :disabled="(file === null)",
+      :disabled="(file === null || file === undefined)",
       :class="{ 'is-loading': isBusy }"
       ) Upload
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect';
 import API from '../api';
 import NotificationController from '../controllers/notification';
 import emotions from '../emotions.json';
 
 export default {
+  components: {
+    Multiselect,
+  },
   name: 'UploadMedia',
+  props: ['selectedMedia'],
   data() {
     return {
       file: null,
       era: 'past',
-      ltag: 'temp',
+      ltag: 'present',
       isBusy: false,
       isHidden: true,
-      emotionsT1Idx: 0,
-      emotionsT2Idx: 0,
-      emotionsT3Idx: 0,
       emotions,
+      lcontent: 'file',
+      value: [],
+      options: [],
+      linkedMedia: [],
     };
   },
   methods: {
+
+    submit() {
+      this.isHidden = !this.isHidden;
+    },
+    addTag(newTag) {
+      // eslint-disable-next-line
+      this.value.push({ 'name': newTag });
+    },
+
     /**
      * Handle a file upload.
      * @returns {Promise<void>}
@@ -139,18 +105,19 @@ export default {
       }
       this.isBusy = true;
       try {
+        const tags = [];
+        this.value.forEach((element) => {
+          tags.push(element.name);
+        });
+
         const response = await API.uploadMedia(
           // set headers
           this.file,
           {
             era: this.era,
             locket: this.ltag,
-            emotions: [
-              this.emotions[this.emotionsT1Idx].name,
-              this.emotions[this.emotionsT1Idx].children[this.emotionsT2Idx].name,
-              this.emotions[this.emotionsT1Idx].children[this.emotionsT2Idx]
-                .children[this.emotionsT3Idx].name,
-            ],
+            emotions: tags,
+            links: this.linkedMedia,
           },
           this.$store.getters.getToken,
         );
@@ -161,6 +128,8 @@ export default {
         this.file = null;
       } finally {
         this.isBusy = false;
+        this.options = [];
+        this.value = [];
       }
     },
     capitalizeFirstLetter(string) {
@@ -174,13 +143,34 @@ export default {
       // eslint-disable-next-line prefer-destructuring
       this.file = e.target.files[0];
     },
+    async getSuggestedTags(query) {
+      if (query.length === 0) {
+        this.options = [];
+      } else {
+        const aux = await API.getTagSuggestion(this.$store.getters.getToken, query);
+        const result = [];
+        for (let i = 0; i < aux.length; i += 1) {
+          let c = '';
+          let value = aux[i].name;
+          if (query.includes('t/')) {
+            c = 't/';
+            // eslint-disable-next-line prefer-destructuring
+            value = aux[i].value;
+          } else if (query.includes('p/')) c = 'p/';
+          else if (query.includes('@')) c = '@';
+          // eslint-disable-next-line
+          result.push({ 'name': `${c}${value}` });
+        }
+        this.options = result;
+      }
+    },
+    asyncUpdate(newVal) {
+      this.options = newVal;
+    },
   },
   computed: {
     filename() {
-      return this.file === null ? 'Your Image' : this.file.name;
-    },
-    t1Emotions() {
-      return this.emotions[this.emotionsT1Idx];
+      return this.file === null || this.file === undefined ? 'Your media' : this.file.name;
     },
   },
 };
@@ -206,4 +196,10 @@ export default {
   .emotions {
     margin-top: 1.25%;
   }
+
+  .tagtypes {
+    list-style-type:square;
+    padding-left: 30px;
+  }
+
 </style>

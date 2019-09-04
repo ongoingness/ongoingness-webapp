@@ -77,6 +77,10 @@ export default {
 
         const deviceResponse = await API.getDevices(this.$store.getters.getToken);
         this.$store.commit('updateDevices', deviceResponse);
+
+        const tagsResponse = await API.getAllTags(this.$store.getters.getToken);
+        this.$store.commit('addTags', tagsResponse);
+
       } catch (e) {
         console.log(e);
         NotificationController.setNotification('danger', 'Something went wrong');

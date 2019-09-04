@@ -4,62 +4,107 @@
 
     UploadMedia
 
+  
     h2.is-size-4 Your Media
-    div.all-media(
-      v-if="permMedia.length > 0 || tempMedia.length > 0"
-    )
-      h2.is-size-4.media-header Permanent Media
-      p This is your permanent media, and will always stay on the locket.
+
+      h3.is-size-5.media-header Permanent Media
+      p.is-size-6 This is your permanent media. You can add a maximum of 7 media items.
       div.media-collection
         MediaItem.media-item(
-          v-for="m in permMedia"
-          :media="m"
+          v-for="m in presentMedia"
+          :media="m",
+          v-bind:key="m.id",
         )
+      
+        <div v-for="i in placeholderCountPermanent">
+          <div style="margin: 5px">    
+            <img src="../assets/placeholder.png">
+          </div>
+        </div>
 
-      h2.is-size-4.media-header Transient Media
-      p This is your transient media, the locket will update to show new images you upload here.
+
+      h3.is-size-5.media-header Changeable Media
+      p.is-size-6 This is your changeable media. You can add a maximum of 13 items.
       div.media-collection
         MediaItem.media-item(
-          v-for="m in tempMedia"
-          :media="m"
+          v-for="m in pastMedia"
+          :media="m",
+          v-bind:key="m.id",
         )
 
-    div(
-      v-else
-    )
-      p You have not uploaded any media.
+        <div v-for="i in 13">
+          <div style="margin: 5px">
+            <img src="../assets/placeholder.png">
+          </div>
+        </div>
+
 </template>
 
 <script>
 import Notification from './views/Notification.vue';
 import MediaItem from './MediaItem.vue';
 import UploadMedia from './UploadMedia.vue';
+import API from '../api';
+
+import TagGeneral from './TagGeneral.vue';
+import TagPeople from './TagPeople.vue';
+import TagPlace from './TagPlace.vue';
+import TagTime from './TagTime.vue';
 
 export default {
   name: 'Media',
-  components: { UploadMedia, MediaItem, Notification },
-  data() {
-    return {};
+  components: { UploadMedia, MediaItem, Notification, TagGeneral, TagPeople, TagPlace, TagTime },
+  data () {
+    return {
+      showTags: false,
+    }
+  },
+  methods: {
+    submit() {
+      this.showTags = !this.showTags;
+    },
   },
   computed: {
     /**
-     * Get all media marked with a temporary tag.
+     * Get all media marked with a present tag.
      *
      * @returns {*}
      */
-    tempMedia() {
-      return this.$store.getters.getMedia.filter(media => media.locket === 'temp');
+    presentMedia() {
+      return this.$store.getters.getMedia.filter(media => media.locket === 'present');
     },
     /**
-     * Get all permanent media.
+     *  Get all media marked with a past tag.
      *
      * @returns {*}
      */
-    permMedia() {
-      return this.$store.getters.getMedia.filter(media => media.locket === 'perm');
+    pastMedia() {
+      return this.$store.getters.getMedia.filter(media => media.locket === 'past');
     },
-  },
-  methods: {
+
+    tags() {
+      return this.$store.getters.getTags;
+    },
+
+    timeTags() {
+      return this.$store.getters.getTimeTags;
+    },
+
+    placeTags() {
+      return this.$store.getters.getPlacesTags;
+    },
+
+    peopleTags() {
+      return this.$store.getters.getPeopleTags;
+    },
+
+    placeholderCountPermanent() {
+      return 7 - this.presentMedia.length;
+    },
+
+    placeholderCountTransient() {
+      return 13 - this.pastMedia.length;
+    }
 
   },
 };
@@ -88,10 +133,6 @@ export default {
     margin-right: 8px;
   }
 
-  .media-item:nth-of-type(2n) {
-    margin-right: 0;
-  }
-
   @media screen and (min-width: 800px) {
     .media-item {
       width: calc(25% - 6px);
@@ -107,6 +148,9 @@ export default {
   }
 
   .media-collection {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
     margin-top: 2.5%;
   }
 

@@ -14,6 +14,7 @@
       div.hero-body
         div.container
           h1.title Ongoingness
+          div Locket
 </template>
 
 <script>
@@ -59,6 +60,7 @@ h1.title {
   text-transform: uppercase;
   letter-spacing: 4px;
   text-align: center;
+  margin-bottom: 0px
 }
   .hero-head {
     padding-top: 1%;
