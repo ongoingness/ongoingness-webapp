@@ -1,7 +1,6 @@
 <template lang="pug">
   div#upload-media
     h2.is-size-4 Upload Media
-
     div.hide-buttons
       button.button(
         v-if="isHidden"
@@ -34,6 +33,7 @@
         label.radio
           input(
           type="radio",
+          :disabled="placeholderCountPermanent == 0",
           name="mtag",
           value="permanent",
           v-model="ltag"
@@ -45,15 +45,16 @@
           input(
           type="radio",
           name="mtag",
-          value="transient",
+          :disabled="placeholderCountTemporary == 0",
+          value="temporary",
           v-model="ltag"
           )
-          | &nbsp; Transient Collection
+          | &nbsp; Temporary Collection
       
       div
       button.button.upload-button.is-primary(
       @click="uploadFile",
-      :disabled="(file === null || file === undefined)",
+      :disabled="(file === null || file === undefined || ltag === 'unset')",
       :class="{ 'is-loading': isBusy }"
       ) Upload
 </template>
@@ -74,7 +75,7 @@ export default {
     return {
       file: null,
       era: 'past',
-      ltag: 'present',
+      ltag: 'unset',
       isBusy: false,
       isHidden: true,
       emotions,
@@ -130,6 +131,7 @@ export default {
         this.isBusy = false;
         this.options = [];
         this.value = [];
+        this.ltag = 'unset'
       }
     },
     capitalizeFirstLetter(string) {
@@ -172,6 +174,34 @@ export default {
     filename() {
       return this.file === null || this.file === undefined ? 'Your media' : this.file.name;
     },
+    /**
+     * Get all media marked with a present tag.
+     *
+     * @returns {*}
+     */
+    presentMedia() {
+      return this.$store.getters.getMedia.filter(media => media.locket === 'permanent');
+    },
+    /**
+     *  Get all media marked with a past tag.
+     *
+     * @returns {*}
+     */
+    pastMedia() {
+      return this.$store.getters.getMedia.filter(media => media.locket === 'temporary');
+    },
+    /**
+     * Change value here to alter max number of 'permanent' media that can be uploaded.
+     */
+    placeholderCountPermanent() {
+      return 7 - this.presentMedia.length;
+    },
+    /**
+     * Change value here to alter max number of 'temporary' media that can be uploaded.
+     */
+    placeholderCountTemporary() {
+      return 13 - this.pastMedia.length;
+    }
   },
 };
 </script>

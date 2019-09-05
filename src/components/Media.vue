@@ -11,7 +11,7 @@
       p.is-size-6 This is your permanent media. You can add a maximum of 7 media items.
       div.media-collection
         MediaItem.media-item(
-          v-for="m in presentMedia"
+          v-for="m in permanentMedia"
           :media="m",
           v-bind:key="m.id",
         )
@@ -23,16 +23,16 @@
         </div>
 
 
-      h3.is-size-5.media-header Changeable Media
-      p.is-size-6 This is your changeable media. You can add a maximum of 13 items.
+      h3.is-size-5.media-header Temporary Media
+      p.is-size-6 This is your temporary media. You can add a maximum of 13 items.
       div.media-collection
         MediaItem.media-item(
-          v-for="m in pastMedia"
+          v-for="m in temporaryMedia"
           :media="m",
           v-bind:key="m.id",
         )
 
-        <div v-for="i in 13">
+        <div v-for="i in placeholderCountTemporary">
           <div style="margin: 5px">
             <img src="../assets/placeholder.png">
           </div>
@@ -70,7 +70,7 @@ export default {
      *
      * @returns {*}
      */
-    presentMedia() {
+    permanentMedia() {
       return this.$store.getters.getMedia.filter(media => media.locket === 'permanent');
     },
     /**
@@ -78,8 +78,8 @@ export default {
      *
      * @returns {*}
      */
-    pastMedia() {
-      return this.$store.getters.getMedia.filter(media => media.locket === 'transient');
+    temporaryMedia() {
+      return this.$store.getters.getMedia.filter(media => media.locket === 'temporary');
     },
 
     tags() {
@@ -99,11 +99,11 @@ export default {
     },
 
     placeholderCountPermanent() {
-      return 7 - this.presentMedia.length;
+      return 7 - this.permanentMedia.length;
     },
 
-    placeholderCountTransient() {
-      return 13 - this.pastMedia.length;
+    placeholderCountTemporary() {
+      return 13 - this.temporaryMedia.length;
     }
 
   },
