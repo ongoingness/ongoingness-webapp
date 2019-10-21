@@ -12,13 +12,11 @@
           :media="m",
           v-bind:key="m.id",
         )
-      
         <div v-for="i in placeholderCountPermanent">
-          <div style="margin: 5px">    
+          <div style="margin: 5px">
             <img src="../assets/placeholder.png">
           </div>
         </div>
-
 
       h3.is-size-5.media-header Temporary Media
       p.is-size-6 This is your temporary media. You can add a maximum of 13 items.
@@ -41,7 +39,7 @@
 import Notification from './views/Notification.vue';
 import MediaItem from './MediaItem.vue';
 import UploadMedia from './UploadMedia.vue';
-import API from '../api';
+// import API from '../api';
 
 import TagGeneral from './TagGeneral.vue';
 import TagPeople from './TagPeople.vue';
@@ -50,11 +48,19 @@ import TagTime from './TagTime.vue';
 
 export default {
   name: 'Media',
-  components: { UploadMedia, MediaItem, Notification, TagGeneral, TagPeople, TagPlace, TagTime },
-  data () {
+  components: {
+    UploadMedia,
+    MediaItem,
+    Notification,
+    TagGeneral,
+    TagPeople,
+    TagPlace,
+    TagTime,
+  },
+  data() {
     return {
       showTags: false,
-    }
+    };
   },
   methods: {
     submit() {
@@ -68,8 +74,8 @@ export default {
      * @returns {*}
      */
     permanentMedia() {
-      let permanent = this.$store.getters.getMedia.filter(media => media.locket === 'permanent');
-      return permanent.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+      const permanent = this.$store.getters.getMedia.filter(media => media.locket === 'permanent');
+      return permanent.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
     },
     /**
      *  Get all media marked with a past tag.
@@ -77,8 +83,8 @@ export default {
      * @returns {*}
      */
     temporaryMedia() {
-      let temporary = this.$store.getters.getMedia.filter(media => media.locket === 'temporary');
-      return temporary.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+      const temporary = this.$store.getters.getMedia.filter(media => media.locket === 'temporary');
+      return temporary.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
     },
 
     tags() {
@@ -103,8 +109,7 @@ export default {
 
     placeholderCountTemporary() {
       return 13 - this.temporaryMedia.length;
-    }
-
+    },
   },
 };
 </script>
