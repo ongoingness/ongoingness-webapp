@@ -1,10 +1,7 @@
 <template lang="pug">
   div#media.container
     h2.is-size-3 Media
-
     UploadMedia
-
-  
     h2.is-size-4 Your Media
 
       h3.is-size-5.media-header Permanent Media
@@ -71,7 +68,8 @@ export default {
      * @returns {*}
      */
     permanentMedia() {
-      return this.$store.getters.getMedia.filter(media => media.locket === 'permanent');
+      let permanent = this.$store.getters.getMedia.filter(media => media.locket === 'permanent');
+      return permanent.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
     },
     /**
      *  Get all media marked with a past tag.
@@ -79,7 +77,8 @@ export default {
      * @returns {*}
      */
     temporaryMedia() {
-      return this.$store.getters.getMedia.filter(media => media.locket === 'temporary');
+      let temporary = this.$store.getters.getMedia.filter(media => media.locket === 'temporary');
+      return temporary.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
     },
 
     tags() {

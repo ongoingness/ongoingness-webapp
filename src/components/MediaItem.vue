@@ -38,7 +38,6 @@ export default {
         day: 'numeric',
       };
       const today = new Date(this.media.createdAt);
-
       return today.toLocaleDateString(options);
     },
     tags() {
