@@ -1,6 +1,8 @@
 <template lang="pug">
   div#media-item()
-    div.actions.has-text-right
+    div.actions.has-text-right(
+      v-if="isTemporary"
+    )
       span.icon.action(
         @click="deleteMedia(media._id)"
       )
@@ -43,6 +45,9 @@ export default {
     tags() {
       return this.media.emotions;
     },
+    isTemporary() {
+      return this.media.locket=="temporary";
+    }
   },
   methods: {
     async deleteMedia(id) {

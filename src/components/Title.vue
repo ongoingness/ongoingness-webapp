@@ -7,14 +7,14 @@
             v-if="isLoggedIn",
             @click="logout"
           ) Logout
-          button.button.is-danger.is-outlined(
-            v-if="isLoggedIn"
-            @click="deleteAccount"
-          ) Delete Account
+          //button.button.is-danger.is-outlined(
+          //  v-if="isLoggedIn"
+          //  @click="deleteAccount"
+          //) Delete Account
       div.hero-body
         div.container
           h1.title Ongoingness
-          div Locket
+          div Anew
 </template>
 
 <script>
@@ -37,6 +37,7 @@ export default {
       this.$store.commit('updateToken', null);
       Cookie.delete();
     },
+    /*
     async deleteAccount() {
       // eslint-disable-next-line no-alert
       const confirmed = window.confirm('Are you sure? your data cannot be recovered');
@@ -50,7 +51,8 @@ export default {
         console.log(e);
         NotificationController.setNotification('danger', 'Something went wrong');
       }
-    },
+      
+    },*/
   },
 };
 </script>

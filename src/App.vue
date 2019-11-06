@@ -4,19 +4,20 @@
     AuthForm(
       v-if="!isLoggedIn"
     )
-    NavTabs(
-      v-if="isLoggedIn",
-      v-on:on-update="tabUpdate"
-    )
+    
+    //NavTabs(
+    //  v-if="isLoggedIn",
+    //  v-on:on-update="tabUpdate"
+    //)
     div(
       v-if="isLoggedIn"
     )
       Media(
         v-if="active.media"
       )
-      Devices(
-        v-if="active.devices"
-      )
+      //Devices(
+      //  v-if="active.devices"
+      //)
     Notification
     FooterBar
 </template>
@@ -27,8 +28,8 @@ import AuthForm from './components/AuthForm.vue';
 import Cookie from './cookies';
 import API from './api';
 import Media from './components/Media.vue';
-import NavTabs from './components/NavTabs.vue';
-import Devices from './components/Devices.vue';
+//import NavTabs from './components/NavTabs.vue';
+//import Devices from './components/Devices.vue';
 import Notification from './components/views/Notification.vue';
 import NotificationController from './controllers/notification';
 import FooterBar from './components/FooterBar.vue';
@@ -38,8 +39,8 @@ export default {
   components: {
     FooterBar,
     Notification,
-    Devices,
-    NavTabs,
+    //Devices,
+    //NavTabs,
     Media,
     AuthForm,
     Title,

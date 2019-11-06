@@ -1,20 +1,7 @@
 <template lang="pug">
   div#upload-media
     h2.is-size-4 Upload Media
-    div.hide-buttons
-      button.button(
-        v-if="isHidden"
-        @click="submit"
-      ) Add Media
-      button.button(
-        v-else
-        @click="submit"
-      ) Close
-
-    div(
-      v-show="!isHidden"
-    )
-
+    div
       div.file.is-boxed.file-upload
         label.file-label
           input.file-input(
@@ -27,29 +14,6 @@
               i.fas.fa-upload
             span.file-label.has-text-centered Choose a file
           span.file-name {{ filename }}
-
-      div.control.image-tag-selection
-        p Which collection should this media be added to?
-        label.radio
-          input(
-          type="radio",
-          :disabled="placeholderCountPermanent == 0",
-          name="mtag",
-          value="permanent",
-          v-model="ltag"
-          )
-          | &nbsp; Permanent Collection
-        
-        br
-        label.radio
-          input(
-          type="radio",
-          name="mtag",
-          :disabled="placeholderCountTemporary == 0",
-          value="temporary",
-          v-model="ltag"
-          )
-          | &nbsp; Temporary Collection
       
       div
       button.button.upload-button.is-primary(
@@ -75,7 +39,7 @@ export default {
     return {
       file: null,
       era: 'past',
-      ltag: 'unset',
+      ltag: 'temporary',
       isBusy: false,
       isHidden: true,
       emotions,
@@ -116,7 +80,7 @@ export default {
           this.file,
           {
             era: this.era,
-            locket: this.ltag,
+            locket: 'temporary',
             emotions: tags,
             links: this.linkedMedia,
           },
@@ -131,7 +95,7 @@ export default {
         this.isBusy = false;
         this.options = [];
         this.value = [];
-        this.ltag = 'unset'
+        this.ltag = 'temporary'
       }
     },
     capitalizeFirstLetter(string) {
