@@ -11,6 +11,7 @@
     div(
       v-if="isLoggedIn"
     )
+      LogForm
       Media(
         v-if="active.media"
       )
@@ -32,6 +33,7 @@ import Devices from './components/Devices.vue';
 import Notification from './components/views/Notification.vue';
 import NotificationController from './controllers/notification';
 import FooterBar from './components/FooterBar.vue';
+import LogForm from './components/LogForm.vue';
 
 export default {
   name: 'app',
@@ -43,6 +45,7 @@ export default {
     Media,
     AuthForm,
     Title,
+    LogForm,
   },
   data() {
     return {
@@ -72,6 +75,27 @@ export default {
       this.$store.commit('updateToken', token);
 
       try {
+        const userlogsResponse = await API.getUserLogsAmount(this.$store.getters.getToken);
+        this.$store.commit('setUsers', userlogsResponse);
+
+        //WATCH
+        this.$store.commit('addLoggingCode', "WAKE_UP");
+        this.$store.commit('addLoggingCode', "NEXT_IMAGE");
+        this.$store.commit('addLoggingCode', "PREV_IMAGE");
+        this.$store.commit('addLoggingCode', "SLEEP");
+        this.$store.commit('addLoggingCode', "ACTIVITY_STARTED");
+        this.$store.commit('addLoggingCode', "ACTIVITY_TERMINATED");
+        this.$store.commit('addLoggingCode', "CHARGER_CONNECTED");
+        this.$store.commit('addLoggingCode', "CHARGER_DISCONNECTED");
+
+        //SERVER  
+        this.$store.commit('addLoggingCode', "REGISTER");
+        this.$store.commit('addLoggingCode', "LOGIN");
+        this.$store.commit('addLoggingCode', "NEW_MEDIA");    
+        this.$store.commit('addLoggingCode', "DEL_MEDIA");
+        this.$store.commit('addLoggingCode', "GET_ALL_MEDIA");
+        this.$store.commit('addLoggingCode', "GET_INF_MEDIA");
+
         const response = await API.getAllMedia(this.$store.getters.getToken);
         this.$store.commit('updateMedia', response);
 

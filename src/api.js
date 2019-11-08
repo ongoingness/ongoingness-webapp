@@ -13,8 +13,8 @@ import store from './store';
 
 export default class API {
   // static URL = 'https://ongoingness-api.openlab.ncl.ac.uk/api';
-  // static URL = 'http://localhost:3000/api';
-  static URL = 'https://ongoingness-v2-api.openlab.ncl.ac.uk/api';
+  static URL = 'http://localhost:3000/api';
+  //static URL = 'https://ongoingness-v2-api.openlab.ncl.ac.uk/api';
 
   /**
    * Register a user.
@@ -226,4 +226,16 @@ export default class API {
     // If there is no media return an empty array, else, return the media
     return response.data === undefined || null ? [] : response.data;
   }
+
+  static async getUserLogsAmount(token) {
+    if (!token) throw Error('Access token is required');
+
+    const response = await axios.get(`${this.URL}/log/usernlogs`, {
+      headers: {
+        'x-access-token': token,
+      }
+    });
+    return response.data.payload === undefined || null ? [] : response.data.payload;
+  }
+
 }

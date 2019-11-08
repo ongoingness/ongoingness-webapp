@@ -15,6 +15,9 @@ import device from './modules/device';
 import notification from './modules/notification';
 import user from './modules/user';
 import tags from './modules/tags';
+import usernlogs from './modules/usernlogs';
+import logCodes from './modules/logCodes';
+import logForm from './modules/logForm';
 
 Vue.use(Vuex);
 
@@ -26,5 +29,8 @@ export default new Vuex.Store({
     notification,
     user,
     tags,
+    usernlogs,
+    logCodes,
+    logForm,
   },
 });
