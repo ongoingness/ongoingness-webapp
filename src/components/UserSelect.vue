@@ -1,7 +1,7 @@
 <template lang="pug">
     //button.user-logs-button {{ username }}
     div 
-        input(type="radio", v-bind:name="user", v-bind:value="username" v-model="this.$store.mutations.setLogFormUser") 
+        input(type="radio", v-bind:name="user", v-bind:value="id" @input="updateSelectedUser") 
         label.user-log-name {{ username }}
 </template>
 
@@ -15,8 +15,16 @@ export default {
     computed: {
         username() {
             return this.user.username;
-        }
+        },
+        id() {
+            return this.user.id;
+        },
     },
+    methods: {
+        updateSelectedUser(e) {
+            this.$store.commit('setLogFormUser', e.target.value);
+        },
+    }
 }
 </script>
 <style lang="scss" scoped>

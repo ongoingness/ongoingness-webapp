@@ -4,7 +4,8 @@ const state = {
 
 const mutations = {
     addLoggingCode: (state, payload) =>  {
-        state.codes.push(payload);
+        if(!state.codes.includes(payload))
+            state.codes.push(payload);
     },
 };
 

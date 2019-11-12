@@ -9,14 +9,13 @@ const mutations = {
         state.user = user;
     },
 
-    addCodeToLogForm: (state, code) => {
-        state.codes.push(code);
-    },
-
-    removeCodeFromLogFrom: (state, code) => {
-        var index = state.code.indexOf(code);
-        if(index > -1) {
-            state.code = state.code.splice(index, 1);
+    updateLogFormCode: (state, code) => {
+        if(state.codes.includes(code)) {
+            var index = state.codes.indexOf(code);
+            if(index > -1)
+                state.codes.splice(index, 1);
+        } else {
+            state.codes.push(code);
         }
     },
 

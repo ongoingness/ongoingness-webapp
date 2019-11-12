@@ -238,4 +238,18 @@ export default class API {
     return response.data.payload === undefined || null ? [] : response.data.payload;
   }
 
+  //http://localhost:3000/api/log/search/?codes=GET_MEDIA,LOGIN&user=5db6ed2a18eef30011ee2a9a&firstPage=1&pageAmount=10&pageSize=10
+  static async searchLogs(token, codes, user, firstPage, pageAmount,pageSize) {
+    if (!token) throw Error('Access token is required');
+
+    const response = await axios.get(`${this.URL}/log/search/?codes=${codes}&user=${user}&firstPage=${firstPage}&pageAmount=${pageAmount}&pageSize=${pageSize}`, {
+      headers: {
+        'x-access-token': token,
+      }
+    });
+
+
+    return response.data.payload === undefined || null ? [] : response.data.payload;
+  }
+
 }

@@ -1,6 +1,6 @@
 <template lang="pug">
     div
-        input(type='checkbox' v-bind:name="value" v-bind:value="value" unchecked) 
+        input(type='checkbox' v-bind:name="value" v-bind:value="value" @input="updateSelectedCode" unchecked) 
         label {{value}}
 </template>
 
@@ -16,6 +16,13 @@ export default {
             return this.code;
         }
     },
+    methods: {
+
+        updateSelectedCode(e) {
+             this.$store.commit('updateLogFormCode', e.target.value);
+        }
+
+    }
 }
 </script>
 <style lang="scss" scoped>

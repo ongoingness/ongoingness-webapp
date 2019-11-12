@@ -12,12 +12,7 @@
       v-if="isLoggedIn"
     )
       LogForm
-      Media(
-        v-if="active.media"
-      )
-      Devices(
-        v-if="active.devices"
-      )
+      LogsTable
     Notification
     FooterBar
 </template>
@@ -34,6 +29,8 @@ import Notification from './components/views/Notification.vue';
 import NotificationController from './controllers/notification';
 import FooterBar from './components/FooterBar.vue';
 import LogForm from './components/LogForm.vue';
+import LogsTable from './components/LogsTable.vue';
+import LogItem from './components/LogItem.vue';
 
 export default {
   name: 'app',
@@ -46,6 +43,8 @@ export default {
     AuthForm,
     Title,
     LogForm,
+    LogsTable,
+    LogItem,
   },
   data() {
     return {

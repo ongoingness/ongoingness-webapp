@@ -18,6 +18,7 @@ import tags from './modules/tags';
 import usernlogs from './modules/usernlogs';
 import logCodes from './modules/logCodes';
 import logForm from './modules/logForm';
+import log from './modules/log';
 
 Vue.use(Vuex);
 
@@ -32,5 +33,6 @@ export default new Vuex.Store({
     usernlogs,
     logCodes,
     logForm,
+    log,
   },
 });

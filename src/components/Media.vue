@@ -26,7 +26,7 @@
           :media="m",
           v-bind:key="m.id",
         )
-
+        
         <div v-for="i in placeholderCountTemporary">
           <div style="margin: 5px">
             <img src="../assets/placeholder.png">
