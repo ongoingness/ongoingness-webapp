@@ -12,7 +12,7 @@
         :src="imageUrl"
       )
     br
-    div.has-text-centered
+    //div.has-text-centered
       div.date.is-size-6
         p Added on:
         | {{ formattedDate }}

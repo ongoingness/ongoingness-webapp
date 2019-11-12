@@ -3,7 +3,6 @@
     h2.is-size-3 Media
     UploadMedia
     h2.is-size-4 Your Media
-
       h3.is-size-5.media-header Permanent Media
       p.is-size-6 This is your permanent media. You can add a maximum of 7 media items.
       div.media-collection
@@ -12,12 +11,11 @@
           :media="m",
           v-bind:key="m.id",
         )
-        <div v-for="i in placeholderCountPermanent">
-          <div style="margin: 5px">
-            <img src="../assets/placeholder.png">
-          </div>
-        </div>
-
+        MediaPlaceholder.media-item(
+          v-for="i in placeholderCountPermanent"
+          type="permanent"
+          :index="i"
+        )
       h3.is-size-5.media-header Temporary Media
       p.is-size-6 This is your temporary media. You can add a maximum of 13 items.
       div.media-collection
@@ -26,13 +24,11 @@
           :media="m",
           v-bind:key="m.id",
         )
-
-        <div v-for="i in placeholderCountTemporary">
-          <div style="margin: 5px">
-            <img src="../assets/placeholder.png">
-          </div>
-        </div>
-
+        MediaPlaceholder.media-item(
+          v-for="i in placeholderCountTemporary"
+          type="temporary"
+          :index="i"
+        )
 </template>
 
 <script>
@@ -45,6 +41,7 @@ import TagGeneral from './TagGeneral.vue';
 import TagPeople from './TagPeople.vue';
 import TagPlace from './TagPlace.vue';
 import TagTime from './TagTime.vue';
+import MediaPlaceholder from './MediaPlaceholder.vue';
 
 export default {
   name: 'Media',
@@ -56,6 +53,7 @@ export default {
     TagPeople,
     TagPlace,
     TagTime,
+    MediaPlaceholder,
   },
   data() {
     return {
