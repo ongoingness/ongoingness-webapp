@@ -40,7 +40,7 @@ export default {
       file: null,
       era: 'past',
       ltag: 'temporary',
-      isBusy: false,
+      isBusy: true,
       isHidden: true,
       emotions,
       lcontent: 'file',

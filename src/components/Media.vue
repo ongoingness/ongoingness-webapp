@@ -1,11 +1,10 @@
 <template lang="pug">
   div#media.container
-    h2.is-size-3 Media
-    UploadMedia
-    h2.is-size-4 Your Media
-      h3.is-size-5.media-header Permanent Media
-      p.is-size-6 This is your permanent media. You can add a maximum of 7 media items.
-      div.media-collection
+    //h2.is-size-3 Media
+    //h2.is-size-4 Your Media
+    h2.is-size-4.media-header Permanent Collection
+    //p.is-size-6 This is your permanent media. You can add a maximum of 7 media items.
+    div.media-collection
         MediaItem.media-item(
           v-for="m in permanentMedia"
           :media="m",
@@ -16,9 +15,9 @@
           type="permanent"
           :index="i"
         )
-      h3.is-size-5.media-header Temporary Media
-      p.is-size-6 This is your temporary media. You can add a maximum of 13 items.
-      div.media-collection
+    h2.is-size-4.media-header Temporary Collection
+    //p.is-size-6 This is your temporary media. You can add a maximum of 13 items.
+    div.media-collection
         MediaItem.media-item(
           v-for="m in temporaryMedia"
           :media="m",
@@ -35,7 +34,6 @@
 import Notification from './views/Notification.vue';
 import MediaItem from './MediaItem.vue';
 import UploadMedia from './UploadMedia.vue';
-// import API from '../api';
 
 import TagGeneral from './TagGeneral.vue';
 import TagPeople from './TagPeople.vue';
@@ -147,17 +145,20 @@ export default {
     .media-item:nth-of-type(4n) {
       margin-right: 0;
     }
+
   }
 
   .media-collection {
     display: flex;
     flex-flow: row;
     flex-wrap: wrap;
-    margin-top: 2.5%;
+    margin-top: 20px;
+    margin-bottom: 50px;
   }
 
   .media-header {
     margin-top: 2.5%;
+    border-bottom-style: inset;
   }
 }
 @media (max-width: 1080px) {
@@ -166,4 +167,10 @@ export default {
     margin-right: 32px;
   }
 }
+
+.spin {
+    -webkit-animation: spinAround 500ms infinite linear;
+    animation: spinAround 500ms infinite linear;
+}
+
 </style>

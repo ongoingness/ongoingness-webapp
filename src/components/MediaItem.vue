@@ -1,21 +1,15 @@
 <template lang="pug">
-  div#media-item()
-    div.actions.has-text-right(
-      v-if="isTemporary"
-    )
-      span.icon.action(
-        @click="deleteMedia(media._id)"
+  div#media-item
+      div.actions-temporary(
+        v-if="isTemporary"
       )
-        i.fas.fa-trash
-    figure
+        span.icon.action.pointer(
+          @click="deleteMedia(media._id)"
+        )
+          i.fas.fa-trash.icon-size
       img(
         :src="imageUrl"
       )
-    br
-    //div.has-text-centered
-      div.date.is-size-6
-        p Added on:
-        | {{ formattedDate }}
 </template>
 
 <script>
@@ -23,6 +17,7 @@
 import API from '../api';
 import NotificationController from '../controllers/notification';
 import Tag from './Tag.vue';
+import { async } from 'q';
 
 export default {
   props: ['media'],
@@ -52,12 +47,18 @@ export default {
   methods: {
     async deleteMedia(id) {
       try {
-        await API.deleteMedia(id, this.$store.getters.getToken);
+        this.$confirm("Do you want to delete this content?", "Delete Content", 'question').then( async() => {
+            try {
+              await API.deleteMedia(id, this.$store.getters.getToken);
+            } catch (e) {
+              NotificationController.setNotification('danger', 'Could not delete media');
+              return;
+            }
+            this.$store.commit('removeMedia', id);
+            });
       } catch (e) {
-        NotificationController.setNotification('danger', 'Could not delete media');
-        return;
+        console.log(e);
       }
-      this.$store.commit('removeMedia', id);
     },
     tagKey(tag) {
       return `${this.media._id}-${tag}`;
@@ -67,8 +68,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .tag-container {
-    padding: 10px;
+
+  .actions-temporary{
+    position: absolute;
+    right: 12px;
+    top: 12px;
+  }
+
+@media all and (max-width: 915px) {
+
+    .actions-temporary {
+        right: 0px;
+    }
+
+}
+
+  .pointer {
+    cursor: pointer;
+  }
+
+  .icon-size {
+    width: 25px;
+    height: 25px;
   }
 
   .tag-list {
@@ -80,9 +101,11 @@ export default {
   }
 
   #media-item {
-    box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
+    //box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
     padding: 0.75%;
     vertical-align: top;
+
+    position: relative;
 
     img {
       $maxImgSize: 256px;
@@ -97,7 +120,7 @@ export default {
       width: 100%;
 
       border-radius: 50%;
-      margin-top: 2.5%;
+      box-shadow: 5px 5px 15px darkgrey;
     }
   }
 </style>

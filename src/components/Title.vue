@@ -13,8 +13,8 @@
           //) Delete Account
       div.hero-body
         div.container
-          h1.title Ongoingness
-          div Anew
+          h1.title Anew
+          div Ongoingness
 </template>
 
 <script>
