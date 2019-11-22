@@ -13,6 +13,7 @@
     )
       LogForm
       LogsTable
+      TimelineChart
     Notification
     FooterBar
 </template>
@@ -31,6 +32,7 @@ import FooterBar from './components/FooterBar.vue';
 import LogForm from './components/LogForm.vue';
 import LogsTable from './components/LogsTable.vue';
 import LogItem from './components/LogItem.vue';
+import TimelineChart from './components/TimelineChart.vue'
 
 export default {
   name: 'app',
@@ -45,6 +47,7 @@ export default {
     LogForm,
     LogsTable,
     LogItem,
+    TimelineChart
   },
   data() {
     return {
@@ -68,6 +71,8 @@ export default {
     },
   },
   async mounted() {
+
+    
     // Get the token from cookie if exists and write to store.
     const token = Cookie.get('authToken');
     if (token) {
