@@ -1,6 +1,6 @@
 <template lang="pug">
   div#media.container(gotData)
-    h2.is-size-4.media-header Content Collection
+    h2.is-size-4.media-header Welcome To Your Collection
     div.media-collection
         MediaPlaceholder.media-item(
           v-if="showAddPermanent"
