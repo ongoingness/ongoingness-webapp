@@ -1,32 +1,30 @@
 <template lang="pug">
-  div#media.container
-    //h2.is-size-3 Media
-    //h2.is-size-4 Your Media
-    h2.is-size-4.media-header Permanent Collection
-    //p.is-size-6 This is your permanent media. You can add a maximum of 7 media items.
+  div#media.container(gotData)
+    h2.is-size-4.media-header Content Collection
     div.media-collection
+        MediaPlaceholder.media-item(
+          v-if="showAddPermanent"
+          type="permanent"
+          index="1"
+          :n="placeholderCountPermanent"
+          nTotal="7"
+        )
         MediaItem.media-item(
           v-for="m in permanentMedia"
           :media="m",
           v-bind:key="m.id",
         )
         MediaPlaceholder.media-item(
-          v-for="i in placeholderCountPermanent"
-          type="permanent"
-          :index="i"
+          v-if="showAddTemporary"
+          type="temporary"
+          index="1"
+          :n="placeholderCountTemporary"
+          nTotal="13"
         )
-    h2.is-size-4.media-header Temporary Collection
-    //p.is-size-6 This is your temporary media. You can add a maximum of 13 items.
-    div.media-collection
         MediaItem.media-item(
           v-for="m in temporaryMedia"
           :media="m",
           v-bind:key="m.id",
-        )
-        MediaPlaceholder.media-item(
-          v-for="i in placeholderCountTemporary"
-          type="temporary"
-          :index="i"
         )
 </template>
 
@@ -71,7 +69,7 @@ export default {
      */
     permanentMedia() {
       const permanent = this.$store.getters.getMedia.filter(media => media.locket === 'permanent');
-      return permanent.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      return permanent.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)).reverse();
     },
     /**
      *  Get all media marked with a past tag.
@@ -80,7 +78,19 @@ export default {
      */
     temporaryMedia() {
       const temporary = this.$store.getters.getMedia.filter(media => media.locket === 'temporary');
-      return temporary.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      return temporary.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)).reverse();
+    },
+
+    gotData() {
+      return this.$store.getters.gotData;
+    },
+
+    showAddTemporary() {
+      return this.$store.getters.gotData && this.placeholderCountTemporary > 0;
+    },
+
+    showAddPermanent() {
+      return this.$store.getters.gotData && this.placeholderCountPermanent > 0;
     },
 
     tags() {
@@ -105,6 +115,18 @@ export default {
 
     placeholderCountTemporary() {
       return 13 - this.temporaryMedia.length;
+    },
+
+    countPermanent() {
+      if(this.permanentMedia != undefined)
+        return this.permanentMedia.length;
+      return 0
+    },
+
+    countTemporary() {
+      if(this.temporaryMedia != undefined)
+        return this.temporaryMedia.length;
+      return 0;
     },
   },
 };

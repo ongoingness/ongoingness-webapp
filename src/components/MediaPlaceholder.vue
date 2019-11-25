@@ -11,23 +11,11 @@ div#media-item(v-if="isUploader")
                 name="file",
                 v-on:change="handleFileChange"
             )
+        div.mediaLeftCounter {{this.n}}/{{this.nTotal}}
+        //div.mediaLeftCounter.twoDigits(v-else) {{this.n}}/{{this.nTotal}}
 div#media-item(v-else)
     img(:src="imageUrl")
-//
-  div#media-item
-        div(v-if="isUploader")
-            div.uploading-container(v-if="isUploading")
-                button.button.is-loading.is-primary.uploading-button
-            div.file.is-boxed.file-upload(v-else)
-                img(:src="imagePlus" v-if="!isUploading")   
-                input.file-input(
-                        type="file",
-                        name="file",
-                        v-on:change="handleFileChange"
-                        v-if="!isUploading"
-                    )
-        div(v-else)
-            img(:src="imageUrl")       
+     
 </template>
 
 <script>
@@ -41,7 +29,7 @@ import plusImageSVG from "../assets/round-add-button.svg"
 import plusImageWhite from "../assets/white-round-add-button.png"
 
 export default {
-  props: ['type', 'index'],
+  props: ['type', 'index', 'n', 'nTotal'],
   name: 'MediaPlaceholder',
   data() {
     return {
@@ -56,6 +44,9 @@ export default {
     },
     imagePlus() {
         return plusImageWhite;
+    },
+    nLengthIsOne() {
+        return String(this.n).length == 1;
     }
   },
   methods: {
@@ -145,6 +136,28 @@ export default {
     font-size: 100px;
 }
 
+.mediaLeftCounter {
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    //bottom: 6.5%;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 200%);
+}
+
+.oneDigit {
+    //left: 47.5%;
+    transform: translate(-50%, 200%);
+}
+
+.twoDigits {
+    //left: 45.5%;
+      transform: translate(-50%, 200%);
+}
+
 #media-item {
     //box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
     padding: 0.75%;
@@ -168,5 +181,6 @@ export default {
       background: #00d1b2;
     }
   }
+
   
 </style>

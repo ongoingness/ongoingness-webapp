@@ -1,14 +1,17 @@
 /* eslint-disable */
 const state = {
+  gotData: false,
   media: [],
 };
 
 const mutations = {
   updateMedia: (state, payload) => {
+    state.gotData = true
     state.media = payload;
   },
 
   addMedia: (state, payload) => {
+    state.gotData = true
     state.media.push(payload.payload);
   },
 
@@ -25,7 +28,10 @@ const getters = {
 
   getMediaById: (state) => (id) => {
     return state.media.find((media) => media._id === id);
-  }
+  },
+
+  gotData: state => state.gotData,
+  
 };
 
 export default {

@@ -4,20 +4,12 @@
     AuthForm(
       v-if="!isLoggedIn"
     )
-    
-    //NavTabs(
-    //  v-if="isLoggedIn",
-    //  v-on:on-update="tabUpdate"
-    //)
     div(
       v-if="isLoggedIn"
     )
       Media(
         v-if="active.media"
       )
-      //Devices(
-      //  v-if="active.devices"
-      //)
     Notification
     FooterBar
 </template>

@@ -1,15 +1,20 @@
 <template lang="pug">
   div#media-item
       div.actions-temporary(
+        v-show="isLoaded",
         v-if="isTemporary"
       )
         span.icon.action.pointer(
           @click="deleteMedia(media._id)"
         )
-          i.fas.fa-trash.icon-size
+          i.fas.fa-times.icon-size
       img(
+        v-show="isLoaded"
         :src="imageUrl"
+         @load="loaded"
       )
+      div.uploading-container(v-show="!isLoaded")
+        button.button.is-loading.is-primary.uploading-button(v-show="!isLoaded")
 </template>
 
 <script>
@@ -23,6 +28,11 @@ export default {
   props: ['media'],
   name: 'MediaItem',
   components: { Tag },
+  data() {
+    return {
+      isLoaded: false,
+    };
+  },
   computed: {
     imageUrl() {
       return `${API.URL}/media/${this.media._id}?token=${this.$store.getters.getToken}`;
@@ -47,7 +57,10 @@ export default {
   methods: {
     async deleteMedia(id) {
       try {
-        this.$confirm("Do you want to delete this content?", "Delete Content", 'question').then( async() => {
+        this.$confirm("Do you want to remove this content?", 
+                      "Remove Content", '',
+                      {imageUrl: this.imageUrl, imageHeight: 256, confirmButtonColor: '#00d1b2',}
+                      ).then( async() => {
             try {
               await API.deleteMedia(id, this.$store.getters.getToken);
             } catch (e) {
@@ -63,6 +76,9 @@ export default {
     tagKey(tag) {
       return `${this.media._id}-${tag}`;
     },
+    loaded() {
+      this.isLoaded = true;
+    }
   },
 };
 </script>
@@ -123,4 +139,56 @@ export default {
       box-shadow: 5px 5px 15px darkgrey;
     }
   }
+
+.uploading-container {
+
+   $maxImgSize: 256px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+    max-height: $maxImgSize;
+    max-width: $maxImgSize;
+
+    min-height: 166.99px;
+    min-width: 166.99px;
+
+    height: 100%;
+    width: 100%;
+
+}
+
+@media all and (max-width: 799px) {
+
+    .uploading-container {
+        height: 256px;
+    }
+
+}
+
+@media all and (min-width: 1215px) {
+
+    .uploading-container {
+        height: 256px;
+    }
+
+}
+
+.uploading-button {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    font-size: 100px;
+    background: none;
+}
+
+.button.is-primary.is-loading::after {
+  border-color: transparent transparent #00d1b2 #00d1b2 !important;
+}
+
+
+.swal2-image {
+  border-radius: 50% !important;
+}
+
 </style>

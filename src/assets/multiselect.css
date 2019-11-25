@@ -499,3 +499,7 @@ fieldset[disabled] .multiselect {
 .list__multiselect {
     line-height: 1.4
 }
+
+.swal2-image {
+    border-radius: 50%;
+}
