@@ -1,7 +1,7 @@
 <template lang="pug">
     div
         input(type='checkbox' v-bind:name="value" v-bind:value="value" @input="updateSelectedCode" unchecked) 
-        label {{value}}
+        label.code-button {{value}}
 </template>
 
 <script>
@@ -27,7 +27,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 
-    .user-logs-button {
+    .code-button {
         padding: 10px;
         margin: 2px;
     }

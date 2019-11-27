@@ -12,7 +12,7 @@ import { isTest } from './utils';
 import store from './store';
 
 export default class API {
-  // static URL = 'https://ongoingness-api.openlab.ncl.ac.uk/api';
+   // static URL = 'https://ongoingness-api.openlab.ncl.ac.uk/api';
   static URL = 'http://localhost:3000/api';
   //static URL = 'https://ongoingness-v2-api.openlab.ncl.ac.uk/api';
 
@@ -239,10 +239,13 @@ export default class API {
   }
 
   //http://localhost:3000/api/log/search/?codes=GET_MEDIA,LOGIN&user=5db6ed2a18eef30011ee2a9a&firstPage=1&pageAmount=10&pageSize=10
-  static async searchLogs(token, codes, user, firstPage, pageAmount,pageSize) {
+  static async searchLogs(token, codes, user, firstPage, pageAmount,pageSize, from, to) {
     if (!token) throw Error('Access token is required');
 
-    const response = await axios.get(`${this.URL}/log/search/?codes=${codes}&user=${user}&firstPage=${firstPage}&pageAmount=${pageAmount}&pageSize=${pageSize}`, {
+    console.log(from);
+    console.log(to);
+
+    const response = await axios.get(`${this.URL}/log/search/?codes=${codes}&user=${user}&firstPage=${firstPage}&pageAmount=${pageAmount}&pageSize=${pageSize}&from=${from}&to=${to}`, {
       headers: {
         'x-access-token': token,
       }

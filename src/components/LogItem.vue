@@ -42,9 +42,9 @@ export default {
     padding-bottom: 25px;
 }
 td {
-    padding-bottom: 25px;
+    padding: 10px;
     width: 250px;
+    text-align:  center;
 }
-
 
 </style>

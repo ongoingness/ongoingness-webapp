@@ -8,10 +8,10 @@
         )
           a
             span.icon.is-small
-              i.fas.fa-image(
+              i.fas.fa-table(
                 aria-hidden="true"
               )
-            span Media
+            span Logs
         li#devices(
           :class="{'is-active': active.devices}",
           @click="setActive('devices')"

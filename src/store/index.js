@@ -32,7 +32,7 @@ export default new Vuex.Store({
     tags,
     usernlogs,
     logCodes,
-    logForm,
+    //logForm,
     log,
   },
 });

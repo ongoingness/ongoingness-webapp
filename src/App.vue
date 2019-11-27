@@ -9,11 +9,10 @@
       v-on:on-update="tabUpdate"
     )
     div(
-      v-if="isLoggedIn"
+      v-if="isLoggedIn && active.media"
     )
       LogForm
       LogsTable
-      TimelineChart
     Notification
     FooterBar
 </template>
@@ -84,21 +83,32 @@ export default {
 
         //WATCH
         this.$store.commit('addLoggingCode', "WAKE_UP");
-        this.$store.commit('addLoggingCode', "NEXT_IMAGE");
-        this.$store.commit('addLoggingCode', "PREV_IMAGE");
+        this.$store.commit('addLoggingCode', "CONTENT_DISPLAYED");
         this.$store.commit('addLoggingCode', "SLEEP");
         this.$store.commit('addLoggingCode', "ACTIVITY_STARTED");
         this.$store.commit('addLoggingCode', "ACTIVITY_TERMINATED");
         this.$store.commit('addLoggingCode', "CHARGER_CONNECTED");
         this.$store.commit('addLoggingCode', "CHARGER_DISCONNECTED");
+        this.$store.commit('addLoggingCode', "PULLED_CONTENT");
+        this.$store.commit('addLoggingCode', "PUSHED_LOGS");
+        this.$store.commit('addLoggingCode', "NEW_CONTENT_ADDED");
+        this.$store.commit('addLoggingCode', "CONTENT_REMOVED");
+        this.$store.commit('addLoggingCode', "STARTED_WATCHFACE");
+        this.$store.commit('addLoggingCode', "STOPPED_WATCHFACE");
 
         //SERVER  
         this.$store.commit('addLoggingCode', "REGISTER");
         this.$store.commit('addLoggingCode', "LOGIN");
+        this.$store.commit('addLoggingCode', "LOGIN_DEVICE");
         this.$store.commit('addLoggingCode', "NEW_MEDIA");    
         this.$store.commit('addLoggingCode', "DEL_MEDIA");
-        this.$store.commit('addLoggingCode', "GET_ALL_MEDIA");
+        this.$store.commit('addLoggingCode', "GET_MEDIA");
         this.$store.commit('addLoggingCode', "GET_INF_MEDIA");
+        this.$store.commit('addLoggingCode', "RECEIVED_LOGS");
+
+        this.$store.commit('addLoggingCode', "WEBSITE");
+        this.$store.commit('addLoggingCode', "PIECE");
+        this.$store.commit('addLoggingCode', "ALL");
 
         const response = await API.getAllMedia(this.$store.getters.getToken);
         this.$store.commit('updateMedia', response);
