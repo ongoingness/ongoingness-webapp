@@ -8,11 +8,11 @@
       v-if="isLoggedIn",
       v-on:on-update="tabUpdate"
     )
-    div(
-      v-if="isLoggedIn && active.media"
-    )
+    div(v-if="isLoggedIn && active.logs")
       LogForm
       LogsTable
+    div(v-if="isLoggedIn && active.piece")
+      PieceEngagement
     Notification
     FooterBar
 </template>
@@ -31,7 +31,7 @@ import FooterBar from './components/FooterBar.vue';
 import LogForm from './components/LogForm.vue';
 import LogsTable from './components/LogsTable.vue';
 import LogItem from './components/LogItem.vue';
-import TimelineChart from './components/TimelineChart.vue'
+import PieceEngagement from './components/PieceEngagement.vue';
 
 export default {
   name: 'app',
@@ -46,13 +46,15 @@ export default {
     LogForm,
     LogsTable,
     LogItem,
-    TimelineChart
+    PieceEngagement,
   },
   data() {
     return {
       active: {
-        media: true,
-        devices: false,
+        logs: true,
+        piece: false,
+        content: false,
+        website: false,
       },
     };
   },

@@ -255,4 +255,16 @@ export default class API {
     return response.data.payload === undefined || null ? [] : response.data.payload;
   }
 
+  static async numberOfSessions(token, user, timescale, from, to) {
+    if (!token) throw Error('Access token is required');
+
+    const response = await axios.get(`${this.URL}/log/numberOfSessions/?user=${user}&timescale=${timescale}&from=${from}&to=${to}`, {
+      headers: {
+        'x-access-token': token,
+      }
+    });
+
+    return response.data.payload === undefined || null ? [] : response.data.payload;
+  }
+
 }

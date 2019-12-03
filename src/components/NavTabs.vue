@@ -3,8 +3,8 @@
     div.tabs.is-centered.is-medium
       ul
         li#images(
-          :class="{'is-active': active.images}",
-          @click="setActive('media')"
+          :class="{'is-active': active.logs}",
+          @click="setActive('logs')"
         )
           a
             span.icon.is-small
@@ -13,15 +13,35 @@
               )
             span Logs
         li#devices(
-          :class="{'is-active': active.devices}",
-          @click="setActive('devices')"
+          :class="{'is-active': active.piece}",
+          @click="setActive('piece')"
         )
           a
             span.icon.is-small
               i.far.fa-circle(
               aria-hidden="true"
               )
-            span Devices
+            span Piece Engagement
+        li#devices(
+          :class="{'is-active': active.content}",
+          @click="setActive('content')"
+        )
+          a
+            span.icon.is-small
+              i.far.fa-circle(
+              aria-hidden="true"
+              )
+            span Content Engagement
+        li#devices(
+          :class="{'is-active': active.website}",
+          @click="setActive('website')"
+        )
+          a
+            span.icon.is-small
+              i.far.fa-circle(
+              aria-hidden="true"
+              )
+            span Website Engagement 
 </template>
 
 <script>
@@ -30,8 +50,10 @@ export default {
   data() {
     return {
       active: {
-        images: true,
-        devices: false,
+        logs: true,
+        piece: false,
+        content: false,
+        website: false,
       },
     };
   },
@@ -48,14 +70,20 @@ export default {
       });
 
       switch (tab) {
-        case 'media':
-          this.active.images = true;
+        case 'logs':
+          this.active.logs = true;
           break;
-        case 'devices':
-          this.active.devices = true;
+        case 'piece':
+          this.active.piece = true;
+          break;
+        case 'content':
+          this.active.content = true;
+          break;
+        case 'website':
+          this.active.website = true;
           break;
         default:
-          this.active.images = true;
+          this.active.logs = true;
           noAction = true;
           break;
       }
