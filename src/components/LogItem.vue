@@ -22,7 +22,9 @@ export default {
             var contentJSON = JSON.parse(this.log.content);
             var contentKeys = Object.keys(contentJSON);
             for(var i = 0; i < contentKeys.length; i++) {
-                if(contentKeys[i] != 'token' && contentKeys[i] != 'user')
+                if(contentKeys[i] == 'media') {
+                    s += `${contentKeys[i]}: ${JSON.stringify(contentJSON[contentKeys[i]])}\n`;
+                } else if(contentKeys[i] != 'token' && contentKeys[i] != 'user')
                     s += `${contentKeys[i]}: ${contentJSON[contentKeys[i]]}\n`;
             }
             return s;
