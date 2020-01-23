@@ -1,21 +1,47 @@
 <template lang="pug">
   div#upload-media
     h2.is-size-4 Upload Media
-    div.hide-buttons
-      button.button(
-        v-if="isHidden"
-        @click="submit"
-      ) Add Media
-      button.button(
-        v-else
-        @click="submit"
-      ) Close
+    div
+      div.control.image-tag-selection
+        p Which collection should this media be added to?
+        label.radio
+          input(
+          type="radio",
+          name="mtag",
+          value="permanent",
+          v-model="ltag"
+          )
+          | &nbsp; Permanent Collection
+        
+        br
+        label.radio
+          input(
+          type="radio",
+          name="mtag",
+          value="temporary",
+          v-model="ltag"
+          )
+          | &nbsp; Temporary Collection
 
-    div(
-      v-show="!isHidden"
-    )
+      div(v-if="ltag == 'temporary'")
+        label(for="temporary_month") Month
+        input(
+          type="text",
+          id="temporary_month",
+          name="temporary_month",
+          maxlength="2",
+          v-model="temporary_month"
+          )
+        label(for="temporary_day") Day
+        input(
+          type="text",
+          id="temporary_day",
+          name="temporary_day",
+          maxlength="2",
+          v-model="temporary_day"
+          )
 
-      div.file.is-boxed.file-upload
+      div.file.is-boxed.file-upload(v-if="ltag != 'unset'")
         label.file-label
           input.file-input(
           type="file",
@@ -28,35 +54,12 @@
             span.file-label.has-text-centered Choose a file
           span.file-name {{ filename }}
 
-      div.control.image-tag-selection
-        p Which collection should this media be added to?
-        label.radio
-          input(
-          type="radio",
-          :disabled="placeholderCountPermanent == 0",
-          name="mtag",
-          value="permanent",
-          v-model="ltag"
-          )
-          | &nbsp; Permanent Collection
-        
-        br
-        label.radio
-          input(
-          type="radio",
-          name="mtag",
-          :disabled="placeholderCountTemporary == 0",
-          value="temporary",
-          v-model="ltag"
-          )
-          | &nbsp; Temporary Collection
-      
-      div
       button.button.upload-button.is-primary(
       @click="uploadFile",
       :disabled="(file === null || file === undefined || ltag === 'unset')",
       :class="{ 'is-loading': isBusy }"
       ) Upload
+
 </template>
 
 <script>
@@ -64,6 +67,7 @@ import Multiselect from 'vue-multiselect';
 import API from '../api';
 import NotificationController from '../controllers/notification';
 import emotions from '../emotions.json';
+import media from '../store/modules/media';
 
 export default {
   components: {
@@ -78,11 +82,15 @@ export default {
       ltag: 'unset',
       isBusy: false,
       isHidden: true,
+      uploadHidden: true,
+      dateHidden: true,
       emotions,
       lcontent: 'file',
       value: [],
       options: [],
       linkedMedia: [],
+      temporary_day: 0,
+      temporary_month: 0,
     };
   },
   methods: {
@@ -106,32 +114,51 @@ export default {
       }
       this.isBusy = true;
       try {
-        const tags = [];
-        this.value.forEach((element) => {
-          tags.push(element.name);
-        });
+        let tags = [];
+        if(this.ltag == 'temporary') { 
+            if(isNaN(this.temporary_month) || isNaN(this.temporary_month))
+              throw new Exception("Date not valid");
 
-        const response = await API.uploadMedia(
-          // set headers
-          this.file,
-          {
-            era: this.era,
-            locket: this.ltag,
-            emotions: tags,
-            links: this.linkedMedia,
-          },
-          this.$store.getters.getToken,
-        );
-        this.file = null;
+            var temporary_day = Number(this.temporary_day);
+            var temporary_month = Number(this.temporary_month);     
+
+            if(temporary_day < 1 || temporary_month < 1 || temporary_month > 12)
+              throw new Exception("Date not valid");
+
+            const today = new Date();
+            const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() /* - 1 + 1 */, 0).getDate();
+
+            if(temporary_day > lastDayOfMonth)
+              throw new Exception("Date not valid");
+
+            var mediaDate = new Date(1970, this.temporary_month - 1, this.temporary_day);
+            console.log(mediaDate.getTime());
+            console.log(new Date(mediaDate.getTime()));
+
+            tags.push([`t/${mediaDate.getTime()}`],);
+        }
+          const response = await API.uploadMedia(
+            // set headers
+            this.file,
+            {
+              era: this.era,
+              locket: this.ltag,
+              emotions: tags,
+              links: this.linkedMedia,
+            },
+            this.$store.getters.getToken,
+          );
+        
         this.$store.commit('addMedia', response);
+
       } catch (e) {
         NotificationController.setNotification('danger', 'Something went wrong');
-        this.file = null;
       } finally {
         this.isBusy = false;
         this.options = [];
         this.value = [];
-        this.ltag = 'unset'
+        this.ltag = 'unset';
+        this.file = null;
       }
     },
     capitalizeFirstLetter(string) {

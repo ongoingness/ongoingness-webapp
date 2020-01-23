@@ -14,7 +14,7 @@
       div.hero-body
         div.container
           h1.title Ongoingness
-          div Locket
+          div Momento
 </template>
 
 <script>

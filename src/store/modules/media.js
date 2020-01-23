@@ -25,7 +25,44 @@ const getters = {
 
   getMediaById: (state) => (id) => {
     return state.media.find((media) => media._id === id);
-  }
+  },
+
+  getMediaByTimeTag: state => {
+    var mediaByDay = []
+    console.log(state.media);
+    state.media.forEach(element => {
+      console.log(element);
+      if(element.locket == "temporary" && element.times.length > 0) {
+        const contentDate = new Date(Number(element.times[0].value));
+        const month = contentDate.getMonth()+1;
+        const day = contentDate.getDate()
+        const dateId = `${month}-${day}`;
+
+        var result = mediaByDay.some(day => {
+          if(day.dateId === dateId) {
+              day.content.push(element);
+              return true
+          }
+        });
+
+        console.log(mediaByDay);
+
+        if(!result) {
+          let newDay = {
+            dateId: dateId,
+            month: month,
+            day: day,
+            date: new Date(1970, month-1, day),
+            content: [element]
+          }
+          mediaByDay.push(newDay);
+        }
+      }
+    });
+
+    return mediaByDay;
+  },
+
 };
 
 export default {

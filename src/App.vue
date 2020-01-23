@@ -81,6 +81,8 @@ export default {
         const tagsResponse = await API.getAllTags(this.$store.getters.getToken);
         this.$store.commit('addTags', tagsResponse);
 
+        console.log(this.$store.getters.getMediaByTimeTag);
+
       } catch (e) {
         console.log(e);
         NotificationController.setNotification('danger', 'Something went wrong');

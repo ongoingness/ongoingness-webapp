@@ -3,35 +3,21 @@
     h2.is-size-3 Media
     UploadMedia
     h2.is-size-4 Your Media
-
       h3.is-size-5.media-header Permanent Media
-      p.is-size-6 This is your permanent media. You can add a maximum of 7 media items.
       div.media-collection
         MediaItem.media-item(
           v-for="m in permanentMedia"
           :media="m",
           v-bind:key="m.id",
         )
-        <div v-for="i in placeholderCountPermanent">
-          <div style="margin: 5px">
-            <img src="../assets/placeholder.png">
-          </div>
-        </div>
-
+        
       h3.is-size-5.media-header Temporary Media
-      p.is-size-6 This is your temporary media. You can add a maximum of 13 items.
-      div.media-collection
-        MediaItem.media-item(
+      div
+        MediaContainer(
           v-for="m in temporaryMedia"
-          :media="m",
+          :dayContent="m",
           v-bind:key="m.id",
         )
-
-        <div v-for="i in placeholderCountTemporary">
-          <div style="margin: 5px">
-            <img src="../assets/placeholder.png">
-          </div>
-        </div>
 
 </template>
 
@@ -46,6 +32,8 @@ import TagPeople from './TagPeople.vue';
 import TagPlace from './TagPlace.vue';
 import TagTime from './TagTime.vue';
 
+import MediaContainer from './MediaContainer.vue';
+
 export default {
   name: 'Media',
   components: {
@@ -56,6 +44,7 @@ export default {
     TagPeople,
     TagPlace,
     TagTime,
+    MediaContainer,
   },
   data() {
     return {
@@ -83,8 +72,10 @@ export default {
      * @returns {*}
      */
     temporaryMedia() {
-      const temporary = this.$store.getters.getMedia.filter(media => media.locket === 'temporary');
-      return temporary.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      //const temporary = this.$store.getters.getMedia.filter(media => media.locket === 'temporary');
+      //return temporary.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      const temporary = this.$store.getters.getMediaByTimeTag;
+      return temporary.sort((a, b) => a.date - b.date);
     },
 
     tags() {
