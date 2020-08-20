@@ -1,0 +1,406 @@
+[
+  {
+    "name": "anger",
+    "children": [
+      {
+        "name": "rage",
+        "children": [
+          {
+            "name": "hate"
+          },
+          {
+            "name": "hostile"
+          }
+        ]
+      },
+      {
+        "name": "exasperated",
+        "children": [
+          {
+            "name": "agitated"
+          },
+          {
+            "name": "frustrated"
+          }
+        ]
+      },
+      {
+        "name": "irritable",
+        "children": [
+          {
+            "name": "annoyed"
+          },
+          {
+            "name": "aggravated"
+          }
+        ]
+      },
+      {
+        "name": "envy",
+        "children": [
+          {
+            "name": "resentful"
+          },
+          {
+            "name": "jealous"
+          }
+        ]
+      },
+      {
+        "name": "disgust",
+        "children": [
+          {
+            "name": "contempt"
+          },
+          {
+            "name": "revolted"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "sadness",
+    "children": [
+      {
+        "name": "suffering",
+        "children": [
+          {
+            "name": "agony"
+          },
+          {
+            "name": "hurt"
+          }
+        ]
+      },
+      {
+        "name": "sadness",
+        "children": [
+          {
+            "name": "depressed"
+          },
+          {
+            "name": "sorrow"
+          }
+        ]
+      },
+      {
+        "name": "disappointed",
+        "children": [
+          {
+            "name": "dismayed"
+          },
+          {
+            "name": "displeased"
+          }
+        ]
+      },
+      {
+        "name": "shameful",
+        "children": [
+          {
+            "name": "regretful"
+          },
+          {
+            "name": "guilty"
+          }
+        ]
+      },
+      {
+        "name": "neglected",
+        "children": [
+          {
+            "name": "isolated"
+          },
+          {
+            "name": "lonely"
+          }
+        ]
+      },
+      {
+        "name": "despair",
+        "children": [
+          {
+            "name": "grief"
+          },
+          {
+            "name": "powerless"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "surprise",
+    "children": [
+      {
+        "name": "stunned",
+        "children": [
+          {
+            "name": "shocked"
+          },
+          {
+            "name": "dismayed"
+          }
+        ]
+      },
+      {
+        "name": "confused",
+        "children": [
+          {
+            "name": "disillusioned"
+          },
+          {
+            "name": "perplexed"
+          }
+        ]
+      },
+      {
+        "name": "amazed",
+        "children": [
+          {
+            "name": "astonished"
+          },
+          {
+            "name": "awe-struck"
+          }
+        ]
+      },
+      {
+        "name": "overcome",
+        "children": [
+          {
+            "name": "speechless"
+          },
+          {
+            "name": "astounded"
+          }
+        ]
+      },
+      {
+        "name": "moved",
+        "children": [
+          {
+            "name": "stimulated"
+          },
+          {
+            "name": "touched"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "joy",
+    "children": [
+      {
+        "name": "content",
+        "children": [
+          {
+            "name": "pleased"
+          },
+          {
+            "name": "satisfied"
+          }
+        ]
+      },
+      {
+        "name": "happy",
+        "children": [
+          {
+            "name": "amused"
+          },
+          {
+            "name": "delighted"
+          }
+        ]
+      },
+      {
+        "name": "cheerful",
+        "children": [
+          {
+            "name": "jovial"
+          },
+          {
+            "name": "blissful"
+          }
+        ]
+      },
+      {
+        "name": "proud",
+        "children": [
+          {
+            "name": "triumphant"
+          },
+          {
+            "name": "illustrious"
+          }
+        ]
+      },
+      {
+        "name": "optimistic",
+        "children": [
+          {
+            "name": "eager"
+          },
+          {
+            "name": "hopeful"
+          }
+        ]
+      },
+      {
+        "name": "enthusiastic",
+        "children": [
+          {
+            "name": "zeal"
+          },
+          {
+            "name": "excited"
+          }
+        ]
+      },
+      {
+        "name": "elation",
+        "children": [
+          {
+            "name": "jubilation"
+          },
+          {
+            "name": "euphoric"
+          }
+        ]
+      },
+      {
+        "name": "enthralled",
+        "children": [
+          {
+            "name": "rapture"
+          },
+          {
+            "name": "enchanted"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "love",
+    "children": [
+      {
+        "name": "affectionate",
+        "children": [
+          {
+            "name": "fondness"
+          },
+          {
+            "name": "romantic"
+          }
+        ]
+      },
+      {
+        "name": "longing",
+        "children": [
+          {
+            "name": "attracted"
+          },
+          {
+            "name": "sentimental"
+          }
+        ]
+      },
+      {
+        "name": "desire",
+        "children": [
+          {
+            "name": "infatuation"
+          },
+          {
+            "name": "passion"
+          }
+        ]
+      },
+      {
+        "name": "tenderness",
+        "children": [
+          {
+            "name": "compassionate"
+          },
+          {
+            "name": "caring"
+          }
+        ]
+      },
+      {
+        "name": "peaceful",
+        "children": [
+          {
+            "name": "satisfied"
+          },
+          {
+            "name": "relieved"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "fear",
+    "children": [
+      {
+        "name": "scared",
+        "children": [
+          {
+            "name": "helpless"
+          },
+          {
+            "name": "frightened"
+          }
+        ]
+      },
+      {
+        "name": "terror",
+        "children": [
+          {
+            "name": "panic"
+          },
+          {
+            "name": "hysterical"
+          }
+        ]
+      },
+      {
+        "name": "insecure",
+        "children": [
+          {
+            "name": "inferior"
+          },
+          {
+            "name": "inadequate"
+          }
+        ]
+      },
+      {
+        "name": "nervous",
+        "children": [
+          {
+            "name": "worried"
+          },
+          {
+            "name": "anxious"
+          }
+        ]
+      },
+      {
+        "name": "horror",
+        "children": [
+          {
+            "name": "dread"
+          },
+          {
+            "name": "mortified"
+          }
+        ]
+      }
+    ]
+  }
+]

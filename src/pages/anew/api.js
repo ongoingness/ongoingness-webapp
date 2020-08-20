@@ -7,13 +7,14 @@
  */
 import axios from 'axios';
 import * as FormData from 'form-data';
-import mock from '../mock_api.json';
+import mock from '../../../mock_api.json';
 import { isTest } from './utils';
 import store from './store';
 
 export default class API {
-  // static URL = 'https://ongoingness-api.openlab.ncl.ac.uk/api';
+  //static URL = 'https://ongoingness-api.openlab.ncl.ac.uk/api';
   static URL = 'http://localhost:3000/api';
+  //static URL = 'https://ongoingness-v2-api.openlab.ncl.ac.uk/api';
 
   /**
    * Register a user.
@@ -141,6 +142,8 @@ export default class API {
       headers,
     });
 
+    console.log(response.data.payload);
+
     return response.data.payload;
   }
 
@@ -196,5 +199,31 @@ export default class API {
     });
 
     return response;
+  }
+
+  static async getTagSuggestion(token, term) {
+    if (!token) throw new Error('Access token is required');
+
+    const response = await axios.get(`${this.URL}/media/tags?term=${term}`, {
+      headers: {
+        'x-access-token': token,
+      },
+    });
+
+    // If there is no media return an empty array, else, return the media
+    return response.data.payload === undefined || null ? [] : response.data.payload;
+  }
+
+  static async getAllTags(token) {
+    if (!token) throw new Error('Access token is required');
+
+    const response = await axios.get(`${this.URL}/media/tagsall`, {
+      headers: {
+        'x-access-token': token,
+      },
+    });
+
+    // If there is no media return an empty array, else, return the media
+    return response.data === undefined || null ? [] : response.data;
   }
 }
