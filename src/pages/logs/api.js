@@ -9,12 +9,14 @@ import axios from 'axios';
 import * as FormData from 'form-data';
 import mock from '../../../mock_api.json';
 import { isTest } from './utils';
+// eslint-disable-next-line
 import store from './store';
 
 export default class API {
-  static URL = 'https://ongoingness-api-dev.openlab.ncl.ac.uk/api';
-  //static URL = 'http://localhost:3000/api';
-  //static URL = 'https://ongoingness-v2-api.openlab.ncl.ac.uk/api';
+  // static URL = 'https://ongoingness-api-dev.openlab.ncl.ac.uk/api';
+  // static URL = 'http://localhost:3000/api';
+  // static URL = 'https://ongoingness-v2-api.openlab.ncl.ac.uk/api';
+  static URL = 'http://134.122.106.9:3000/api';
 
   /**
    * Register a user.
@@ -233,13 +235,12 @@ export default class API {
     const response = await axios.get(`${this.URL}/log/usernlogs`, {
       headers: {
         'x-access-token': token,
-      }
+      },
     });
     return response.data.payload === undefined || null ? [] : response.data.payload;
   }
 
-  //http://localhost:3000/api/log/search/?codes=GET_MEDIA,LOGIN&user=5db6ed2a18eef30011ee2a9a&firstPage=1&pageAmount=10&pageSize=10
-  static async searchLogs(token, codes, user, firstPage, pageAmount,pageSize, from, to) {
+  static async searchLogs(token, codes, user, firstPage, pageAmount, pageSize, from, to) {
     if (!token) throw Error('Access token is required');
 
     console.log(from);
@@ -248,10 +249,8 @@ export default class API {
     const response = await axios.get(`${this.URL}/log/search/?codes=${codes}&user=${user}&firstPage=${firstPage}&pageAmount=${pageAmount}&pageSize=${pageSize}&from=${from}&to=${to}`, {
       headers: {
         'x-access-token': token,
-      }
+      },
     });
-
-
     return response.data.payload === undefined || null ? [] : response.data.payload;
   }
 
@@ -261,10 +260,8 @@ export default class API {
     const response = await axios.get(`${this.URL}/log/numberOfSessions/?user=${user}&timescale=${timescale}&from=${from}&to=${to}`, {
       headers: {
         'x-access-token': token,
-      }
+      },
     });
-
     return response.data.payload === undefined || null ? [] : response.data.payload;
   }
-
 }

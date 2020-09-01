@@ -19,7 +19,7 @@ const mutations = {
 const actions = {};
 
 const getters = {
-  getUser: state => state.user,
+  getUser: (state) => state.user,
 };
 
 export default {
