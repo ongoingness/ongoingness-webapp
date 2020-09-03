@@ -14,7 +14,7 @@ import store from './store';
 export default class API {
   // static URL = 'https://ongoingness-api.openlab.ncl.ac.uk/api';
   // static URL = 'http://localhost:3000/api';
-  static URL = 'https://api.enablingongoingness.com/api';
+  static URL = 'https://app.enablingongoingness.com/api';
 
   /**
    * Register a user.
