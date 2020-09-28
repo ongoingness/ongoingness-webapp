@@ -5,13 +5,8 @@
       p Ongoingness by&nbsp;
         |
         a(
-        href="https://openlab.ncl.ac.uk/"
-        ) Open Lab, Newcastle University
-        | , and&nbsp;
-        a(
         href="https://www.northumbria.ac.uk"
         ) Northumbria University
-        | .
       p
         | The software is licensed under&nbsp;
         a(
@@ -19,15 +14,15 @@
         ) BSD-3
         | . Checkout the&nbsp;
         a(
-        href="https://github.com/digitalinteraction"
+        href="https://github.com/ongoingness"
         ) source code
         | &nbsp;on Github.
         br
         | If you have any questions about your data or wish for it to be removed, then please
         | send an email to&nbsp;
         a(
-        href="mailto:openlab-admin@ncl.ac.uk"
-        ) Open Lab.
+        href="mailto:kyle.montague@northumbria.ac.uk"
+        ) Kyle Montague.
 </template>
 
 <script>
