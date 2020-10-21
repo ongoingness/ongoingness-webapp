@@ -12,7 +12,7 @@
           v-model="ltag"
           )
           | &nbsp; Permanent Collection
-        
+
         br
         label.radio
           input(
@@ -114,10 +114,10 @@ export default {
       }
       this.isBusy = true;
       try {
-        let tags = [];
-        if(this.ltag == 'temporary') { 
-            if(isNaN(this.temporary_month) || isNaN(this.temporary_month))
-              throw new Exception("Date not valid");
+        let tags = '';
+        if (this.ltag === 'temporary') {
+          if (isNaN(this.temporary_month) || isNaN(this.temporary_month))
+            throw new Exception("Date not valid");
 
             var temporary_day = Number(this.temporary_day);
             var temporary_month = Number(this.temporary_month);     
@@ -135,8 +135,9 @@ export default {
             console.log(mediaDate.getTime());
             console.log(new Date(mediaDate.getTime()));
 
-            tags.push([`t/${mediaDate.getTime()}`],);
+            tags += `t/${mediaDate.getTime()}`;
         }
+
           const response = await API.uploadMedia(
             // set headers
             this.file,
@@ -149,6 +150,7 @@ export default {
             this.$store.getters.getToken,
           );
         
+       
         this.$store.commit('addMedia', response);
 
       } catch (e) {
