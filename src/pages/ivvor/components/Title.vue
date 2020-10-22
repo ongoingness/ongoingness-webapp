@@ -14,7 +14,7 @@
       div.hero-body
         div.container
           h1.title Ongoingness
-          div Momento
+          div Ivvor
 </template>
 
 <script>
