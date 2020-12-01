@@ -252,6 +252,20 @@ export default class API {
         'x-access-token': token,
       },
     });
+
+    if(response.data.payload === undefined || null )
+      return []
+
+    for(let page of response.data.payload.pages) {
+      for(let log of page.logs) {
+        if(log.content.includes('\\')) {
+          log.content = log.content.replaceAll('\\', '')
+          log.content = log.content.substring(1, log.content.length-1);
+          console.log(log.content);
+        }
+      }
+    }
+
     return response.data.payload === undefined || null ? [] : response.data.payload;
   }
 
