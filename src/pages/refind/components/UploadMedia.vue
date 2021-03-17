@@ -127,10 +127,12 @@ export default {
       }
       this.isBusy = true;
       try {
-        const tags = [];
+        let tags = '';
         this.value.forEach((element) => {
-          tags.push(element.name);
+          tags += `${element.name},`;
         });
+
+        tags = tags.slice(0, -1);
 
         const response = await API.uploadMedia(
           // set headers
@@ -139,7 +141,7 @@ export default {
             era: this.era,
             locket: this.ltag,
             emotions: tags,
-            links: this.linkedMedia,
+            links: '',
           },
           this.$store.getters.getToken,
         );

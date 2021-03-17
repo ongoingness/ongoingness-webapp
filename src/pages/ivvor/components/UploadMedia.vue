@@ -117,9 +117,6 @@ export default {
               throw new Exception("Date not valid");
 
             var mediaDate = new Date(1970, this.temporary_month - 1, this.temporary_day);
-            console.log(mediaDate.getTime());
-            console.log(new Date(mediaDate.getTime()));
-
             tags += `t/${mediaDate.getTime()}`;
         }
 
@@ -130,7 +127,7 @@ export default {
               era: this.era,
               locket: this.ltag,
               emotions: tags,
-              links: this.linkedMedia,
+              links: '',
             },
             this.$store.getters.getToken,
           );

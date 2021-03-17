@@ -53,8 +53,8 @@ export default {
                 {
                     era: 'past',
                     locket: this.type,
-                    emotions: [],
-                    links: [],
+                    emotions: '',
+                    links: '',
                 },
                 this.$store.getters.getToken,
             );

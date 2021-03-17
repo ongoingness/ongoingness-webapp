@@ -97,19 +97,14 @@ export default {
       }
       this.isBusy = true;
       try {
-        const tags = [];
-        this.value.forEach((element) => {
-          tags.push(element.name);
-        });
-
         const response = await API.uploadMedia(
           // set headers
           this.file,
           {
             era: this.era,
             locket: this.ltag,
-            emotions: tags,
-            links: this.linkedMedia,
+            emotions:'',
+            links: '',
           },
           this.$store.getters.getToken,
         );

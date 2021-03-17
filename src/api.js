@@ -12,8 +12,8 @@ import { isTest } from './utils';
 import store from './store';
 
 export default class API {
-  // static URL = 'http://localhost:3000/api';
-  static URL = 'https://app.enablingongoingness.com/api';
+  static URL = 'http://localhost:3000/api';
+  // static URL = 'https://app.enablingongoingness.com/api';
 
   /**
    * Register a user.
@@ -236,12 +236,16 @@ export default class API {
       'x-access-token': token,
     };
 
+  
+
     if (data) {
       Object.keys(data).forEach((key) => {
         headers[key] = data[key];
       });
     }
     
+    console.log(headers);
+
     const response = await axios.post(`${this.URL}/media`, formData, {
       headers,
     });
