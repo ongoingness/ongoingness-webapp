@@ -23,7 +23,7 @@ div#media.container(style="padding-bottom: 30px;")
 </template>
 <script>
 import UserSelect from './UserSelect.vue';
-import API from '../api';
+import API from '../../../api';
 
 export default {
 

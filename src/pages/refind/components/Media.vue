@@ -61,19 +61,16 @@
 </template>
 
 <script>
-import Notification from './views/Notification.vue';
 import MediaItem from './MediaItem.vue';
 import UploadMedia from './UploadMedia.vue';
-import API from '../api';
-
-import TagGeneral from './TagGeneral.vue';
-import TagPeople from './TagPeople.vue';
-import TagPlace from './TagPlace.vue';
-import TagTime from './TagTime.vue';
+import TagGeneral from '../../../components/TagGeneral.vue';
+import TagPeople from '../../../components/TagPeople.vue';
+import TagPlace from '../../../components/TagPlace.vue';
+import TagTime from '../../../components/TagTime.vue';
 
 export default {
   name: 'Media',
-  components: { UploadMedia, MediaItem, Notification, TagGeneral, TagPeople, TagPlace, TagTime },
+  components: { UploadMedia, MediaItem, TagGeneral, TagPeople, TagPlace, TagTime },
   data () {
     return {
       showTags: false,

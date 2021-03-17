@@ -4,11 +4,16 @@ Web application to upload images and register devices for the Ongoingness protot
 
 ## Project Structure
 ### /src
+#### /assets
+Images and CSS files
+
 #### /components
 Individual components are found here, these present and collect data to the user.
 
 #### /controllers
 Handle user actions and interface with the store.
+
+
 
 ##### TODO
  - [ ] Move `src/api.js` to be a controller.

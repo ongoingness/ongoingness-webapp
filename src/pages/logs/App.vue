@@ -1,6 +1,6 @@
 <template lang="pug">
   div#app
-    Title
+    Title(title="Logs", canDelete="true")
     AuthForm(
       v-if="!isLoggedIn"
     )
@@ -18,19 +18,16 @@
 </template>
 
 <script>
-import Title from './components/Title.vue';
-import AuthForm from './components/AuthForm.vue';
-import Cookie from './cookies';
-import API from './api';
-import Media from './components/Media.vue';
+import Title from '../../components/Title.vue';
+import AuthForm from '../../components/AuthForm.vue';
+import Cookie from '../../cookies';
+import API from '../../api';
 import NavTabs from './components/NavTabs.vue';
-import Devices from './components/Devices.vue';
-import Notification from './components/views/Notification.vue';
-import NotificationController from './controllers/notification';
-import FooterBar from './components/FooterBar.vue';
+import Notification from '../../components/views/Notification.vue';
+import NotificationController from '../../controllers/notification';
+import FooterBar from '../../components/FooterBar.vue';
 import LogForm from './components/LogForm.vue';
 import LogsTable from './components/LogsTable.vue';
-import LogItem from './components/LogItem.vue';
 import PieceEngagement from './components/PieceEngagement.vue';
 
 export default {
@@ -38,14 +35,11 @@ export default {
   components: {
     FooterBar,
     Notification,
-    Devices,
     NavTabs,
-    Media,
     AuthForm,
     Title,
     LogForm,
     LogsTable,
-    LogItem,
     PieceEngagement,
   },
   data() {

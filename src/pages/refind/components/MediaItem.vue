@@ -26,9 +26,9 @@
 
 <script>
 /* eslint-disable no-underscore-dangle */
-import API from '../api';
-import NotificationController from '../controllers/notification';
-import Tag from './Tag.vue';
+import API from '../../../api';
+import NotificationController from '../../../controllers/notification';
+import Tag from '../../../components/Tag.vue';
 
 export default {
   props: ['media'],

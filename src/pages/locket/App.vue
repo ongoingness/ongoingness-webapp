@@ -1,6 +1,6 @@
 <template lang="pug">
   div#app
-    Title
+    Title(title="Locket", canDelete="true")
     AuthForm(
       v-if="!isLoggedIn"
     )
@@ -22,16 +22,16 @@
 </template>
 
 <script>
-import Title from './components/Title.vue';
-import AuthForm from './components/AuthForm.vue';
-import Cookie from './cookies';
-import API from './api';
+import Title from '../../components/Title.vue';
+import AuthForm from '../../components/AuthForm.vue';
+import Cookie from '../../cookies';
+import API from '../../api';
 import Media from './components/Media.vue';
-import NavTabs from './components/NavTabs.vue';
-import Devices from './components/Devices.vue';
-import Notification from './components/views/Notification.vue';
-import NotificationController from './controllers/notification';
-import FooterBar from './components/FooterBar.vue';
+import NavTabs from '../../components/NavTabs.vue';
+import Devices from '../../components/Devices.vue';
+import Notification from '../../components/views/Notification.vue';
+import NotificationController from '../../controllers/notification';
+import FooterBar from '../../components/FooterBar.vue';
 
 export default {
   name: 'app',

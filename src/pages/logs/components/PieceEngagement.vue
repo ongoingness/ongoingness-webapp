@@ -19,10 +19,7 @@ div#media.container
 </template>
 
 <script>
-import Notification from './views/Notification.vue';
-import MediaItem from './MediaItem.vue';
 import NumberOfSessions from './NumberOfSessions.vue';
-// import API from '../api';
 
 export default {
   name: 'PieceEngagement',
@@ -71,15 +68,6 @@ export default {
         this.pageTitle = "Number of Sessions";
         this.numberOfSessions = true;
     }
-    /*
-    lengthOfSessions: false,
-     numberOfImagesViewed: false,
-        timeOfDay: false,
-        timeBetweenSessions: false,
-        totalWearTime: false,
-        skippedDays: false,
-        wearWindow: false,
-        falseStarts: false,*/
   },
 };
 </script>

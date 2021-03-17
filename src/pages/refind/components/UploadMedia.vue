@@ -83,9 +83,8 @@
 
 <script>
 import Multiselect from 'vue-multiselect';
-import API from '../api';
-import NotificationController from '../controllers/notification';
-import emotions from '../emotions.json';
+import API from '../../../api';
+import NotificationController from '../../../controllers/notification';
 
 export default {
   components: {
@@ -100,7 +99,7 @@ export default {
       ltag: 'present',
       isBusy: false,
       isHidden: true,
-      emotions,
+      emotions: [],
       lcontent: 'file',
       value: [],
       options: [],
@@ -155,9 +154,7 @@ export default {
         this.value = [];
       }
     },
-    capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    },
+
     /**
      * Set the file when the file is changed.
      * @param e
@@ -210,10 +207,6 @@ export default {
 
   .upload-button {
     margin-bottom: 1.25%;
-  }
-
-  .expand-button {
-    margin-left: 5px;
   }
 
   .emotions {

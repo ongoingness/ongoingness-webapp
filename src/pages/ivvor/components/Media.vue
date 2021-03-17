@@ -22,16 +22,8 @@
 </template>
 
 <script>
-import Notification from './views/Notification.vue';
 import MediaItem from './MediaItem.vue';
 import UploadMedia from './UploadMedia.vue';
-// import API from '../api';
-
-import TagGeneral from './TagGeneral.vue';
-import TagPeople from './TagPeople.vue';
-import TagPlace from './TagPlace.vue';
-import TagTime from './TagTime.vue';
-
 import MediaContainer from './MediaContainer.vue';
 
 export default {
@@ -39,22 +31,7 @@ export default {
   components: {
     UploadMedia,
     MediaItem,
-    Notification,
-    TagGeneral,
-    TagPeople,
-    TagPlace,
-    TagTime,
     MediaContainer,
-  },
-  data() {
-    return {
-      showTags: false,
-    };
-  },
-  methods: {
-    submit() {
-      this.showTags = !this.showTags;
-    },
   },
   computed: {
     /**
@@ -72,35 +49,10 @@ export default {
      * @returns {*}
      */
     temporaryMedia() {
-      //const temporary = this.$store.getters.getMedia.filter(media => media.locket === 'temporary');
-      //return temporary.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
       const temporary = this.$store.getters.getMediaByTimeTag;
       return temporary.sort((a, b) => a.date - b.date);
     },
 
-    tags() {
-      return this.$store.getters.getTags;
-    },
-
-    timeTags() {
-      return this.$store.getters.getTimeTags;
-    },
-
-    placeTags() {
-      return this.$store.getters.getPlacesTags;
-    },
-
-    peopleTags() {
-      return this.$store.getters.getPeopleTags;
-    },
-
-    placeholderCountPermanent() {
-      return 7 - this.permanentMedia.length;
-    },
-
-    placeholderCountTemporary() {
-      return 13 - this.temporaryMedia.length;
-    },
   },
 };
 </script>
@@ -108,10 +60,6 @@ export default {
 <style scoped lang="scss">
 #media {
   margin-bottom: 5%;
-
-  .all-media {
-    margin-top: 2.5%;
-  }
 
   .is-size-3 {
     margin-top: 1.25%;

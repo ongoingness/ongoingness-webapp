@@ -33,17 +33,7 @@ export default {
 #media {
   margin-bottom: 5%;
 
-  .all-media {
-    margin-top: 2.5%;
-  }
 
-  .is-size-3 {
-    margin-top: 1.25%;
-  }
-
-  .is-size-4 {
-    margin-top: 1.25%;
-  }
 
   .media-item {
     display: inline-block;
@@ -72,9 +62,6 @@ export default {
     flex-wrap: wrap;
   }
 
-  .media-header {
-    margin-top: 2.5%;
-  }
 }
 @media (max-width: 1080px) {
   #media {

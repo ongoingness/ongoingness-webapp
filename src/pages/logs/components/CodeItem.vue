@@ -6,8 +6,6 @@
 
 <script>
 
-import API from "../api";
-
 export default {
     props: ['code'],
     name: 'CodeItem',

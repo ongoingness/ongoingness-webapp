@@ -1,7 +1,7 @@
 <template lang="pug">
 div#media.container(style="padding-bottom: 30px;")
     h2.is-size-3 Users
-    div.user-container
+    div.users-container
         UserSelect.user-item(
             v-for="u in users"
             :user="u",
@@ -30,7 +30,7 @@ div#media.container(style="padding-bottom: 30px;")
 <script>
 import UserSelect from './UserSelect.vue';
 import CodeItem from './CodeItem.vue';
-import API from '../api';
+import API from '../../../api';
 
 export default {
 
@@ -62,6 +62,9 @@ export default {
             var to = this.$store.getters.getLogFormTo;
             var pageAmount = this.$store.getters.getLogPageRequestAmount;
             var pageSize = this.$store.getters.getLogPageSize;
+
+            console.log(codes, user, 1, pageAmount, pageSize, from, to);
+
 
             if(user != null && token != null) {
 

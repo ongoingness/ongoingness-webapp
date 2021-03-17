@@ -63,16 +63,10 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect';
-import API from '../api';
-import NotificationController from '../controllers/notification';
-import emotions from '../emotions.json';
-import media from '../store/modules/media';
+import API from '../../../api';
+import NotificationController from '../../../controllers/notification';
 
 export default {
-  components: {
-    Multiselect,
-  },
   name: 'UploadMedia',
   props: ['selectedMedia'],
   data() {
@@ -84,7 +78,7 @@ export default {
       isHidden: true,
       uploadHidden: true,
       dateHidden: true,
-      emotions,
+      emotions: [],
       lcontent: 'file',
       value: [],
       options: [],
@@ -94,15 +88,6 @@ export default {
     };
   },
   methods: {
-
-    submit() {
-      this.isHidden = !this.isHidden;
-    },
-    addTag(newTag) {
-      // eslint-disable-next-line
-      this.value.push({ 'name': newTag });
-    },
-
     /**
      * Handle a file upload.
      * @returns {Promise<void>}
@@ -163,9 +148,6 @@ export default {
         this.file = null;
       }
     },
-    capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    },
     /**
      * Set the file when the file is changed.
      * @param e
@@ -174,69 +156,17 @@ export default {
       // eslint-disable-next-line prefer-destructuring
       this.file = e.target.files[0];
     },
-    async getSuggestedTags(query) {
-      if (query.length === 0) {
-        this.options = [];
-      } else {
-        const aux = await API.getTagSuggestion(this.$store.getters.getToken, query);
-        const result = [];
-        for (let i = 0; i < aux.length; i += 1) {
-          let c = '';
-          let value = aux[i].name;
-          if (query.includes('t/')) {
-            c = 't/';
-            // eslint-disable-next-line prefer-destructuring
-            value = aux[i].value;
-          } else if (query.includes('p/')) c = 'p/';
-          else if (query.includes('@')) c = '@';
-          // eslint-disable-next-line
-          result.push({ 'name': `${c}${value}` });
-        }
-        this.options = result;
-      }
-    },
-    asyncUpdate(newVal) {
-      this.options = newVal;
-    },
   },
   computed: {
     filename() {
       return this.file === null || this.file === undefined ? 'Your media' : this.file.name;
     },
-    /**
-     * Get all media marked with a present tag.
-     *
-     * @returns {*}
-     */
-    presentMedia() {
-      return this.$store.getters.getMedia.filter(media => media.locket === 'permanent');
-    },
-    /**
-     *  Get all media marked with a past tag.
-     *
-     * @returns {*}
-     */
-    pastMedia() {
-      return this.$store.getters.getMedia.filter(media => media.locket === 'temporary');
-    },
-    /**
-     * Change value here to alter max number of 'permanent' media that can be uploaded.
-     */
-    placeholderCountPermanent() {
-      return 7 - this.presentMedia.length;
-    },
-    /**
-     * Change value here to alter max number of 'temporary' media that can be uploaded.
-     */
-    placeholderCountTemporary() {
-      return 13 - this.pastMedia.length;
-    }
   },
 };
 </script>
 
 <style lang="scss" scoped>
-  .image-tag-selection, .upload-button, .file-upload, .hide-buttons {
+  .image-tag-selection, .upload-button, .file-upload {
     margin-top: 1.25%;
   }
 
@@ -246,19 +176,6 @@ export default {
 
   .upload-button {
     margin-bottom: 1.25%;
-  }
-
-  .expand-button {
-    margin-left: 5px;
-  }
-
-  .emotions {
-    margin-top: 1.25%;
-  }
-
-  .tagtypes {
-    list-style-type:square;
-    padding-left: 30px;
   }
 
 </style>

@@ -1,8 +1,8 @@
 import 'bulma/css/bulma.css';
-import './assets/multiselect.css';
+import '../../assets/multiselect.css';
 import Vue from 'vue';
 import Vuex from 'vuex';
-import store from './store';
+import store from '../../store';
 import App from './App.vue';
 
 Vue.use(Vuex);

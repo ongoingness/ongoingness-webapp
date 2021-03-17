@@ -14,7 +14,7 @@
         )
         <div v-for="i in placeholderCountPermanent">
           <div style="margin: 5px">
-            <img src="../assets/placeholder.png">
+            <img src="../../../assets/placeholder.png">
           </div>
         </div>
 
@@ -29,43 +29,21 @@
 
         <div v-for="i in placeholderCountTemporary">
           <div style="margin: 5px">
-            <img src="../assets/placeholder.png">
+            <img src="../../../assets/placeholder.png">
           </div>
         </div>
 
 </template>
 
 <script>
-import Notification from './views/Notification.vue';
 import MediaItem from './MediaItem.vue';
 import UploadMedia from './UploadMedia.vue';
-// import API from '../api';
-
-import TagGeneral from './TagGeneral.vue';
-import TagPeople from './TagPeople.vue';
-import TagPlace from './TagPlace.vue';
-import TagTime from './TagTime.vue';
 
 export default {
   name: 'Media',
   components: {
     UploadMedia,
     MediaItem,
-    Notification,
-    TagGeneral,
-    TagPeople,
-    TagPlace,
-    TagTime,
-  },
-  data() {
-    return {
-      showTags: false,
-    };
-  },
-  methods: {
-    submit() {
-      this.showTags = !this.showTags;
-    },
   },
   computed: {
     /**
@@ -87,22 +65,6 @@ export default {
       return temporary.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
     },
 
-    tags() {
-      return this.$store.getters.getTags;
-    },
-
-    timeTags() {
-      return this.$store.getters.getTimeTags;
-    },
-
-    placeTags() {
-      return this.$store.getters.getPlacesTags;
-    },
-
-    peopleTags() {
-      return this.$store.getters.getPeopleTags;
-    },
-
     placeholderCountPermanent() {
       return 7 - this.permanentMedia.length;
     },
@@ -117,10 +79,6 @@ export default {
 <style scoped lang="scss">
 #media {
   margin-bottom: 5%;
-
-  .all-media {
-    margin-top: 2.5%;
-  }
 
   .is-size-3 {
     margin-top: 1.25%;

@@ -5,14 +5,12 @@ div#media-item(v-if="isUploader")
         button.button.is-loading.is-primary.uploading-button
     div.file.is-boxed.file-upload(v-else)
         img(:src="imagePlus")
-        //i.fas.fa-plus 
         input.file-input(
                 type="file",
                 name="file",
                 v-on:change="handleFileChange"
             )
         div.mediaLeftCounter {{this.n}}/{{this.nTotal}}
-        //div.mediaLeftCounter.twoDigits(v-else) {{this.n}}/{{this.nTotal}}
 div#media-item(v-else)
     img(:src="imageUrl")
      
@@ -20,13 +18,10 @@ div#media-item(v-else)
 
 <script>
 /* eslint-disable no-underscore-dangle */
-import API from '../api';
-import NotificationController from '../controllers/notification';
-
-import placeholderImage from "../assets/placeholder.png"
-import plusImage from "../assets/round-add-button.png"
-import plusImageSVG from "../assets/round-add-button.svg"
-import plusImageWhite from "../assets/white-round-add-button.png"
+import API from '../../../api';
+import NotificationController from '../../../controllers/notification';
+import placeholderImage from "../../../assets/placeholder.png"
+import plusImageWhite from "../../../assets/white-round-add-button.png"
 
 export default {
   props: ['type', 'index', 'n', 'nTotal'],
@@ -45,9 +40,6 @@ export default {
     imagePlus() {
         return plusImageWhite;
     },
-    nLengthIsOne() {
-        return String(this.n).length == 1;
-    }
   },
   methods: {
     async handleFileChange(e) {
@@ -80,18 +72,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.upper-padding {
-    padding-bottom: 36px;
-}
-
-.info-permanent {
-    padding-bottom: 35px;
-}
-
-.info-temporary {
-    padding-bottom: 15px;
-}
 
 .file-input {
     cursor: pointer;
@@ -141,25 +121,12 @@ export default {
     color: white;
     font-size: 20px;
     font-weight: 600;
-    //bottom: 6.5%;
-
     top: 50%;
     left: 50%;
     transform: translate(-50%, 200%);
 }
 
-.oneDigit {
-    //left: 47.5%;
-    transform: translate(-50%, 200%);
-}
-
-.twoDigits {
-    //left: 45.5%;
-      transform: translate(-50%, 200%);
-}
-
 #media-item {
-    //box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
     padding: 0.75%;
     vertical-align: top;
     max-height: 276.16px;

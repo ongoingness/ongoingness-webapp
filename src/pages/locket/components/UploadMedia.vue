@@ -60,15 +60,10 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect';
-import API from '../api';
-import NotificationController from '../controllers/notification';
-import emotions from '../emotions.json';
+import API from '../../../api';
+import NotificationController from '../../../controllers/notification';
 
 export default {
-  components: {
-    Multiselect,
-  },
   name: 'UploadMedia',
   props: ['selectedMedia'],
   data() {
@@ -78,7 +73,7 @@ export default {
       ltag: 'unset',
       isBusy: false,
       isHidden: true,
-      emotions,
+      emotions: [],
       lcontent: 'file',
       value: [],
       options: [],
@@ -89,10 +84,6 @@ export default {
 
     submit() {
       this.isHidden = !this.isHidden;
-    },
-    addTag(newTag) {
-      // eslint-disable-next-line
-      this.value.push({ 'name': newTag });
     },
 
     /**
@@ -134,9 +125,7 @@ export default {
         this.ltag = 'unset'
       }
     },
-    capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    },
+
     /**
      * Set the file when the file is changed.
      * @param e
@@ -145,30 +134,7 @@ export default {
       // eslint-disable-next-line prefer-destructuring
       this.file = e.target.files[0];
     },
-    async getSuggestedTags(query) {
-      if (query.length === 0) {
-        this.options = [];
-      } else {
-        const aux = await API.getTagSuggestion(this.$store.getters.getToken, query);
-        const result = [];
-        for (let i = 0; i < aux.length; i += 1) {
-          let c = '';
-          let value = aux[i].name;
-          if (query.includes('t/')) {
-            c = 't/';
-            // eslint-disable-next-line prefer-destructuring
-            value = aux[i].value;
-          } else if (query.includes('p/')) c = 'p/';
-          else if (query.includes('@')) c = '@';
-          // eslint-disable-next-line
-          result.push({ 'name': `${c}${value}` });
-        }
-        this.options = result;
-      }
-    },
-    asyncUpdate(newVal) {
-      this.options = newVal;
-    },
+
   },
   computed: {
     filename() {
@@ -217,19 +183,6 @@ export default {
 
   .upload-button {
     margin-bottom: 1.25%;
-  }
-
-  .expand-button {
-    margin-left: 5px;
-  }
-
-  .emotions {
-    margin-top: 1.25%;
-  }
-
-  .tagtypes {
-    list-style-type:square;
-    padding-left: 30px;
   }
 
 </style>

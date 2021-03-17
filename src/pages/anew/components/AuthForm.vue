@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import Login from './auth/Login.vue';
-import API from '../api';
-import NotificationController from '../controllers/notification';
+import Login from '../../../components/auth/Login.vue';
+import API from '../../../api';
+import NotificationController from '../../../controllers/notification';
 
 export default {
   name: 'AuthForm',

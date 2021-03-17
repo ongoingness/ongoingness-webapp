@@ -7,8 +7,6 @@
 
 <script>
 
-import API from "../api";
-
 export default {
     props: ['user'],
     name: 'UserSelect',
