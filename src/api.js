@@ -12,8 +12,8 @@ import { isTest } from './utils';
 import store from './store';
 
 export default class API {
-  static URL = 'http://localhost:3000/api';
-  // static URL = 'https://app.enablingongoingness.com/api';
+  //static URL = 'http://localhost:3000/api';
+  static URL = 'https://app.enablingongoingness.com/api';
 
   /**
    * Register a user.
