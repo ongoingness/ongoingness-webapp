@@ -244,13 +244,9 @@ export default class API {
       });
     }
     
-    console.log(headers);
-
     const response = await axios.post(`${this.URL}/media`, formData, {
       headers,
     });
-
-    console.log(response.data.payload);
 
     return response.data.payload;
   }

@@ -63,9 +63,6 @@ export default {
             var pageAmount = this.$store.getters.getLogPageRequestAmount;
             var pageSize = this.$store.getters.getLogPageSize;
 
-            console.log(codes, user, 1, pageAmount, pageSize, from, to);
-
-
             if(user != null && token != null) {
 
                 this.loadingData = true;

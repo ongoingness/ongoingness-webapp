@@ -40,11 +40,11 @@ const getters = {
   
   getMediaByTimeTag: state => {
     var mediaByDay = []
-    console.log(state.media);
+  
     state.media.forEach(element => {
-      console.log(element.emotions);
+    
       if(element.locket == "temporary" && element.times.length > 0) {
-        console.log('time', element.times[0].value);
+      
         const contentDate = new Date(Number(element.times[0].value));
         const month = contentDate.getMonth()+1;
         const day = contentDate.getDate()
@@ -56,8 +56,6 @@ const getters = {
               return true
           }
         });
-
-        console.log(mediaByDay);
 
         if(!result) {
           let newDay = {
