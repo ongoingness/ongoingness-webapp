@@ -23,9 +23,6 @@ async mounted() {
     var timescale = "m";
     var token = this.$store.getters.getToken;
     var result = await API.numberOfSessions(token, "5db6ed2a18eef30011ee2a9a", timescale, 1572220800000, 1575331199999);
-    console.log("whar");
-    console.log(this.data);
-    console.log(result);
     return this.renderChart(result, timescale);    
 
 },
