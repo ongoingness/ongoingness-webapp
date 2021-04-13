@@ -88,7 +88,8 @@ export default {
      * @returns {*}
      */
     presentMedia() {
-      return this.$store.getters.getMedia.filter(media => media.locket === 'present');
+      const presentCollection = this.$store.getters.getMedia.filter(media => media.locket === 'present');
+      return presentCollection.sort((a, b) =>  new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
     },
     /**
      *  Get all media marked with a past tag.
@@ -96,7 +97,8 @@ export default {
      * @returns {*}
      */
     pastMedia() {
-      return this.$store.getters.getMedia.filter(media => media.locket === 'past');
+      const pastCollection = this.$store.getters.getMedia.filter(media => media.locket === 'past');
+      return pastCollection.sort((a, b) =>  new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
     },
 
     tags() {
